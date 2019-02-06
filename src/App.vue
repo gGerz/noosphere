@@ -26,6 +26,11 @@ export default {
 </script>
 
 <style lang="scss">
-$main_color: #0D84FB;
 
+$main_color: #0D84FB;
+$background-color: #f8f8f8;
+
+  #app{
+    background-color: $background-color;
+  }
 </style>
