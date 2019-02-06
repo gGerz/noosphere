@@ -1,6 +1,6 @@
 <template>
   <div>
-    Меню
+    МенюИзмененияДляМиши
   </div>
 </template>
 <style>
