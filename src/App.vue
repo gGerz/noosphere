@@ -27,10 +27,16 @@ export default {
 
 <style lang="scss">
 
-$main_color: #0D84FB;
-$background-color: #f8f8f8;
+  @import url('https://fonts.googleapis.com/css?family=Roboto');
+  $main_color: #0D84FB;
+  $background-color: #f8f8f8;
 
   #app{
     background-color: $background-color;
+    font-family: Roboto;
   }
+
+
+
+
 </style>
