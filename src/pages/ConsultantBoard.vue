@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button class="btn btn-success">ConsultantBoard</button>
+    <button class="btn btn-warning">Доска консультаций</button>
   </div>
 </template>
 <script>
@@ -9,3 +9,4 @@
 <style>
 
 </style>
+

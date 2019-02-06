@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button class="btn btn-primary">TicketBoard</button>
+    <button class="btn btn-primary">Доска заявок</button>
   </div>
 </template>
 <script>
