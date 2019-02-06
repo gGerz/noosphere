@@ -1,7 +1,7 @@
 <template>
   <div>
-    МенюИзмененияДляМиши
+    Меню
   </div>
 </template>
-<style style lang="scss">
+<style lang="scss">
 </style>

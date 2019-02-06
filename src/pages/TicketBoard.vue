@@ -6,6 +6,6 @@
 <script>
 
 </script>
-<style style lang="scss">
+<style lang="scss">
 
 </style>
