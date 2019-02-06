@@ -26,5 +26,6 @@ export default {
 </script>
 
 <style lang="scss">
+$main_color: #0D84FB;
 
 </style>
