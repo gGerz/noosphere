@@ -10,14 +10,14 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Доска консультаций</a>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/">Доска консултаций</router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Доска заявок</a>
+            <router-link class="nav-link" to="/ticketboard">Доска заявок</router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">О сервисе</a>
+            <router-link class="nav-link" to="/about">О сервисе</router-link>
           </li>
         </ul>
         <button class="btn btn-outline-primary m-2 my-sm-0" type="submit">Войти</button>
