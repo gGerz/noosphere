@@ -35,8 +35,4 @@ export default {
     background-color: $background-color;
     font-family: Roboto;
   }
-
-
-
-
 </style>

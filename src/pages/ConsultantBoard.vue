@@ -1,9 +1,5 @@
 <template>
   <div>
-    <div class="row">
-      <div class="block"><span class="mx-auto">тег</span></div>
-      <div class="block">консультация</div>
-    </div>
     <h2 class="my-4" >Доска консультаций</h2>
     <div class="row">
       <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4" v-for="(con, i) in cons">
