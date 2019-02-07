@@ -20,7 +20,7 @@
             <router-link class="nav-link" to="/about">О сервисе</router-link>
           </li>
         </ul>
-        <router-link class="btn btn-outline-primary m-2 my-sm-0" to="/">Войти</router-link>
+        <router-link class="btn btn-outline-primary m-2 my-sm-0" to="/cabinet">Войти</router-link>
 
         <router-link class="btn btn-outline-primary my-2 my-sm-0" to="/">Регистрация</router-link>
       </div>
