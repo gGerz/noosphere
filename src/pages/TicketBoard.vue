@@ -38,7 +38,7 @@
       return {
         cons: [
           {
-            title: 'Учу рисовать картины маслом',
+            title: 'Научите рисовать',
             compition: 'Искусство',
             author: 'Пикассо',
             raiting: '150',
@@ -52,7 +52,7 @@
             ]
           },
           {
-            title: 'Учу верстать',
+            title: 'Научите верстать',
             compition: 'Front-end',
             author: 'Фронтовик Ендович',
             raiting: '1337',

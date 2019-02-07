@@ -28,8 +28,13 @@ export default {
 <style lang="scss">
 
   @import url('https://fonts.googleapis.com/css?family=Roboto');
+
   $main_color: #0D84FB;
   $background-color: #f8f8f8;
+
+  html{
+    overflow: scroll; //добавление полосы прокрутки на всех страницах (чтобы меню не прыгало)
+  }
 
   #app{
     background-color: $background-color;
