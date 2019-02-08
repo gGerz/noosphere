@@ -17,9 +17,10 @@
         </li>
       </ul>
     </div>
+    <!-- ТАБЫ ДЕСКТОП -->
     <div class="tab-content">
+      <!-- ВКЛАДКА ОБЩЕЕ -->
       <div class="tab-pane active" id="general">
-
         <div class="cab_card">
           <div class="card-body m-4">
             <div class="d-flex align-items-center">
@@ -52,7 +53,7 @@
             <div class="d-flex justify-content-between">
               <div class="spec">
                 <div class="text-grey">Компетенция</div>
-                <div class="justify-content-between d-flex">Front-end <span class="ml-4">50<span class="text-grey">/100</span><i class="fas fa-times ml-4"></i></span></div>
+                <div class="justify-content-between d-flex">Front-end разработка<span class="ml-4">50<span class="text-grey">/100</span><i class="fas fa-times ml-4"></i></span></div>
                 <div class="justify-content-between d-flex">Back-end <span>20<span class="text-grey">/100</span><i class="fas fa-times ml-4"></i></span></div>
                 <div class="justify-content-between d-flex">Дизайн <span>100<span class="text-grey">/100</span><i class="fas fa-times ml-4"></i></span></div>
               </div>
@@ -64,22 +65,19 @@
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
-
-
-
-
-
       </div>
+      <!-- ВКЛАДКА РАСПИСАНИЕ -->
       <div class="tab-pane" id="schedule">
         schedule
       </div>
+      <!-- ВКЛАДКА ЗАЯВКИ -->
       <div class="tab-pane" id="tickets">
         tickets
       </div>
+      <!-- ВКЛАДКА АРХИВ -->
       <div class="tab-pane" id="archive">
         archive
       </div>
@@ -95,7 +93,7 @@
       }
     },
     mounted() {
-      // Переключение вкладок на desktop
+      // Переключение вкладок
       $('#lk-tabs a').on('click', function (e) {
         e.preventDefault()
         $(this).tab('show')
@@ -104,38 +102,53 @@
   }
 </script>
 <style lang="scss">
+
   $main_color: #0D84FB;
-  $main_grey: #8D8F93;
+  $main_grey: #A6A6A6; //Внимательно смотри цвета в макете (удали после прочтения)
+  $secondary_grey: #373737;
+  $font_l: 18px;
+  $font_m: 16px;
+  $font_s: 14px;
+
   body {
-    color: #555;
+    color: $secondary_grey;
   }
+
   .text-grey { //серый цвет
     color: $main_grey;
+
     &-light { //светлее
       color: lighten($main_grey,35%);
     }
   }
+
   .user_info > div{
     margin-right: 50px;
+
     div:first-child{
       color: $main_grey;
     }
   }
+
   .about_user {
     max-width: 670px;
     font-size: 16px;
   }
+
   .spec {
     width: 220px;
   }
+
   .dashed { //пунктирное подчеркивание
     text-decoration: none;
     border-bottom: 1px dashed $main_grey;
+
      &:hover{
        text-decoration: none;
        color: darken($main_grey,20%);
      }
   }
+
   .cab_card { //тело вкладки
     position: relative;
     display: -ms-flexbox;
@@ -150,6 +163,7 @@
     border-top: 0;
     border-radius: .25rem;
   }
+
   .ava_cabinet {
     height: 40px;
     width: 40px!important;

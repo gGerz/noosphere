@@ -5,7 +5,6 @@
       <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4" v-for="(con, i) in cons">
         <div class="card mb-3">
           <div class="card-body cons-body post-wrapper">
-
             <div style="font-size: 23px;" >
               <p class="text-dark mb-0 cons-title">{{con.title}}</p>
               <p class="mr-auto mb-1 text-grey cons-spec" >{{con.compition}}</p>
@@ -17,21 +16,42 @@
                 </div>
                 <div>
                   <span class="text-dark">{{con.author}}</span>
-                  <div class="h6"><span title="Рейтинг" class=""><i class="fas fa-star mr-1 text-grey"></i>{{con.raiting}}</span></div>
+                  <div class="h6">
+                    <span title="Рейтинг" class="">
+                      <i class="fas fa-star mr-1 text-grey"></i>
+                      {{con.raiting}}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="d-flex ">
-              <div class=""><span title="Дата"><i class="fas fa-calendar-week mr-1 text-grey"></i><span class="text-dark">{{con.date}}</span></span></div>
-              <div class="ml-auto"><span title="Время"><i class="far fa-clock mr-1 text-grey"></i><span class="text-dark">{{con.time}}</span></span></div>
+              <div class="">
+                <span title="Дата">
+                  <i class="fas fa-calendar-week mr-1 text-grey"></i>
+                  <span class="text-dark">
+                    {{con.date}}
+                  </span>
+                </span>
+              </div>
+              <div class="ml-auto">
+                <span title="Время">
+                  <i class="far fa-clock mr-1 text-grey"></i>
+                  <span class="text-dark">
+                    {{con.time}}
+                  </span>
+                </span>
+              </div>
             </div>
             <div class="">
               <div class="tag px-2 " v-for="tag in con.tags">{{tag.title}}</div>
             </div>
             <div class="d-flex">
-              <div class="my-auto price"><span class="" style="font-size: 23px;">{{con.price}}</span>
-                <span >руб</span>
-
+              <div class="my-auto price">
+                <span class="" style="font-size: 23px;">
+                  {{con.price}}
+                </span>
+                <span>руб</span>
               </div>
               <button class="btn btn-outline-primary btn-md ml-auto px-4">Купить</button>
             </div>
@@ -132,23 +152,26 @@
           }
         ],
       }
-    },
-
-
+    }
   }
 </script>
 <style lang="scss">
+
   $main_color: #0D84FB;
   $main_grey: #8D8F93;
+
   body {
     color: #555;
   }
+
   .text-grey {
     color: $main_grey;
+
     &-light {
       color: lighten($main_grey,35%);
     }
   }
+
   .tag {
     background: lighten($main_grey,35%);
     position: relative;
@@ -161,12 +184,15 @@
     padding-left: .2rem!important;
     padding-right: .5rem!important;
     margin-bottom: 4px;
+
     &:hover {
       background: lighten($main_grey,20%);
+
       &:before{
         border-right: 12px solid lighten($main_grey,20%);
       }
     }
+
     &:before{
       content: '';
       position: absolute;
@@ -175,13 +201,16 @@
       border-right: 12px solid lighten($main_grey,35%);
     }
   }
+
   .cons-spec {
     font-size: 18px;
   }
+
   .price {
     color: $main_color;
     font-weight: 600;
   }
+
   .img_master2 {
     height: 40px;
     width: 40px!important;
@@ -189,9 +218,11 @@
     border-radius: 100%;
     margin-right: 17px;
   }
+
   .cons-title {
     font-size: 20px;
   }
+
   .cons-body {
     padding: 20px;
     min-height: 373px;
@@ -199,15 +230,6 @@
     flex-direction: column;
     justify-content: space-between;
   }
-  .btn-cons-card {
-    color: white;
-    background-image: linear-gradient(to right, #0c83fb, #38b5ea);
-    border: none;
-  }
-  .btn-cons-card:hover {
-    color: white;
-    background-image: linear-gradient(to right, #0a61c8, #2d96c1);
-    border: none;
-  }
+
 </style>
 
