@@ -25,36 +25,38 @@
         <div class="cab_card">
           <div class="card-body">
             <div class="d-flex align-items-center">
-              <img class="ava_cabinet" src="../assets/img/ava.jpg">
-              <div class="text-dark h3">Леонардо да Винчи</div>
-              <div class="ml-5 "><a href="" class="dashed text-grey">Изменить данные</a></div>
+              <div class="d-flex align-items-center d-block-md">
+                  <img class="ava_cabinet" src="../assets/img/ava.jpg">
+                  <div class="text-dark h3 m-0">Леонардо да Винчи</div>
+              </div>
+              <div class="ml-5 d-block"><a href="" class="dashed text-grey">Изменить данные</a></div>
             </div>
-              <div class="d-flex user_info">
-                  <div class="">
+              <div class="row user_info">
+                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg">
                       <div>E-mail</div>
                       <div>leo228@mail.ru</div>
                   </div>
-                  <div>
+                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg">
                       <div>Телефон</div>
                       <div>+7 999 888 77 66</div>
                   </div>
-                  <div>
+                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg">
                       <div>Пароль</div>
                       <div>**********</div>
                   </div>
-                  <div>
+                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg">
                       <div>Дата рождения</div>
                       <div>15.04.1452</div>
                   </div>
-                  <div>
+                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg">
                       <div>Пол</div>
                       <div>Мужской</div>
                   </div>
               </div>
-              <div class="d-flex justify-content-between">
-                  <div class="spec">
+              <div class="row">
+                  <div class="spec col-xs-12 col-sm-12 col-md-12 col-lg-4 mb-3">
                       <div class="text-grey font_s">Компетенции</div>
-                      <div class="d-flex justify-content-between mt-1" v-for="competence in competencies">
+                      <div class="d-flex justify-content-between mt-1 mr-4" v-for="competence in competencies">
                           <div>{{competence.title}}</div>
                           <div class="d-flex justify-content-between">
                               <div>{{competence.goodMark}}<span class="text-grey">/{{competence.badMark}}</span></div>
@@ -64,11 +66,13 @@
                           </div>
                       </div>
                   </div>
-                  <div>
-                      <div class="text-grey font_s">О себе</div>
-                      <div class="card about_user">
-                          <div class="card-body">
-                              <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer facilisis nisl vel mauris posuere, et posuere erat ullamcorper. Fusce dignissim maximus elit, eu hendrerit leo scelerisque non. Suspendisse ultrices libero id urna consectetur accumsan. Quisque lobortis sapien non ultrices auctor. Sed dolor magna, blandit ut justo id, vestibulum porta risus. Nam vitae sodales magna. Nullam sagittis feugiat tempus.</span>
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
+                      <div class="">
+                          <div class="text-grey font_s">О себе</div>
+                          <div class="card about_user">
+                              <div class="card-body">
+                                  <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer facilisis nisl vel mauris posuere, et posuere erat ullamcorper. Fusce dignissim maximus elit, eu hendrerit leo scelerisque non. Suspendisse ultrices libero id urna consectetur accumsan. Quisque lobortis sapien non ultrices auctor. Sed dolor magna, blandit ut justo id, vestibulum porta risus. Nam vitae sodales magna. Nullam sagittis feugiat tempus.</span>
+                              </div>
                           </div>
                       </div>
                   </div>
@@ -165,16 +169,20 @@
     border-color: #dee2e6 #dee2e6 #fff;
   }
   .user_info {
-    padding-top: 38px;
-    padding-bottom: 50px;
+      padding-top: 38px;
+      padding-bottom: 50px;
+      max-width: 900px;
     div {
-      margin-right: 50px;
       width: 132px;
       div:first-child{
         font-size: $font_s;
-        padding-bottom: 10px;
+        padding-bottom: 4px;
         color: $main_grey;
       }
+
+        div:nth-child(2){
+            padding-bottom: 13px;
+        }
     }
   }
 
