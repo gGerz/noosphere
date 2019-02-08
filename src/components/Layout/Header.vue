@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="menu">
     <nav class="navbar navbar-expand-lg navbar-light">
       <a class="navbar-brand" href="#">
-        <img src="/src/assets/img/logo.png" width="230" class="d-inline-block align-top" alt="">
+        <img src="../../assets/img/logo.png" width="230" class="d-inline-block align-top" alt="">
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -28,6 +28,9 @@
   </div>
 </template>
 <style lang="scss">
+  .menu{
+    padding-top: 20px;
+  }
   .nav-link {
     padding-right: .9rem!important;
     padding-left: .9rem!important;

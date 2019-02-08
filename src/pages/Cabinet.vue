@@ -104,9 +104,11 @@
 <style lang="scss">
 
   $main_color: #0D84FB;
-  $main_grey: #A6A6A6; //Внимательно смотри цвета в макете (удали после прочтения)
+  $main_grey: #A6A6A6;  //Внимательно смотри цвета в макете (удали после прочтения)
   $secondary_grey: #373737;
+  $font_card-price: 34px;
   $font_xxl: 28px;
+  $font_card-header: 22px;
   $font_xl: 20px;
   $font_l: 18px;
   $font_m: 16px;
