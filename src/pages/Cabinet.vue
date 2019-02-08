@@ -24,12 +24,12 @@
       <div class="tab-pane active" id="general">
         <div class="cab_card">
           <div class="card-body">
-            <div class="d-flex align-items-center">
-              <div class="d-flex align-items-center d-block-md">
+            <div class="d-lg-flex d-md-block align-items-center">
+              <div class="d-flex align-items-center ">
                   <img class="ava_cabinet" src="../assets/img/ava.jpg">
                   <div class="text-dark h3 m-0">Леонардо да Винчи</div>
               </div>
-              <div class="ml-5 d-block"><a href="" class="dashed text-grey">Изменить данные</a></div>
+              <div class="ml-lg-5"><a href="" class="dashed text-grey">Изменить данные</a></div>
             </div>
               <div class="row user_info">
                   <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg">
@@ -54,7 +54,7 @@
                   </div>
               </div>
               <div class="row">
-                  <div class="spec col-xs-12 col-sm-12 col-md-12 col-lg-4 mb-3">
+                  <div class="spec col-xs-12 col-sm-12 col-md-12 col-lg-4">
                       <div class="text-grey font_s">Компетенции</div>
                       <div class="d-flex justify-content-between mt-1 mr-4" v-for="competence in competencies">
                           <div>{{competence.title}}</div>
@@ -102,18 +102,18 @@
       return{
         competencies: [
           {
-            title: 'Компетенция 1',
-            goodMark: '10',
-            badMark: '5',
+            title: 'Front',
+            goodMark: '25',
+            badMark: '15',
           },
           {
-            title: 'Компетенция 2',
-            goodMark: '10',
-            badMark: '5',
+            title: 'Back',
+            goodMark: '140',
+            badMark: '56',
           },
           {
-            title: 'Компетенция 3',
-            goodMark: '10',
+            title: 'Design',
+            goodMark: '15',
             badMark: '5',
           },
         ]
@@ -196,6 +196,7 @@
   .spec {
     width: 280px;
     font-size: $font_m;
+      padding-bottom: 50px;
   }
   .fa-times:before {
     color: #FF3F3F;
