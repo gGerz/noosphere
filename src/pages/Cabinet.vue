@@ -53,14 +53,11 @@
               </div>
               <div class="d-flex justify-content-between">
                   <div class="spec">
-                      <div class="text-grey font_s">Компетенция</div>
-                      <div class="justify-content-between d-flex">Front-end разработка<span class="ml-4">50<span class="text-grey">/100</span><i class="fas fa-times ml-4"></i></span></div>
-                      <div class="justify-content-between d-flex">Back-end <span>20<span class="text-grey">/100</span><i class="fas fa-times ml-4"></i></span></div>
-                      <div class="justify-content-between d-flex">Дизайн <span>100<span class="text-grey">/100</span><i class="fas fa-times ml-4"></i></span></div>
-                      <div class="d-flex justify-content-between">
-                          <div>Комп</div>
+                      <div class="text-grey font_s">Компетенции</div>
+                      <div class="d-flex justify-content-between mt-1" v-for="competence in competencies">
+                          <div>{{competence.title}}</div>
                           <div class="d-flex justify-content-between">
-                              <div>10<span class="text-grey">/100</span></div>
+                              <div>{{competence.goodMark}}<span class="text-grey">/{{competence.badMark}}</span></div>
                               <div>
                                   <i class="fas fa-times ml-4"></i>
                               </div>
@@ -99,7 +96,23 @@
   export default{
     data(){
       return{
-
+        competencies: [
+          {
+            title: 'Компетенция 1',
+            goodMark: '10',
+            badMark: '5',
+          },
+          {
+            title: 'Компетенция 2',
+            goodMark: '10',
+            badMark: '5',
+          },
+          {
+            title: 'Компетенция 3',
+            goodMark: '10',
+            badMark: '5',
+          },
+        ]
       }
     },
     mounted() {
@@ -229,4 +242,5 @@
     border-radius: 100%;
     margin-right: 17px;
   }
+
 </style>
