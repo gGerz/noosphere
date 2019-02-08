@@ -15,6 +15,7 @@
         <li class="nav-item">
           <a class="nav-link" id="settings-tab" data-toggle="tab" href="#archive" role="tab" aria-controls="settings" aria-selected="false"><i class="far fa-calendar-times"></i>Архив занятий</a>
         </li>
+        <div class="ml-auto"><i class="far fa-plus-square"></i><span class="dashed2">Создать карточку консультации</span></div>
       </ul>
     </div>
     <!-- ТАБЫ ДЕСКТОП -->
@@ -22,56 +23,65 @@
       <!-- ВКЛАДКА ОБЩЕЕ -->
       <div class="tab-pane active" id="general">
         <div class="cab_card">
-          <div class="card-body m-4">
+          <div class="card-body">
             <div class="d-flex align-items-center">
               <img class="ava_cabinet" src="../assets/img/ava.jpg">
               <div class="text-dark h3">Леонардо да Винчи</div>
               <div class="ml-5 "><a href="" class="dashed text-grey">Изменить данные</a></div>
             </div>
-            <div class="d-flex my-4 user_info">
-              <div class="">
-                <div>E-mail</div>
-                <div>leo228@mail.ru</div>
-              </div>
-              <div>
-                <div>Телефон</div>
-                <div>+7 999 888 77 66</div>
-              </div>
-              <div>
-                <div>Пароль</div>
-                <div>**********</div>
-              </div>
-              <div>
-                <div>Дата рождения</div>
-                <div>15.04.1452</div>
-              </div>
-              <div>
-                <div>Пол</div>
-                <div>Мужской</div>
-              </div>
-            </div>
-            <div class="d-flex justify-content-between">
-              <div class="spec">
-                <div class="text-grey">Компетенция</div>
-                <div class="justify-content-between d-flex">Front-end разработка<span class="ml-4">50<span class="text-grey">/100</span><i class="fas fa-times ml-4"></i></span></div>
-                <div class="justify-content-between d-flex">Back-end <span>20<span class="text-grey">/100</span><i class="fas fa-times ml-4"></i></span></div>
-                <div class="justify-content-between d-flex">Дизайн <span>100<span class="text-grey">/100</span><i class="fas fa-times ml-4"></i></span></div>
-              </div>
-              <div>
-                <div class="text-grey">О себе</div>
-                <div class="card shadow about_user">
-                  <div class="card-body">
-                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer facilisis nisl vel mauris posuere, et posuere erat ullamcorper. Fusce dignissim maximus elit, eu hendrerit leo scelerisque non. Suspendisse ultrices libero id urna consectetur accumsan. Quisque lobortis sapien non ultrices auctor. Sed dolor magna, blandit ut justo id, vestibulum porta risus. Nam vitae sodales magna. Nullam sagittis feugiat tempus.</span>
+              <div class="d-flex user_info">
+                  <div class="">
+                      <div>E-mail</div>
+                      <div>leo228@mail.ru</div>
                   </div>
-                </div>
+                  <div>
+                      <div>Телефон</div>
+                      <div>+7 999 888 77 66</div>
+                  </div>
+                  <div>
+                      <div>Пароль</div>
+                      <div>**********</div>
+                  </div>
+                  <div>
+                      <div>Дата рождения</div>
+                      <div>15.04.1452</div>
+                  </div>
+                  <div>
+                      <div>Пол</div>
+                      <div>Мужской</div>
+                  </div>
               </div>
-            </div>
+              <div class="d-flex justify-content-between">
+                  <div class="spec">
+                      <div class="text-grey font_s">Компетенция</div>
+                      <div class="justify-content-between d-flex">Front-end разработка<span class="ml-4">50<span class="text-grey">/100</span><i class="fas fa-times ml-4"></i></span></div>
+                      <div class="justify-content-between d-flex">Back-end <span>20<span class="text-grey">/100</span><i class="fas fa-times ml-4"></i></span></div>
+                      <div class="justify-content-between d-flex">Дизайн <span>100<span class="text-grey">/100</span><i class="fas fa-times ml-4"></i></span></div>
+                      <div class="d-flex justify-content-between">
+                          <div>Комп</div>
+                          <div class="d-flex justify-content-between">
+                              <div>10<span class="text-grey">/100</span></div>
+                              <div>
+                                  <i class="fas fa-times ml-4"></i>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div>
+                      <div class="text-grey font_s">О себе</div>
+                      <div class="card about_user">
+                          <div class="card-body">
+                              <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer facilisis nisl vel mauris posuere, et posuere erat ullamcorper. Fusce dignissim maximus elit, eu hendrerit leo scelerisque non. Suspendisse ultrices libero id urna consectetur accumsan. Quisque lobortis sapien non ultrices auctor. Sed dolor magna, blandit ut justo id, vestibulum porta risus. Nam vitae sodales magna. Nullam sagittis feugiat tempus.</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
           </div>
         </div>
       </div>
       <!-- ВКЛАДКА РАСПИСАНИЕ -->
       <div class="tab-pane" id="schedule">
-        schedule
+        <div class="cab_card">132</div>
       </div>
       <!-- ВКЛАДКА ЗАЯВКИ -->
       <div class="tab-pane" id="tickets">
@@ -104,7 +114,7 @@
 <style lang="scss">
 
   $main_color: #0D84FB;
-  $main_grey: #A6A6A6;  //Внимательно смотри цвета в макете (удали после прочтения)
+  $main_grey: #A6A6A6;
   $secondary_grey: #373737;
   $font_card-price: 34px;
   $font_xxl: 28px;
@@ -125,25 +135,57 @@
       color: lighten($main_grey,35%);
     }
   }
-
-  .user_info > div{
-    margin-right: 50px;
-
-    div:first-child{
-      color: $main_grey;
+  .font_s {
+    font-size: $font_s;
+  }
+  .nav-link {
+    color: $main_grey!important;
+    padding-right: 25px !important;
+    padding-left: 25px !important;
+    i {
+      padding-right: 10px;
+    }
+  }
+  .nav-link.active {
+    color: $main_color!important;
+    background-color: #fff;
+    border-color: #dee2e6 #dee2e6 #fff;
+  }
+  .user_info {
+    padding-top: 38px;
+    padding-bottom: 50px;
+    div {
+      margin-right: 50px;
+      width: 132px;
+      div:first-child{
+        font-size: $font_s;
+        padding-bottom: 10px;
+        color: $main_grey;
+      }
     }
   }
 
   .about_user {
-    max-width: 670px;
+    max-width: 650px;
     font-size: 16px;
+    border-radius: 15px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
   }
 
   .spec {
-    width: 220px;
+    width: 280px;
+    font-size: $font_m;
   }
-
+  .fa-times:before {
+    color: #FF3F3F;
+    font-size: 15px;
+  }
+  .fa-plus-square:before {
+    color: $main_color;
+    font-size: 18px;
+  }
   .dashed { //пунктирное подчеркивание
+    font-size: $font_s;
     text-decoration: none;
     border-bottom: 1px dashed $main_grey;
 
@@ -152,20 +194,32 @@
        color: darken($main_grey,20%);
      }
   }
-
+  .dashed2 { //пунктирное подчеркивание
+    color: $main_color;
+    font-size: $font_m;
+    text-decoration: none;
+    border-bottom: 1px dashed $main_color;
+    &:hover{
+      text-decoration: none;
+      color: darken($main_color,20%);
+    }
+  }
+  .card-body {
+    padding: 2.5rem;
+  }
   .cab_card { //тело вкладки
-    position: relative;
+    //position: relative;
+    //top: -5px;
     display: -ms-flexbox;
     display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    min-width: 0;
     word-wrap: break-word;
     background-color: #fff;
     background-clip: border-box;
     border: 1px solid rgba(0,0,0,.125);
     border-top: 0;
     border-radius: .25rem;
+    border-top-left-radius: 0rem!important;
+    border-top-right-radius: 0rem!important;
   }
 
   .ava_cabinet {
