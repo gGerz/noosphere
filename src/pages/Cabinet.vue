@@ -24,37 +24,37 @@
       <div class="tab-pane active" id="general">
         <div class="cab_card">
           <div class="card-body">
-            <div class="d-lg-flex d-md-block align-items-center">
+            <div class="d-lg-flex d-md-flex d-block align-items-center">
               <div class="d-flex align-items-center ">
                   <img class="ava_cabinet" src="../assets/img/ava.jpg">
                   <div class="text-dark h3 m-0">Леонардо да Винчи</div>
               </div>
-              <div class="ml-lg-5"><a href="" class="dashed text-grey">Изменить данные</a></div>
+              <div class="ml-lg-5 ml-md-5"><a href="" class="dashed text-grey">Изменить данные</a></div>
             </div>
               <div class="row user_info">
-                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg">
+                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block">
                       <div>E-mail</div>
                       <div>leo228@mail.ru</div>
                   </div>
-                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg">
+                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block">
                       <div>Телефон</div>
                       <div>+7 999 888 77 66</div>
                   </div>
-                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg">
+                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block">
                       <div>Пароль</div>
                       <div>**********</div>
                   </div>
-                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg">
+                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block">
                       <div>Дата рождения</div>
                       <div>15.04.1452</div>
                   </div>
-                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg">
+                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block">
                       <div>Пол</div>
                       <div>Мужской</div>
                   </div>
               </div>
               <div class="row">
-                  <div class="spec col-xs-12 col-sm-12 col-md-12 col-lg-4">
+                  <div class="spec col-xs-8 col-sm-8 col-md-8 col-lg-4">
                       <div class="text-grey font_s">Компетенции</div>
                       <div class="d-flex justify-content-between mt-1 mr-4" v-for="competence in competencies">
                           <div>{{competence.title}}</div>
@@ -226,8 +226,11 @@
       color: darken($main_color,20%);
     }
   }
-  .card-body {
-    padding: 2.5rem;
+  @media (min-width: 768px) {
+
+      .card-body {
+          padding: 2.5rem;
+      }
   }
   .cab_card { //тело вкладки
     //position: relative;
