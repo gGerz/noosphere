@@ -12,7 +12,9 @@
             <div class="">
               <div class="d-flex align-items-center">
                 <div>
-                  <img class="img_master2" src="../assets/img/ava.jpg" >
+                  <!--<img class="img_master2" src="../assets/img/ava.jpg" >  статичная картинка  -->
+                  <!-- Пока что будет выдавать ошибку в консоль, тк фотки подгружаются после построения карточек-->
+                  <img class="img_master2" :src="photos[i].url" >
                 </div>
                 <div>
                   <span class="text-dark">{{con.author}}</span>
@@ -62,6 +64,9 @@
   </div>
 </template>
 <script>
+
+  import axios from 'axios'
+
   export default {
     data() {
       return {
@@ -151,7 +156,21 @@
             ]
           }
         ],
+        photos: []
       }
+    },
+    mounted () {
+      axios({
+        method: 'get',
+        url: `https://jsonplaceholder.typicode.com/photos`
+      })
+        .then((response) => {
+          this.photos = response.data
+          console.log(this.photos)
+        })
+        .catch((error) => {
+          console.error(error)
+        })
     }
   }
 </script>
