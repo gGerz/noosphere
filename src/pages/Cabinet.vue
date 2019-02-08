@@ -15,15 +15,15 @@
         <li class="nav-item">
           <a class="nav-link" id="settings-tab" data-toggle="tab" href="#archive" role="tab" aria-controls="settings" aria-selected="false"><i class="far fa-calendar-times"></i>Архив занятий</a>
         </li>
-        <div class="ml-auto"><i class="far fa-plus-square"></i><span class="dashed2">Создать карточку консультации</span></div>
+        <div class="ml-auto"><i class="far fa-plus-square mr-2"></i><span class="dashed2">Создать карточку консультации</span></div>
       </ul>
     </div>
     <!-- ТАБЫ ДЕСКТОП -->
     <div class="tab-content">
       <!-- ВКЛАДКА ОБЩЕЕ -->
-      <div class="tab-pane active" id="general">
+      <div class="tab-pane " id="general">
         <div class="cab_card">
-          <div class="card-body">
+          <div class="card-body-main">
             <div class="d-lg-flex d-md-flex d-block align-items-center">
               <div class="d-flex align-items-center ">
                   <img class="ava_cabinet" src="../assets/img/ava.jpg">
@@ -85,8 +85,27 @@
         <div class="cab_card">132</div>
       </div>
       <!-- ВКЛАДКА ЗАЯВКИ -->
-      <div class="tab-pane" id="tickets">
-        tickets
+      <div class="tab-pane active" id="tickets">
+        <div class="cab_card">
+            <div class="card-body-main">
+                <div class="row req-table font_s text-grey">
+                    <div class="col-2">Дата</div>
+                    <div class="col-2">Время</div>
+                    <div class="col-2">Компитенция</div>
+                </div>
+                <div class="card card-req ">
+                    <div class="row card-body font_m">
+                        <div class="col-2">12/12/12</div>
+                        <div class="col-2">04:19:59</div>
+                        <div class="col-2">Front</div>
+                        <div class="col d-flex justify-content-end">
+                            <div>Изменить</div>
+                            <div>Отменить</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
       </div>
       <!-- ВКЛАДКА АРХИВ -->
       <div class="tab-pane" id="archive">
@@ -155,6 +174,9 @@
   .font_s {
     font-size: $font_s;
   }
+  .font_l {
+      font-size: $font_l;
+  }
   .nav-link {
     color: $main_grey!important;
     padding-right: 25px !important;
@@ -172,18 +194,17 @@
       padding-top: 38px;
       padding-bottom: 50px;
       max-width: 900px;
-    div {
-      width: 132px;
-      div:first-child{
-        font-size: $font_s;
-        padding-bottom: 4px;
-        color: $main_grey;
+      div {
+          width: 132px;
+          div:first-child{
+              font-size: $font_s;
+              padding-bottom: 4px;
+              color: $main_grey;
+          }
+          div:nth-child(2){
+              padding-bottom: 13px;
+          }
       }
-
-        div:nth-child(2){
-            padding-bottom: 13px;
-        }
-    }
   }
 
   .about_user {
@@ -198,13 +219,17 @@
     font-size: $font_m;
       padding-bottom: 50px;
   }
-  .fa-times:before {
+
+  .fa-times:before {//иконка крест
     color: #FF3F3F;
     font-size: 15px;
   }
-  .fa-plus-square:before {
+
+  .fa-plus-square:before {//иконка создания консультации
+      position: relative;
+      top: 3px;
     color: $main_color;
-    font-size: 18px;
+    font-size: 23px;
   }
   .dashed { //пунктирное подчеркивание
     font-size: $font_s;
@@ -226,15 +251,16 @@
       color: darken($main_color,20%);
     }
   }
+  .card-body-main {
+      flex: 1 1 auto;
+      padding: 1.25rem;
+  }
   @media (min-width: 768px) {
-
-      .card-body {
+      .card-body-main {
           padding: 2.5rem;
       }
   }
   .cab_card { //тело вкладки
-    //position: relative;
-    //top: -5px;
     display: -ms-flexbox;
     display: flex;
     word-wrap: break-word;
@@ -255,4 +281,12 @@
     margin-right: 17px;
   }
 
+    .req-table {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+        padding-bottom: .55rem;
+    }
+    .card-req {
+        box-shadow: 0px 1px 4px rgba(13, 132, 251, 0.2);
+    }
 </style>
