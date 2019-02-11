@@ -29,7 +29,18 @@ export default {
 
   @import url('https://fonts.googleapis.com/css?family=Roboto');
 
-  $main_color: #0D84FB;
+  $main_color: #0D84FB; //синиий
+  $main_grey: #A6A6A6; //серый
+  $danger: #FF3F3F; //красный
+  $success: #43C768; //зеленый
+  $secondary_grey: #373737;
+  $font_card-price: 34px;
+  $font_xxl: 28px;
+  $font_card-header: 22px;
+  $font_xl: 20px;
+  $font_l: 18px;
+  $font_m: 16px;
+  $font_s: 14px;
   $background-color: #f8f8f8;
 
   html{

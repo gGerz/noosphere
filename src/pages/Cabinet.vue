@@ -32,29 +32,29 @@
               <div class="ml-lg-5 ml-md-5"><a href="" class="dashed text-grey">Изменить данные</a></div>
             </div>
               <div class="row user_info">
-                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block">
+                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
                       <div>E-mail</div>
                       <div>leo228@mail.ru</div>
                   </div>
-                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block">
+                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
                       <div>Телефон</div>
                       <div>+7 999 888 77 66</div>
                   </div>
-                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block">
+                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
                       <div>Пароль</div>
                       <div>**********</div>
                   </div>
-                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block">
+                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
                       <div>Дата рождения</div>
                       <div>15.04.1452</div>
                   </div>
-                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block">
+                  <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto mx-sm-0">
                       <div>Пол</div>
                       <div>Мужской</div>
                   </div>
               </div>
               <div class="row">
-                  <div class="spec col-xs-8 col-sm-8 col-md-8 col-lg-4">
+                  <div class="spec col-10 col-xs-12 col-sm-10 col-md-10 col-lg-4 px-3">
                       <div class="text-grey font_s">Компетенции</div>
                       <div class="d-flex justify-content-between mt-1 mr-4" v-for="competence in competencies">
                           <div>{{competence.title}}</div>
@@ -89,18 +89,37 @@
         <div class="cab_card">
             <div class="card-body-main">
                 <div class="row req-table font_s text-grey">
-                    <div class="col-2">Дата</div>
-                    <div class="col-2">Время</div>
-                    <div class="col-2">Компитенция</div>
+                    <div class="col-sm-3 col-md-3 col-lg-2">Дата</div>
+                    <div class="col-sm-3 col-md-3 col-lg-2">Время</div>
+                    <div class="col-sm-6 col-md-6 col-lg-4">Компитенция</div>
                 </div>
-                <div class="card card-req ">
-                    <div class="row card-body font_m">
-                        <div class="col-2">12/12/12</div>
-                        <div class="col-2">04:19:59</div>
-                        <div class="col-2">Front</div>
-                        <div class="col d-flex justify-content-end">
-                            <div>Изменить</div>
-                            <div>Отменить</div>
+                <div class="card card-req mb-3">
+                    <div class="row card-body font_l  d-flex">
+                        <div class="col-6 col-sm-3 col-md-3 col-lg-2">12/12/12</div>
+                        <div class="col-6 col-sm-3 col-md-3 col-lg-2">04:19</div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-4">Front разработчик</div>
+                        <div class="col-md-12 col-lg-4  d-flex justify-content-lg-end justify-content-around font_s align-items-center mt-3 mt-lg-0">
+                            <div class="">
+                                <a href="#" class="text-success"><i class="fas fa-pencil-alt mr-2"></i>Изменить</a>
+                            </div>
+                            <div class="ml-lg-4">
+                                <a href="#" class="text-danger"><i class="fas fa-times mr-2"></i>Отменить</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-req mb-3">
+                    <div class="row card-body font_l  d-flex">
+                        <div class="col-6 col-sm-3 col-md-3 col-lg-2">12/12/12</div>
+                        <div class="col-6 col-sm-3 col-md-3 col-lg-2">04:19</div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-4">Front разработчик</div>
+                        <div class="col-md-12 col-lg-4  d-flex justify-content-lg-end justify-content-around font_s align-items-center mt-3 mt-lg-0">
+                            <div class="">
+                                <a href="#" class="text-success"><i class="fas fa-pencil-alt mr-2"></i>Изменить</a>
+                            </div>
+                            <div class="ml-lg-4">
+                                <a href="#" class="text-danger"><i class="fas fa-times mr-2"></i>Отменить</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -148,28 +167,40 @@
   }
 </script>
 <style lang="scss">
+    $main_color: #0D84FB; //синиий
+    $main_grey: #A6A6A6; //серый
+    $danger: #FF3F3F; //красный
+    $success: #43C768; //зеленый
+    $secondary_grey: #373737;
+    $font_card-price: 30px; //34
+    $font_xxl: 28px;
+    $font_card-header: 22px;
+    $font_xl: 20px;
+    $font_l: 18px;
+    $font_m: 16px;
+    $font_s: 14px;
 
-  $main_color: #0D84FB;
-  $main_grey: #A6A6A6;
-  $secondary_grey: #373737;
-  $font_card-price: 34px;
-  $font_xxl: 28px;
-  $font_card-header: 22px;
-  $font_xl: 20px;
-  $font_l: 18px;
-  $font_m: 16px;
-  $font_s: 14px;
-
-  body {
-    color: $secondary_grey;
-  }
-
-  .text-grey { //серый цвет
-    color: $main_grey;
-
-    &-light { //светлее
-      color: lighten($main_grey,35%);
+    .main_color {color: $main_color;}
+    .font_xl {font-size: $font_xl;}
+    .font_l {font-size: $font_l;}
+    .font_m {font-size: $font_m;}
+    .font_s {font-size: $font_s;}
+    .text-grey {color: $main_grey;}
+    body {
+        color: $secondary_grey;
     }
+
+    .text-danger {
+      color: $danger!important;
+  }
+  a .text-success:hover {
+      color: darken($danger, 10%)!important;
+  }
+  .text-success {
+      color: $success!important;
+  }
+  a .text-success:hover {
+      color: darken($success, 10%)!important;
   }
   .font_s {
     font-size: $font_s;
@@ -227,7 +258,7 @@
 
   .fa-plus-square:before {//иконка создания консультации
       position: relative;
-      top: 3px;
+      top: 4px;
     color: $main_color;
     font-size: 23px;
   }
