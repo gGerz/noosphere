@@ -88,6 +88,15 @@
       <div class="tab-pane " id="tickets">
         <div class="cab_card">
             <div class="card-body-main">
+              <div class="row mb-4">
+                <div class="col-3">
+                  <vue-select v-model="selected"  :options="options" placeholder="Компетенции" label="text" style="display: block">
+                    <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
+                      <div class="py-1">{{ option.text }}</div>
+                    </template>
+                  </vue-select>
+                </div>
+              </div>
                 <div class="row req-table font_s text-grey">
                     <div class="col-sm-3 col-md-3 col-lg-2">Дата</div>
                     <div class="col-sm-3 col-md-3 col-lg-2">Время</div>
@@ -120,9 +129,29 @@
 </template>
 <script>
   import $ from 'jquery'
+  import VueSelect from 'vue-select'
   export default{
+    components: {
+      VueSelect
+    },
     data(){
       return{
+        options: [
+          { value: 1, text: 'One' },
+          { value: 1, text: 'One' },
+          { value: 1, text: 'One' },
+          { value: 1, text: 'One' },
+          { value: 1, text: 'One' },
+          { value: 1, text: 'One' },
+          { value: 2, text: 'Two' },
+          { value: 2, text: 'Two' },
+          { value: 2, text: 'Two' },
+          { value: 2, text: 'Two' },
+          { value: 2, text: 'Two' },
+          { value: 2, text: 'Two' },
+          { value: 2, text: 'Two' },
+        ],
+        selected: '',
         competencies: [
           {
             title: 'Front',
@@ -183,6 +212,7 @@
   $main_grey: #A6A6A6; //серый
   $danger: #FF3F3F; //красный
   $success: #43C768; //зеленый
+  $white: #FFFFFF; // Белый
   $secondary_grey: #373737;
   $font_card-price: 30px; //34
   $font_xxl: 28px;
@@ -195,10 +225,11 @@
   .main_color {color: $main_color;}
   .font_xl {font-size: $font_xl;}
   .font_l {font-size: $font_l;}
-  .font_xxl {font-size: $font_xxl;}
   .font_m {font-size: $font_m;}
   .font_s {font-size: $font_s;}
-  .text-grey {color: $main_grey;}
+  .text-grey {
+    color: $main_grey;
+  }
   body {
       color: $secondary_grey;
   }
@@ -342,4 +373,42 @@
     .card-req {
         box-shadow: 0px 1px 4px rgba(13, 132, 251, 0.2);
     }
+
+  /*Настройка vue-select*/
+  .clear, .dropdown-toggle::after{
+    display: none;
+  }
+  .dropdown-menu li{
+    background-color: $white;
+
+    :active, :focus, :hover, :target, :visited{
+      color: $main_color!important;
+      background-color: $white!important;
+    }
+  }
+
+  /*Настройка скроллбара для селектов*/
+
+  .dropdown-menu{
+    overflow-y: scroll!important;
+    max-height: 200px!important;
+  }
+
+  .dropdown-menu::-webkit-scrollbar-track {
+    -webkit-box-shadow: none;
+    background-color: $white;
+
+  }
+
+  .dropdown-menu::-webkit-scrollbar {
+    width: 4px;
+    background-color: $white;
+  }
+
+  .dropdown-menu::-webkit-scrollbar-thumb {
+    background-color: $main_color;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+  }
 </style>
