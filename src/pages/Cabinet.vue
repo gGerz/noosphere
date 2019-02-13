@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h2 class="my-4" >Личный кабинет</h2>
+      <h2 class="my-4 font_xxl" >Личный кабинет</h2>
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
           <a class="nav-link active" id="home-tab" data-toggle="tab" href="#general" role="tab" aria-controls="home" aria-selected="true"><i class="fas fa-user-graduate"></i>Общее</a>
@@ -21,7 +21,7 @@
     <!-- ТАБЫ ДЕСКТОП -->
     <div class="tab-content">
       <!-- ВКЛАДКА ОБЩЕЕ -->
-      <div class="tab-pane " id="general">
+      <div class="tab-pane active" id="general">
         <div class="cab_card">
           <div class="card-body-main">
             <div class="d-lg-flex d-md-flex d-block align-items-center">
@@ -85,40 +85,25 @@
         <div class="cab_card">132</div>
       </div>
       <!-- ВКЛАДКА ЗАЯВКИ -->
-      <div class="tab-pane active" id="tickets">
+      <div class="tab-pane " id="tickets">
         <div class="cab_card">
             <div class="card-body-main">
                 <div class="row req-table font_s text-grey">
                     <div class="col-sm-3 col-md-3 col-lg-2">Дата</div>
                     <div class="col-sm-3 col-md-3 col-lg-2">Время</div>
-                    <div class="col-sm-6 col-md-6 col-lg-4">Компитенция</div>
+                    <div class="col-sm-6 col-md-6 col-lg-4">Компетенция</div>
                 </div>
-                <div class="card card-req mb-3">
+                <div class="card card-req mb-3" v-for="(item, i) in ticketConsultations">
                     <div class="row card-body font_l  d-flex">
-                        <div class="col-6 col-sm-3 col-md-3 col-lg-2">12/12/12</div>
-                        <div class="col-6 col-sm-3 col-md-3 col-lg-2">04:19</div>
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-4">Front разработчик</div>
+                        <div class="col-6 col-sm-3 col-md-3 col-lg-2">{{item.date}}</div>
+                        <div class="col-6 col-sm-3 col-md-3 col-lg-2">{{item.time}}</div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-4">{{item.competencies}}</div>
                         <div class="col-md-12 col-lg-4  d-flex justify-content-lg-end justify-content-around font_s align-items-center mt-3 mt-lg-0">
                             <div class="">
                                 <a href="#" class="text-success"><i class="fas fa-pencil-alt mr-2"></i>Изменить</a>
                             </div>
                             <div class="ml-lg-4">
-                                <a href="#" class="text-danger"><i class="fas fa-times mr-2"></i>Отменить</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card card-req mb-3">
-                    <div class="row card-body font_l  d-flex">
-                        <div class="col-6 col-sm-3 col-md-3 col-lg-2">12/12/12</div>
-                        <div class="col-6 col-sm-3 col-md-3 col-lg-2">04:19</div>
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-4">Front разработчик</div>
-                        <div class="col-md-12 col-lg-4  d-flex justify-content-lg-end justify-content-around font_s align-items-center mt-3 mt-lg-0">
-                            <div class="">
-                                <a href="#" class="text-success"><i class="fas fa-pencil-alt mr-2"></i>Изменить</a>
-                            </div>
-                            <div class="ml-lg-4">
-                                <a href="#" class="text-danger"><i class="fas fa-times mr-2"></i>Отменить</a>
+                                <a href="#" class="text-danger" @click="cancelTicket(i)"><i class="fas fa-times mr-2"></i>Отменить</a>
                             </div>
                         </div>
                     </div>
@@ -154,7 +139,34 @@
             goodMark: '15',
             badMark: '5',
           },
+        ],
+       ticketConsultations: [
+          {
+            date: '15/01/2019',
+            time: '14:05',
+            competencies: 'Front-end'
+          },
+          {
+            date: '13/01/2019',
+            time: '14:05',
+            competencies: 'ИЗО'
+          },
+          {
+            date: '11/01/2019',
+            time: '14:05',
+            competencies: 'Земледелие'
+          },
+          {
+            date: '06/01/2019',
+            time: '14:05',
+            competencies: 'Здоровье'
+          },
         ]
+      }
+    },
+    methods: {
+      cancelTicket(i){
+        this.ticketConsultations.splice(i, 1)
       }
     },
     mounted() {
@@ -167,60 +179,70 @@
   }
 </script>
 <style lang="scss">
-    $main_color: #0D84FB; //синиий
-    $main_grey: #A6A6A6; //серый
-    $danger: #FF3F3F; //красный
-    $success: #43C768; //зеленый
-    $secondary_grey: #373737;
-    $font_card-price: 30px; //34
-    $font_xxl: 28px;
-    $font_card-header: 22px;
-    $font_xl: 20px;
-    $font_l: 18px;
-    $font_m: 16px;
-    $font_s: 14px;
+  $main_color: #0D84FB; //синиий
+  $main_grey: #A6A6A6; //серый
+  $danger: #FF3F3F; //красный
+  $success: #43C768; //зеленый
+  $secondary_grey: #373737;
+  $font_card-price: 30px; //34
+  $font_xxl: 28px;
+  $font_card-header: 22px;
+  $font_xl: 20px;
+  $font_l: 18px;
+  $font_m: 16px;
+  $font_s: 14px;
 
-    .main_color {color: $main_color;}
-    .font_xl {font-size: $font_xl;}
-    .font_l {font-size: $font_l;}
-    .font_m {font-size: $font_m;}
-    .font_s {font-size: $font_s;}
-    .text-grey {color: $main_grey;}
-    body {
-        color: $secondary_grey;
-    }
-
-    .text-danger {
-      color: $danger!important;
+  .main_color {color: $main_color;}
+  .font_xl {font-size: $font_xl;}
+  .font_l {font-size: $font_l;}
+  .font_xxl {font-size: $font_xxl;}
+  .font_m {font-size: $font_m;}
+  .font_s {font-size: $font_s;}
+  .text-grey {color: $main_grey;}
+  body {
+      color: $secondary_grey;
   }
+
+  .text-danger {
+    color: $danger!important;
+  }
+
   a .text-success:hover {
       color: darken($danger, 10%)!important;
   }
+
   .text-success {
       color: $success!important;
   }
+
   a .text-success:hover {
       color: darken($success, 10%)!important;
   }
+
   .font_s {
     font-size: $font_s;
   }
+
   .font_l {
       font-size: $font_l;
   }
+
   .nav-link {
     color: $main_grey!important;
     padding-right: 25px !important;
     padding-left: 25px !important;
+
     i {
       padding-right: 10px;
     }
   }
+
   .nav-link.active {
     color: $main_color!important;
     background-color: #fff;
     border-color: #dee2e6 #dee2e6 #fff;
   }
+
   .user_info {
       padding-top: 38px;
       padding-bottom: 50px;

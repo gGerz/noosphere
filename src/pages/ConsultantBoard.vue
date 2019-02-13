@@ -1,6 +1,17 @@
 <template>
   <div>
-    <h2 class="my-4" >Доска консультаций</h2>
+    <h2 class="my-4 font_xxl" >Доска консультаций</h2>
+    <div class="row mb-4">
+      <div class="col-3">
+        <vue-select v-model="selected"  :options="options" placeholder="Компетенции" label="text" style="display: block">
+          <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
+            <div class="py-1">{{ option.text }}</div>
+          </template>
+        </vue-select>
+      </div>
+      <div class="col-3">
+      </div>
+    </div>
     <div class="row">
       <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 card-pad" v-for="(con, i) in cons">
         <div class="card">
@@ -66,10 +77,30 @@
 <script>
 
   import axios from 'axios'
+  import VueSelect from 'vue-select'
 
   export default {
+    components: {
+      VueSelect
+    },
     data() {
       return {
+        options: [
+          { value: 1, text: 'One' },
+          { value: 1, text: 'One' },
+          { value: 1, text: 'One' },
+          { value: 1, text: 'One' },
+          { value: 1, text: 'One' },
+          { value: 1, text: 'One' },
+          { value: 2, text: 'Two' },
+          { value: 2, text: 'Two' },
+          { value: 2, text: 'Two' },
+          { value: 2, text: 'Two' },
+          { value: 2, text: 'Two' },
+          { value: 2, text: 'Two' },
+          { value: 2, text: 'Two' },
+        ],
+        selected: '',
         cons: [
           {
             title: 'Учу рисовать картины маслом',
@@ -154,6 +185,48 @@
               {title: 'Тег'},
               {title: 'Тег'},
             ]
+          },
+          {
+            title: 'Название',
+            compition: 'Компетенция',
+            author: 'Имя',
+            raiting: '150',
+            date: '30/01/2019',
+            time: '13:00 - 14:00',
+            price: '150',
+            tags: [
+              {title: 'Тег'},
+              {title: 'Тег'},
+              {title: 'Тег'},
+            ]
+          },
+          {
+            title: 'Название',
+            compition: 'Компетенция',
+            author: 'Имя',
+            raiting: '150',
+            date: '30/01/2019',
+            time: '13:00 - 14:00',
+            price: '150',
+            tags: [
+              {title: 'Тег'},
+              {title: 'Тег'},
+              {title: 'Тег'},
+            ]
+          },
+          {
+            title: 'Название',
+            compition: 'Компетенция',
+            author: 'Имя',
+            raiting: '150',
+            date: '30/01/2019',
+            time: '13:00 - 14:00',
+            price: '150',
+            tags: [
+              {title: 'Тег'},
+              {title: 'Тег'},
+              {title: 'Тег'},
+            ]
           }
         ],
         photos: []
@@ -180,6 +253,7 @@
   $main_grey: #A6A6A6; //серый
   $danger: #FF3F3F; //красный
   $success: #43C768; //зеленый
+  $white: #FFFFFF; // Белый
   $secondary_grey: #373737;
   $font_card-price: 30px; //34
   $font_xxl: 28px;
@@ -189,9 +263,6 @@
   $font_m: 16px;
   $font_s: 14px;
 
-  body {
-    color: $secondary_grey;
-  }
   .main_color {color: $main_color;}
   .font_xl {font-size: $font_xl;}
   .font_l {font-size: $font_l;}
@@ -200,13 +271,20 @@
   .text-grey {
     color: $main_grey;
   }
+
+  body {
+    color: $secondary_grey;
+  }
+
   .card-pad {
     padding-right: 12px!important;
     padding-left: 12px!important;
     padding-bottom: 24px!important;
   }
+
   .tag {
-    background: lighten($main_grey,25%);
+    background-color: #ECECEC;
+    color: $main_grey;
     position: relative;
     margin-left: 11px;
     margin-right: 11px;
@@ -217,20 +295,14 @@
     padding-right: .5rem!important;
     margin-bottom: 7px;
     transition: .1s;
-    &:hover {
-      background: lighten($main_grey,20%);
-      transition: .1s;
-      &:before{
-        border-right: 12px solid lighten($main_grey,20%);
-      }
-    }
+
     &:before{
       transition: .1s;
       content: '';
       position: absolute;
       margin-left: -27px;
       border: 12px solid transparent;
-      border-right: 12px solid lighten($main_grey,25%);
+      border-right: 12px solid #ECECEC;
     }
   }
 
@@ -258,6 +330,44 @@
 
   .btn-buy {
     max-height: 42px;
+  }
+
+  /*Настройка vue-select*/
+  .clear, .dropdown-toggle::after{
+    display: none;
+  }
+  .dropdown-menu li{
+    background-color: $white;
+
+    :active, :focus, :hover, :target, :visited{
+      color: $main_color!important;
+      background-color: $white!important;
+    }
+  }
+
+  /*Настройка скроллбара для селектов*/
+
+  .dropdown-menu{
+    overflow-y: scroll!important;
+    max-height: 200px!important;
+  }
+
+  .dropdown-menu::-webkit-scrollbar-track {
+    -webkit-box-shadow: none;
+    background-color: $white;
+
+  }
+
+  .dropdown-menu::-webkit-scrollbar {
+    width: 4px;
+    background-color: $white;
+  }
+
+  .dropdown-menu::-webkit-scrollbar-thumb {
+    background-color: $main_color;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
   }
 </style>
 
