@@ -2,6 +2,7 @@
   <div id="app">
     <div class="container">
       <Header />
+      <loader v-if="this.$store.state.loader" />
       <Content />
     </div>
   </div>
@@ -10,12 +11,14 @@
 <script>
 import Header from './components/Layout/Header.vue'
 import Content from './components/Layout/Content.vue'
+import Loader from './components/Layout/Loader.vue'
 
 export default {
   name: 'app',
   components: {
     Header,
-    Content
+    Content,
+    Loader
   },
   data () {
     return {

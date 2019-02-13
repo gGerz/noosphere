@@ -233,12 +233,14 @@
       }
     },
     mounted () {
+      this.$store.state.loader = true
       axios({
         method: 'get',
         url: `https://jsonplaceholder.typicode.com/photos`
       })
         .then((response) => {
           this.photos = response.data
+          this.$store.state.loader = false
           console.log(this.photos)
         })
         .catch((error) => {
