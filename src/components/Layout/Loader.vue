@@ -1,6 +1,6 @@
 <template>
   <div class="loader">
-    <img src="../../assets/img/logo.png" width="230" class="d-inline-block align-top" alt="">
+    <img src="../../assets/img/load2.png" width="230" class="d-inline-block align-top rot" alt="">
   </div>
 </template>
 <script>
@@ -11,6 +11,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 400px;
+    margin-top: 20%;
+  }
+  img.rot {
+    animation: 1s linear 0s normal none infinite running rot;
+    -webkit-animation: 1s linear 0s normal none infinite running rot;
+    width: 100px;
+  }
+  @keyframes rot {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes rot {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 </style>

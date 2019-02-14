@@ -53,5 +53,6 @@ export default {
   #app{
     background-color: $background-color;
     font-family: Roboto;
+    min-height: 1080px;
   }
 </style>
