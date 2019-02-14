@@ -78,7 +78,6 @@
 
   import axios from 'axios'
   import VueSelect from 'vue-select'
-
   export default {
     components: {
       VueSelect

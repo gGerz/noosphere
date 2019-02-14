@@ -1,6 +1,6 @@
 <template>
   <div class="loader">
-    <img src="../../assets/img/load2.png" width="230" class="d-inline-block align-top rot" alt="">
+    <img src="../../assets/img/load.png" width="230" class="d-inline-block align-top rot" alt="">
   </div>
 </template>
 <script>
