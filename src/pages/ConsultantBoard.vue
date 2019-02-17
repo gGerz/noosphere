@@ -284,6 +284,7 @@
   }
 
   .tag {
+    cursor: pointer;
     background-color: #ECECEC;
     color: $main_grey;
     position: relative;

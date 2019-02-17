@@ -47,11 +47,13 @@ export default {
   $background-color: #f8f8f8;
 
   html{
-    overflow: scroll; //добавление полосы прокрутки на всех страницах (чтобы меню не прыгало)
-  }
-
-  #app{
     background-color: $background-color;
+  }
+  body{
+    padding-right: 14px;
+    overflow-y: scroll; overflow-x: auto;
+  }
+  #app{
     font-family: Roboto;
     min-height: 1080px;
   }
