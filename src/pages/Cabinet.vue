@@ -94,6 +94,7 @@
                     <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
                       <div class="py-1">{{ option.text }}</div>
                     </template>
+                    <span slot="no-options">Ничего не найдено</span>
                   </vue-select>
                 </div>
               </div>

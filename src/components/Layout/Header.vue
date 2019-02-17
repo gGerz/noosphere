@@ -20,13 +20,29 @@
             <router-link class="nav-link" to="/about">О сервисе</router-link>
           </li>
         </ul>
-        <router-link class="btn btn-outline-primary m-2 my-sm-0" to="/cabinet">Войти</router-link>
-
-        <router-link class="btn btn-outline-primary my-2 my-sm-0" to="/">Регистрация</router-link>
+        <router-link class="btn btn-outline-primary m-2 my-sm-0" data-toggle="modal" data-target=".sign_in_modal" to="/">Войти</router-link>
+        <auth />
+        <router-link class="btn btn-outline-primary my-2 my-sm-0" data-toggle="modal" data-target=".sign_up_modal" to="/">Регистрация</router-link>
+        <reg />
       </div>
     </nav>
   </div>
 </template>
+<script>
+  import Auth from '../Modals/Auth.vue'
+  import Reg from '../Modals/Reg.vue'
+  export default {
+    components: {
+      Auth,
+      Reg
+    },
+    data(){
+      return{
+
+      }
+    }
+  }
+</script>
 <style lang="scss">
   .menu{
     padding-top: 20px;
