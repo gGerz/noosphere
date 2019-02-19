@@ -8,32 +8,34 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body py-0 signin-page">
-          <div class="wrapper">
-            <div class="form-field">
-              <input type="email" placeholder="Email" required="required" v-model="mail">
+        <div class="modal-body signin">
+          <div class="py-5 px-5">
+            <div class="form-group">
+              <input type="email" class="form-control inputText" required="required" aria-describedby="emailHelp" placeholder="Email"  v-model="mail">
             </div>
-            <div class="form-field">
-              <input type="password" placeholder="Пароль" required="required" v-model="password">
+            <div class="form-group">
+              <input type="password" class="form-control inputText" required="required" placeholder="Пароль" v-model="password">
             </div>
-            <div class="form-field">
-              <input type="password" placeholder="Подтвердите пароль" required="required" v-model="resetPassword">
+            <div class="form-group pb-4">
+              <input type="password" class="form-control inputText" required="required" placeholder="Подтвердите пароль" v-model="resetPassword">
             </div>
-            <div class="form-field">
-              <label class="terms">
+
+            <div class="form-field pt-2">
+              <label class="text-center d-inline-block">
                 <input type="checkbox" name="terms">
                 Я принимаю условия <a href="#">Пользовательского соглашения</a>.
               </label>
             </div>
-            <div class="form-action">
-              <button class="btn btn-success" @click="login">Войти</button>
+            <div class="pt-3">
+              <button type="submit" class="btn btn-primary btn-shadow" @click="login">Зарегистрировать</button>
             </div>
-            <div class="form-bottom">
+            <div class="text-center pt-3">
               Уже есть аккаунт?
               <a href="#" data-toggle="modal" data-target=".sign_in_modal" data-dismiss="modal">Войти</a>
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -70,3 +72,26 @@
     }
   }
 </script>
+<style lang="scss" scoped>
+  .inputText {
+    height: 52px;
+  }
+  .btn-shadow {
+    width: 100%;
+    border: 0;
+    font-weight: 600;
+    color: #fff;
+    display: inline-block;
+    box-shadow: rgba(23,43,99,.24) 0 7px 28px;
+    padding: 12px 23px;
+    text-shadow: 1px 1px rgba(0,0,0,.09);
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    -webkit-transition: all .2s;
+    -moz-transition: all .2s;
+    -ms-transition: all .2s;
+    -o-transition: all .2s;
+    transition: all .2s;
+  }
+</style>
