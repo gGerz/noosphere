@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="my-4 font_xxl" >Доска консультаций</h2>
+    <h2 class="my-4 font_xxl" >Доска консультацийs</h2>
     <div class="row mb-4">
       <div class="col-3">
         <vue-select v-model="selected"  :options="options" placeholder="Компетенции" label="text" style="display: block">
@@ -18,7 +18,7 @@
         <div class="card">
           <div class="card-body cons-body">
             <div>
-              <p class="mb-0 font_xl">{{con.title}}</p>
+              <p class="mb-0 font_xl">{{con.sc_title}}</p>
               <p class="mr-auto mb-0 text-grey font_l" >{{con.compition}}</p>
             </div>
             <div>
@@ -29,7 +29,7 @@
                   <img class="img_master2" :src="photos[i].url" >
                 </div>
                 <div>
-                  <span class="font_m">{{con.author}}</span>
+                  <span class="font_m">{{con.sc_user_id}}</span>
                   <div class="h6 m-0">
                     <span title="Рейтинг" class="font_m">
                       <i class="fas fa-star mr-1 text-grey"></i>
@@ -44,7 +44,7 @@
                 <span title="Дата">
                   <i class="fas fa-calendar-week mr-1 text-grey"></i>
                   <span class="">
-                    {{con.date}}
+                    {{con.sc_date}}
                   </span>
                 </span>
               </div>
@@ -52,7 +52,7 @@
                 <span title="Время">
                   <i class="far fa-clock mr-1 text-grey"></i>
                   <span class="">
-                    {{con.time}}
+                    {{con.sc_begin_time}}{{con.sc_end_time}}
                   </span>
                 </span>
               </div>
@@ -63,7 +63,7 @@
             <div class="d-flex">
               <div class="my-auto ">
                 <span class="price">
-                  {{con.price}}
+                  {{con.sc_price}}
                 </span>
                 <span class="main_color font_xl">руб</span>
               </div>
@@ -100,134 +100,7 @@
           { value: 4, text: 'four' },
         ],
         selected: '',
-        cons: [
-          {
-            title: 'Учу рисовать картины маслом',
-            compition: 'Искусство',
-            author: 'Пикассо',
-            raiting: '150',
-            date: '31/01/2019',
-            time: '13:00 - 14:00',
-            price: '1 450',
-            tags: [
-              {title: 'Рисование'},
-              {title: 'Масло'},
-              {title: 'Изобразительное искусство'},
-            ]
-          },
-          {
-            title: 'Учу верстать',
-            compition: 'Front-end',
-            author: 'Фронтовик Ендович',
-            raiting: '1337',
-            date: '31/01/2019',
-            time: '13:00 - 14:00',
-            price: '150',
-            tags: [
-              {title: 'программирование'},
-              {title: 'дизайн'},
-              {title: 'фреймворк'},
-            ]
-          },
-          {
-            title: 'Название',
-            compition: 'Компетенция3',
-            author: 'Имя',
-            raiting: '150',
-            date: '31/01/2019',
-            time: '13:00 - 14:00',
-            price: '150',
-            tags: [
-              {title: 'Тег'},
-              {title: 'Тег'},
-              {title: 'Тег'},
-            ]
-          },
-          {
-            title: 'Название',
-            compition: 'Компетенция1',
-            author: 'Имя',
-            raiting: '150',
-            date: '31/01/2019',
-            time: '13:00 - 14:00',
-            price: '150',
-            tags: [
-              {title: 'Тег'},
-              {title: 'Тег'},
-              {title: 'Тег'},
-            ]
-          },
-          {
-            title: 'Название',
-            compition: 'Компетенция2',
-            author: 'Имя',
-            raiting: '150',
-            date: '29/01/2019',
-            time: '13:00 - 14:00',
-            price: '150',
-            tags: [
-              {title: 'Тег'},
-              {title: 'Тег'},
-              {title: 'Тег'},
-            ]
-          },
-          {
-            title: 'Название',
-            compition: 'Компетенция',
-            author: 'Имя',
-            raiting: '150',
-            date: '30/01/2019',
-            time: '13:00 - 14:00',
-            price: '150',
-            tags: [
-              {title: 'Тег'},
-              {title: 'Тег'},
-              {title: 'Тег'},
-            ]
-          },
-          {
-            title: 'Название',
-            compition: 'Компетенция',
-            author: 'Имя',
-            raiting: '150',
-            date: '30/01/2019',
-            time: '13:00 - 14:00',
-            price: '150',
-            tags: [
-              {title: 'Тег'},
-              {title: 'Тег'},
-              {title: 'Тег'},
-            ]
-          },
-          {
-            title: 'Название',
-            compition: 'Компетенция',
-            author: 'Имя',
-            raiting: '150',
-            date: '30/01/2019',
-            time: '13:00 - 14:00',
-            price: '150',
-            tags: [
-              {title: 'Тег'},
-              {title: 'Тег'},
-              {title: 'Тег'},
-            ]
-          },
-          {
-            title: 'Название',
-            compition: 'Компетенция',
-            author: 'Имя',
-            raiting: '150',
-            date: '30/01/2019',
-            time: '13:00 - 14:00',
-            price: '150',
-            tags: [
-              {title: 'Тег'},
-              {title: 'Тег'},
-              {title: 'Тег'},
-            ]
-          }
-        ],
+        cons: [],
         photos: []
       }
     },
@@ -241,6 +114,19 @@
           this.photos = response.data
           this.$store.state.loader = false
           console.log(this.photos)
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+      axios({
+        method: 'get',
+        url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings`
+      })
+        .then((response) => {
+          this.cons = response.data
+          this.$store.state.loader = false
+          console.log('kek')
+          console.log(this.cons)
         })
         .catch((error) => {
           console.error(error)
