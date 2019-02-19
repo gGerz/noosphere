@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="my-4 font_xxl" >Доска консультацийs</h2>
+    <h2 class="my-4 font_xxl" >Доска консультаций</h2>
     <div class="row mb-4">
       <div class="col-3">
         <vue-select v-model="selected"  :options="options" placeholder="Компетенции" label="text" style="display: block">

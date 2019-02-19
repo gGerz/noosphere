@@ -44,6 +44,9 @@
   }
 </script>
 <style lang="scss">
+  .menu{
+    padding-top: 25px;
+  }
   .nav-link {
     padding-right: .9rem!important;
     padding-left: .9rem!important;

@@ -46,14 +46,8 @@ export default {
   $font_s: 14px;
   $background-color: #f8f8f8;
 
-  html{
-    background-color: $background-color;
-  }
-  body{
-    padding-right: 14px;
-    overflow-y: scroll; overflow-x: auto;
-  }
   #app{
+    background-color: $background-color;
     font-family: Roboto;
     min-height: 1080px;
   }
