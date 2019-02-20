@@ -8,7 +8,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body signin py-5 px-5 ">
+                <div class="modal-body signin py-5 px-2 px-sm-5">
                     <div class="row">
                         <div class="col-lg-7 col-12">
                             <div class="form-group">

@@ -29,13 +29,20 @@
                   <img class="img_master2" :src="photos[i].url" >
                 </div>
                 <div>
-                  <span class="font_m">{{con.sc_user_id}}</span>
-                  <div class="h6 m-0">
-                    <span title="Рейтинг" class="font_m">
-                      <i class="fas fa-star mr-1 text-grey"></i>
-                      {{con.raiting}}
-                    </span>
+                  <div class="font_m">{{con.sc_user_id}}</div>
+                  <div class="m-0" title="Рейтинг font_m">
+                    <div class="d-flex">
+                      <div class="mx-2">
+                        <i class="far fa-thumbs-up"></i>
+                        {{con.raiting}}
+                      </div>
+                      <div class="mx-2">
+                        <i class="far fa-thumbs-down"></i>
+                        {{con.raiting}}
+                      </div>
+                    </div>
                   </div>
+
                 </div>
               </div>
             </div>

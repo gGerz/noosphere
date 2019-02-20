@@ -1,29 +1,19 @@
 <template>
-    <div class="modal fade req_cons_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal arbitration_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel1">Заявка на консультацию</h5>
+                    <h5 class="modal-title" id="exampleModalLabel1">Арбитраж</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body signin px-2 px-sm-5">
+                <div class="modal-body signin py-5 px-2 px-sm-5">
                     <div class="row">
                         <div class="col-lg-7 col-12">
                             <div class="form-group">
-                                <label class="m-0">Название заявки:</label>
+                                <label class="m-0">Название консультации:</label>
                                 <input type="text" class="form-control inputText" required="required" aria-describedby="emailHelp" placeholder="">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleSelect1">Компетенция:</label>
-                                <select class="form-control" id="exampleSelect1">
-                                    <option>Frontend</option>
-                                    <option>Backend</option>
-                                    <option>Аналитик</option>
-                                    <option>Менеджер</option>
-                                    <option>Тестировщик</option>
-                                </select>
                             </div>
                             <div class="form-group ">
                                 <label class="m-0">Дата:</label>
@@ -34,13 +24,14 @@
                                 <input type="time" class="form-control inputText" required="required" placeholder="">
                             </div>
                             <div class="form-group">
-                                <label class="m-0">Цена: [возможно цену нужно убрать]</label>
+                                <label class="m-0">Цена:</label>
                                 <input type="text" class="form-control inputText" required="required" placeholder="">
                             </div>
+
                         </div>
                         <div class="col-lg-5 col-12">
                             <div class="form-group">
-                                <label class="m-0">Что я хочу узнать:</label>
+                                <label class="m-0">Описание консультации:</label>
                                 <textarea class="form-control" rows="10"></textarea>
                             </div>
                         </div>
