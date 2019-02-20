@@ -132,7 +132,6 @@
         .then((response) => {
           this.cons = response.data
           this.$store.state.loader = false
-          console.log('kek')
           console.log(this.cons)
         })
         .catch((error) => {

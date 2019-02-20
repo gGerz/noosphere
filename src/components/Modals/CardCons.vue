@@ -2,16 +2,14 @@
     <div class="modal fade card_cons_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
-
                 <div class="modal-body py-5 px-2 px-sm-5">
-
                     <div class="">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                             <div class="pb-2">
-                                <p class="mb-0 font_xl">Небольшой гайд по верстке модалок</p>
-                                <p class="mr-auto mb-0 text-grey font_l" >Web-дизайн</p>
+                                <p class="mb-0 font_xl">{{selectedCard.title}}</p>
+                                <p class="mr-auto mb-0 text-grey font_l" >{{selectedCard.compition}}</p>
                             </div>
                             <div class="d-flex align-items-center py-3">
                                 <div>
@@ -67,7 +65,7 @@
                             <div class="d-flex pt-3">
                                 <div class="my-auto ">
                                     <span class="price">
-                                      3 000
+                                      {{selectedCard.price}}
                                     </span>
                                     <span class="main_color font_xl">руб</span>
                                 </div>
@@ -79,6 +77,16 @@
         </div>
     </div>
 </template>
+<script>
+  export default {
+    props: ['selectedIndex', 'selectedCard'],
+    data(){
+      return{
+
+      }
+    }
+  }
+</script>
 <style lang="scss" scoped>
     .inputText {
     }

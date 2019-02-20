@@ -2,7 +2,7 @@
   <div>
     <h2 class="my-4 font_xxl" >Доска заявок</h2>
     <div class="row">
-      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 card-pad" v-for="(con, i) in cons">
+      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 card-pad" @click="selectIndex(i)" data-toggle="modal" data-target=".card_cons_modal" v-for="(con, i) in cons">
         <div class="card">
           <div class="card-body req-body">
             <div>
@@ -43,13 +43,23 @@
         </div>
       </div>
     </div>
-    <div></div>
+    <card-cons :selectedIndex="selectedIndex"
+               :selectedCard="selectedCard"
+    />
   </div>
 </template>
 <script>
+
+  import CardCons from '../components/Modals/CardCons.vue'
+
   export default {
+    components: {
+      CardCons
+    },
     data() {
       return {
+        selectedIndex: '',
+        selectedCard: '',
         cons: [
           {
             title: 'Научите рисовать',
@@ -138,6 +148,12 @@
         ],
       }
     },
+    methods: {
+      selectIndex(i){
+        this.selectedIndex = i
+        this.selectedCard = this.cons[i]
+      }
+    }
 
 
   }
