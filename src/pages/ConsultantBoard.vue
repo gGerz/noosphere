@@ -152,7 +152,7 @@
     },
     filters: {
       rounded(value){
-        return value.substr(2)
+        return parseInt(value * 100) / 100
       }
     }
   }
