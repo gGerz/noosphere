@@ -3,75 +3,67 @@
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-body py-5 px-2 px-sm-5">
-                    <div class="">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <div class="pb-2">
-                                <p class="mb-0 font_xl">{{selectedCard.title}}</p>
-                                <p class="mr-auto mb-0 text-grey font_l" >{{selectedCard.compition}}</p>
-                            </div>
-                            <div class="d-flex align-items-center py-3">
-                                <div>
-                                    <img class="img_master2" src="../../assets/img/ava.jpg" >
-
-                                    <!-- Пока что будет выдавать ошибку в консоль, тк фотки подгружаются после построения карточек-->
-                                    <!--<img class="img_master2" :src="photos[i].url" > -->
-                                </div>
-                                <div>
-                                    <div class="font_m">Владислав Камнев</div>
-                                    <div class="m-0" title="Рейтинг font_m">
-                                        <div class="d-flex">
-                                            <div class="mx-2">
-                                                <i class="far fa-thumbs-up"></i>
-                                                6
-                                            </div>
-                                            <div class="mx-2">
-                                                <i class="far fa-thumbs-down"></i>
-                                                9
-                                            </div>
-                                        </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="pb-2">
+                        <p class="mb-0 font_xl">{{selectedCard.title}}</p>
+                        <p class="mr-auto mb-0 text-grey font_l" >{{selectedCard.compition}}</p>
+                    </div>
+                    <div class="d-flex align-items-center py-3">
+                        <div>
+                            <img class="img_master2" src="../../assets/img/ava.jpg" >
+                            <!-- Пока что будет выдавать ошибку в консоль, тк фотки подгружаются после построения карточек-->
+                            <!--<img class="img_master2" :src="photos[i].url" > -->
+                        </div>
+                        <div>
+                            <div class="font_m">{{selectedCard.author}}</div>
+                            <div class="m-0" title="Рейтинг font_m">
+                                <div class="d-flex">
+                                    <div class="mx-2">
+                                        <i class="far fa-thumbs-up"></i>
+                                        {{selectedCard.raiting}}
+                                    </div>
+                                    <div class="mx-2">
+                                        <i class="far fa-thumbs-down"></i>
+                                        {{selectedCard.raiting}}
                                     </div>
                                 </div>
                             </div>
-                            <div class="d-flex py-2">
-                                <div>
-                                    <span title="Дата">
-                                      <i class="fas fa-calendar-week mr-1 text-grey"></i>
-                                      <span class="">
-                                        17.04.19
-                                      </span>
-                                    </span>
-                                </div>
-                                <div class="ml-4">
-                                    <span title="Время">
-                                      <i class="far fa-clock mr-1 text-grey"></i>
-                                      <span class="">
-                                        12:00 - 14:00
-                                      </span>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="py-2">
-                                <div class="tag px-2 font_s">адаптация</div>
-                                <div class="tag px-2 font_s">модалки</div>
-                                <div class="tag px-2 font_s">бутстрап</div>
-                            </div>
-
-                            <div class="py-2">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aperiam consectetur culpa dignissimos, eius ex excepturi exercitationem, explicabo molestiae necessitatibus nihil nisi nostrum ratione voluptatem voluptatum? At facilis fugit harum!
-                            </div>
-
-                            <div class="d-flex pt-3">
-                                <div class="my-auto ">
+                        </div>
+                    </div>
+                    <div class="d-flex py-2">
+                        <div><span title="Дата">
+                            <i class="fas fa-calendar-week mr-1 text-grey"></i>
+                            <span class="">
+                                {{selectedCard.date}}
+                            </span>
+                        </span>
+                        </div>
+                        <div class="ml-4">
+                            <span title="Время">
+                                <i class="far fa-clock mr-1 text-grey"></i>
+                                <span class="">
+                                    {{selectedCard.time}}
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="py-2">
+                        <div class="tag px-2 font_s" v-for="tag in selectedCard.tags">{{tag.title}}</div>
+                    </div>
+                    <div class="py-2">
+                        {{selectedCard.about}}
+                    </div>
+                    <div class="d-flex pt-3">
+                        <div class="my-auto ">
                                     <span class="price">
                                       {{selectedCard.price}}
                                     </span>
-                                    <span class="main_color font_xl">руб</span>
-                                </div>
-                                <button class="btn btn-outline-primary btn-md ml-auto px-4 btn-buy font_l">Купить</button>
-                            </div>
+                            <span class="main_color font_xl">руб</span>
                         </div>
+                        <button class="btn btn-outline-primary btn-md ml-auto px-4 btn-buy font_l">Купить</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -145,7 +137,7 @@
     }
 
     .tag {
-        cursor: pointer;
+        /*cursor: pointer;*/
         background-color: #ECECEC;
         color: $main_grey;
         position: relative;
@@ -194,6 +186,5 @@
     .btn-buy {
         max-height: 42px;
     }
-
 
 </style>

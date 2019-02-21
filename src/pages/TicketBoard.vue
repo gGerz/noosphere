@@ -2,7 +2,7 @@
   <div>
     <h2 class="my-4 font_xxl" >Доска заявок</h2>
     <div class="row">
-      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 card-pad" @click="selectIndex(i)" data-toggle="modal" data-target=".card_cons_modal" v-for="(con, i) in cons">
+      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 card-pad" @click="selectIndex(i)" data-toggle="modal" data-target=".card_req_modal" v-for="(con, i) in cons">
         <div class="card">
           <div class="card-body req-body">
             <div>
@@ -43,17 +43,18 @@
         </div>
       </div>
     </div>
-    <card-cons :selectedIndex="selectedIndex"
-               :selectedCard="selectedCard"
-    />
+    <card-req :selectedIndex="selectedIndex"
+               :selectedCard="selectedCard" />
   </div>
 </template>
 <script>
 
   import CardCons from '../components/Modals/CardCons.vue'
+  import CardReq from "../components/Modals/CardReq";
 
   export default {
     components: {
+      CardReq,
       CardCons
     },
     data() {
@@ -73,7 +74,8 @@
               {title: 'Рисование'},
               {title: 'Масло'},
               {title: 'Изобразительное искусство'},
-            ]
+            ],
+            about: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aperiam consectetur culpa dignissimos, eius ex excepturi exercitationem, explicabo molestiae necessitatibus nihil nisi nostrum ratione voluptatem voluptatum? At facilis fugit harum!"
           },
           {
             title: 'Научите верстать',
@@ -87,13 +89,14 @@
               {title: 'программирование'},
               {title: 'дизайн'},
               {title: 'фреймворк'},
-            ]
+            ],
+            about: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aperiam consectetur culpa dignissimos, eius ex excepturi exercitationem, explicabo molestiae necessitatibus nihil nisi nostrum ratione voluptatem voluptatum? At facilis fugit harum!"
           },
           {
             title: 'Название',
             compition: 'Компетенция3',
             author: 'Имя',
-            raiting: '150',
+            raiting: '99',
             date: '31/01/2019',
             time: '13:00 - 14:00',
             price: '150',
@@ -101,7 +104,8 @@
               {title: 'Тег'},
               {title: 'Тег'},
               {title: 'Тег'},
-            ]
+            ],
+            about: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aperiam consectetur culpa dignissimos, eius ex excepturi exercitationem, explicabo molestiae necessitatibus nihil nisi nostrum ratione voluptatem voluptatum? At facilis fugit harum!"
           },
           {
             title: 'Название',
@@ -115,7 +119,8 @@
               {title: 'Тег'},
               {title: 'Тег'},
               {title: 'Тег'},
-            ]
+            ],
+            about: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aperiam consectetur culpa dignissimos, eius ex excepturi exercitationem, explicabo molestiae necessitatibus nihil nisi nostrum ratione voluptatem voluptatum? At facilis fugit harum!"
           },
           {
             title: 'Название',
@@ -129,7 +134,8 @@
               {title: 'Тег'},
               {title: 'Тег'},
               {title: 'Тег'},
-            ]
+            ],
+            about: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aperiam consectetur culpa dignissimos, eius ex excepturi exercitationem, explicabo molestiae necessitatibus nihil nisi nostrum ratione voluptatem voluptatum? At facilis fugit harum!"
           },
           {
             title: 'Название',
@@ -143,14 +149,14 @@
               {title: 'Тег'},
               {title: 'Тег'},
               {title: 'Тег'},
-            ]
+            ],
+            about: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aperiam consectetur culpa dignissimos, eius ex excepturi exercitationem, explicabo molestiae necessitatibus nihil nisi nostrum ratione voluptatem voluptatum? At facilis fugit harum!"
           }
         ],
       }
     },
     methods: {
       selectIndex(i){
-        this.selectedIndex = i
         this.selectedCard = this.cons[i]
       }
     }

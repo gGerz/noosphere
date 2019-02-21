@@ -2,71 +2,73 @@
     <div class="modal fade card_req_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
-
                 <div class="modal-body py-5 px-2 px-sm-5">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="pb-2">
+                        <p class="mb-0 font_xl">{{selectedCard.title}}</p>
+                        <p class="mr-auto mb-0 text-grey font_l" >{{selectedCard.compition}}</p>
+                    </div>
+                    <div class="d-flex align-items-center py-3">
+                        <div>
+                            <img class="img_master2" src="../../assets/img/ava.jpg" >
+                            <!-- Пока что будет выдавать ошибку в консоль, тк фотки подгружаются после построения карточек-->
+                            <!--<img class="img_master2" :src="photos[i].url" > -->
+                        </div>
+                        <div>
+                            <div class="font_m">{{selectedCard.author}}</div>
 
-                    <div class="">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <div class="pb-2">
-                            <p class="mb-0 font_xl">Научите верстать модалки умоляю</p>
-                            <p class="mr-auto mb-0 text-grey font_l" >Web-дизайн</p>
                         </div>
-                        <div class="d-flex align-items-center py-3">
-                            <div>
-                                <img class="img_master2" src="../../assets/img/ava.jpg" >
-
-                                <!-- Пока что будет выдавать ошибку в консоль, тк фотки подгружаются после построения карточек-->
-                                <!--<img class="img_master2" :src="photos[i].url" > -->
-                            </div>
-                            <div>
-                                <div class="font_m">Владислав Камнев</div>
-                            </div>
+                    </div>
+                    <div class="d-flex py-2">
+                        <div>
+                            <span title="Дата">
+                            <i class="fas fa-calendar-week mr-1 text-grey"></i>
+                            <span class="">
+                                {{selectedCard.date}}
+                            </span>
+                        </span>
                         </div>
-                        <div class="d-flex py-2">
-                            <div>
-                                    <span title="Дата">
-                                      <i class="fas fa-calendar-week mr-1 text-grey"></i>
-                                      <span class="">
-                                        17.04.19
-                                      </span>
-                                    </span>
-                            </div>
-                            <div class="ml-4">
-                                    <span title="Время">
-                                      <i class="far fa-clock mr-1 text-grey"></i>
-                                      <span class="">
-                                        12:00 - 14:00
-                                      </span>
-                                    </span>
-                            </div>
+                        <div class="ml-4">
+                            <span title="Время">
+                                <i class="far fa-clock mr-1 text-grey"></i>
+                                <span class="">
+                                    {{selectedCard.time}}
+                                </span>
+                            </span>
                         </div>
-                        <div class="py-2">
-                            <div class="tag px-2 font_s">адаптация</div>
-                            <div class="tag px-2 font_s">модалки</div>
-                            <div class="tag px-2 font_s">бутстрап</div>
-                        </div>
-
-                        <div class="py-2">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aperiam consectetur culpa dignissimos, eius ex excepturi exercitationem, explicabo molestiae necessitatibus nihil nisi nostrum ratione voluptatem voluptatum? At facilis fugit harum!
-                        </div>
-
-                        <div class="d-flex pt-3">
-                            <div class="my-auto ">
+                    </div>
+                    <div class="py-2">
+                        <div class="tag px-2 font_s" v-for="tag in selectedCard.tags">{{tag.title}}</div>
+                    </div>
+                    <div class="py-2">
+                        {{selectedCard.about}}
+                    </div>
+                    <div class="d-flex pt-3">
+                        <div class="my-auto ">
                                     <span class="price">
-                                      3 000
+                                      {{selectedCard.price}}
                                     </span>
-                                <span class="main_color font_xl">руб</span>
-                            </div>
-                            <button class="btn btn-outline-primary btn-md ml-auto px-4 btn-buy font_l">Ответить</button>
+                            <span class="main_color font_xl">руб</span>
                         </div>
+                        <button class="btn btn-outline-primary btn-md ml-auto px-4 btn-buy font_l">Ответить</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
+<script>
+    export default {
+        props: ['selectedIndex', 'selectedCard'],
+        data(){
+            return{
+
+            }
+        }
+    }
+</script>
 <style lang="scss" scoped>
     .inputText {
     }
@@ -125,7 +127,7 @@
     }
 
     .tag {
-        cursor: pointer;
+        /*cursor: pointer;*/
         background-color: #ECECEC;
         color: $main_grey;
         position: relative;
@@ -174,6 +176,5 @@
     .btn-buy {
         max-height: 42px;
     }
-
 
 </style>

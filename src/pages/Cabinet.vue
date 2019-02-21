@@ -4,16 +4,16 @@
       <h2 class="my-4 font_xxl" >Личный кабинет</h2>
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#general" role="tab" aria-controls="home" aria-selected="true"><i class="fas fa-user-graduate"></i>Общее</a>
+          <a class="nav-link nav-link-cabinet active" id="home-tab" data-toggle="tab" href="#general" role="tab" aria-controls="home" aria-selected="true"><i class="fas fa-user-graduate"></i>Общее</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#schedule" role="tab" aria-controls="profile" aria-selected="false"><i class="far fa-calendar-alt"></i>Расписание консультаций</a>
+          <a class="nav-link nav-link-cabinet" id="profile-tab" data-toggle="tab" href="#schedule" role="tab" aria-controls="profile" aria-selected="false"><i class="far fa-calendar-alt"></i>Расписание консультаций</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="messages-tab" data-toggle="tab" href="#tickets" role="tab" aria-controls="messages" aria-selected="false"><i class="far fa-list-alt"></i>Мои заявки</a>
+          <a class="nav-link nav-link-cabinet" id="messages-tab" data-toggle="tab" href="#tickets" role="tab" aria-controls="messages" aria-selected="false"><i class="far fa-list-alt"></i>Мои заявки</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" id="settings-tab" data-toggle="tab" href="#archive" role="tab" aria-controls="settings" aria-selected="false"><i class="far fa-calendar-times"></i>Архив занятий</a>
+          <a class="nav-link nav-link-cabinet" id="settings-tab" data-toggle="tab" href="#archive" role="tab" aria-controls="settings" aria-selected="false"><i class="far fa-calendar-times"></i>Архив занятий</a>
         </li>
         <div class="ml-auto"><i class="far fa-plus-square mr-2"></i><span class="dashed2">Создать карточку консультации</span></div>
       </ul>
@@ -82,7 +82,40 @@
       </div>
       <!-- ВКЛАДКА РАСПИСАНИЕ -->
       <div class="tab-pane" id="schedule">
-        <div class="cab_card">132</div>
+          <div class="cab_card">
+              <div class="card-body-main">
+                  <div class="row mb-4">
+                      <div class="col-3">
+                          <vue-select v-model="selected"  :options="options" placeholder="Компетенции" label="text" style="display: block">
+                              <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
+                                  <div class="py-1">{{ option.text }}</div>
+                              </template>
+                              <span slot="no-options">Ничего не найдено</span>
+                          </vue-select>
+                      </div>
+                  </div>
+                  <div class="row req-table font_s text-grey">
+                      <div class="col-sm-3 col-md-3 col-lg-2">Дата</div>
+                      <div class="col-sm-3 col-md-3 col-lg-2">Время</div>
+                      <div class="col-sm-6 col-md-6 col-lg-4">Компетенция</div>
+                  </div>
+                  <div class="card card-req mb-3" v-for="(item, i) in ticketConsultations">
+                      <div class="row card-body font_l  d-flex">
+                          <div class="col-6 col-sm-3 col-md-3 col-lg-2">{{item.date}}</div>
+                          <div class="col-6 col-sm-3 col-md-3 col-lg-2">{{item.time}}</div>
+                          <div class="col-12 col-sm-6 col-md-6 col-lg-4">{{item.competencies}}</div>
+                          <div class="col-md-12 col-lg-4  d-flex justify-content-lg-end justify-content-around font_s align-items-center mt-3 mt-lg-0">
+                              <div class="">
+                                  <a href="#" class="text-success"><i class="fas fa-pencil-alt mr-2"></i>Изменить</a>
+                              </div>
+                              <div class="ml-lg-4">
+                                  <a href="#" class="text-danger" @click="cancelTicket(i)"><i class="fas fa-times mr-2"></i>Отменить</a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
       </div>
       <!-- ВКЛАДКА ЗАЯВКИ -->
       <div class="tab-pane " id="tickets">
@@ -98,21 +131,23 @@
                   </vue-select>
                 </div>
               </div>
-                <div class="row req-table font_s text-grey">
-                    <div class="col-sm-3 col-md-3 col-lg-2">Дата</div>
-                    <div class="col-sm-3 col-md-3 col-lg-2">Время</div>
-                    <div class="col-sm-6 col-md-6 col-lg-4">Компетенция</div>
-                </div>
                 <div class="card card-req mb-3" v-for="(item, i) in ticketConsultations">
-                    <div class="row card-body font_l  d-flex">
-                        <div class="col-6 col-sm-3 col-md-3 col-lg-2">{{item.date}}</div>
-                        <div class="col-6 col-sm-3 col-md-3 col-lg-2">{{item.time}}</div>
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-4">{{item.competencies}}</div>
-                        <div class="col-md-12 col-lg-4  d-flex justify-content-lg-end justify-content-around font_s align-items-center mt-3 mt-lg-0">
+                    <div class="row card-body font_m d-flex align-items-center">
+                        <div class="col-12 col-lg-6 d-flex justify-content-lg-start justify-content-around font_l">{{item.competencies}}</div>
+                        <div class="col-12 col-lg-3 d-flex d-lg-block text-center d-xl-flex justify-content-lg-end justify-content-around pl-0 mt-2 mt-lg-0">
+                            <div class="mr-xl-2">
+                                <i class="fas fa-calendar-week mr-1 text-grey"></i>{{item.date}}
+                            </div>
+                            <div>
+                                <i class="far fa-clock mr-1 text-grey"></i>{{item.time}}
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 col-lg-3 d-flex d-lg-block text-center d-xl-flex justify-content-lg-end justify-content-around font_s pl-0 mt-2 mt-lg-0">
                             <div class="">
                                 <a href="#" class="text-success"><i class="fas fa-pencil-alt mr-2"></i>Изменить</a>
                             </div>
-                            <div class="ml-lg-4">
+                            <div class="ml-xl-4">
                                 <a href="#" class="text-danger" @click="cancelTicket(i)"><i class="fas fa-times mr-2"></i>Отменить</a>
                             </div>
                         </div>
@@ -173,13 +208,13 @@
        ticketConsultations: [
           {
             date: '15/01/2019',
-            time: '14:05',
-            competencies: 'Front-end'
+            time: '14:05 - 16:05',
+            competencies: 'Как сделать сайт если я знаю только бутстрап '
           },
           {
             date: '13/01/2019',
-            time: '14:05',
-            competencies: 'ИЗО'
+            time: '14:05 - 16:05',
+            competencies: 'Как рисовать в стиле суми-ё'
           },
           {
             date: '11/01/2019',
@@ -259,7 +294,7 @@
       font-size: $font_l;
   }
 
-  .nav-link {
+  .nav-link-cabinet {
     color: $main_grey!important;
     padding-right: 25px !important;
     padding-left: 25px !important;
@@ -269,7 +304,7 @@
     }
   }
 
-  .nav-link.active {
+  .nav-link-cabinet.active {
     color: $main_color!important;
     background-color: #fff;
     border-color: #dee2e6 #dee2e6 #fff;

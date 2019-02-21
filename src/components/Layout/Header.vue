@@ -11,15 +11,19 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <router-link class="nav-link" to="/">Доска консультаций</router-link>
+            <router-link class="nav-link nav-link-header" to="/">Доска консультаций</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/ticketboard">Доска заявок</router-link>
+            <router-link class="nav-link nav-link-header" to="/ticketboard">Доска заявок</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/about">О сервисе</router-link>
+            <router-link class="nav-link nav-link-header" to="/about">О сервисе</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link nav-link-header" to="/cabinet">[Личный кабинет]</router-link>
           </li>
         </ul>
+
         <router-link class="btn btn-outline-primary m-2 my-sm-0" data-toggle="modal" data-target=".sign_in_modal" to="">Войти</router-link>
         <auth />
         <router-link class="btn btn-outline-primary my-2 my-sm-0" data-toggle="modal" data-target=".sign_up_modal" to="">Регистрация</router-link>
@@ -47,7 +51,7 @@
   .menu{
     padding-top: 25px;
   }
-  .nav-link {
+  .nav-link-header {
     padding-right: .9rem!important;
     padding-left: .9rem!important;
   }
