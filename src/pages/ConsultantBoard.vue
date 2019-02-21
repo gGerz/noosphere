@@ -15,7 +15,7 @@
       <div class="ml-auto align-items-center d-flex"><i class="far fa-plus-square mr-2"></i><span class="dashed2">Создать карточку консультации</span></div>
     </div>
     <div class="row">
-      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 card-pad" @click="selectIndex(i)" data-toggle="modal" data-target=".card_req_modal" v-for="(con, i) in cons">
+      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 card-pad" @click="selectIndex(i)" data-toggle="modal" data-target=".card_cons_modal" v-for="(con, i) in cons">
         <div class="card">
           <div class="card-body cons-body">
             <div>
@@ -81,14 +81,18 @@
         </div>
       </div>
     </div>
+    <card-cons :selectedIndex="selectedIndex"
+              :selectedCard="selectedCard" />
   </div>
 </template>
 <script>
 
   import axios from 'axios'
   import VueSelect from 'vue-select'
+  import CardCons from "../components/Modals/CardCons";
   export default {
     components: {
+      CardCons,
       VueSelect
     },
     data() {
