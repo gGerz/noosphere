@@ -37,14 +37,14 @@
                 </span>
                 <span class="main_color font_xl">руб</span>
               </div>
-              <button class="btn btn-outline-primary btn-md ml-auto px-4 btn-buy">Купить</button>
+              <button class="btn btn-outline-primary btn-md ml-auto px-4 btn-buy">Ответить</button>
             </div>
           </div>
         </div>
       </div>
     </div>
     <card-req :selectedIndex="selectedIndex"
-               :selectedCard="selectedCard" />
+              :selectedCard="selectedCard" />
   </div>
 </template>
 <script>

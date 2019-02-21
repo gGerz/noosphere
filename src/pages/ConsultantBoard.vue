@@ -35,11 +35,11 @@
                     <div class="d-flex">
                       <div class="mx-2">
                         <i class="far fa-thumbs-up"></i>
-                        {{con.raiting}}
+                        {{con.sc_like}}
                       </div>
                       <div class="mx-2">
                         <i class="far fa-thumbs-down"></i>
-                        {{con.raiting}}
+                        {{con.sc_like}}
                       </div>
                     </div>
                   </div>
@@ -71,7 +71,7 @@
             <div class="d-flex">
               <div class="my-auto ">
                 <span class="price">
-                  {{con.sc_price}}
+                  {{con.sc_price | rounded}}
                 </span>
                 <span class="main_color font_xl">руб</span>
               </div>
@@ -97,6 +97,8 @@
     },
     data() {
       return {
+        selectedIndex: '',
+        selectedCard: '',
         options: [
           { value: 1, text: 'One' },
           { value: 2, text: 'two' },
@@ -146,6 +148,11 @@
     methods: {
       selectIndex(i){
         this.selectedCard = this.cons[i]
+      }
+    },
+    filters: {
+      rounded(value){
+        return value.substr(2)
       }
     }
   }
