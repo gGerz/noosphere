@@ -8,7 +8,7 @@
           </button>
           <div class="pb-2">
             <p class="mb-0 font_xl">{{selectedCard.sc_title}}</p>
-            <p class="mr-auto mb-0 text-grey font_l" >{{selectedCard.compition}}</p>
+            <p class="mr-auto mb-0 text-grey font_l" >{{selectedCard.sc_com_id}}</p>
           </div>
           <div class="d-flex align-items-center py-3">
             <div>
@@ -17,16 +17,16 @@
               <!--<img class="img_master2" :src="photos[i].url" > -->
             </div>
             <div>
-              <div class="font_m">{{selectedCard.author}}</div>
+              <div class="font_m">{{selectedCard.sc_user_id}}</div>
               <div class="m-0" title="Рейтинг font_m">
                 <div class="d-flex">
                   <div class="mx-2">
                     <i class="far fa-thumbs-up"></i>
-                    {{selectedCard.raiting}}
+                    {{selectedCard.sc_like}}
                   </div>
                   <div class="mx-2">
                     <i class="far fa-thumbs-down"></i>
-                    {{selectedCard.raiting}}
+                    {{selectedCard.sc_like}}
                   </div>
                 </div>
               </div>
@@ -37,7 +37,7 @@
               <span title="Дата">
                 <i class="fas fa-calendar-week mr-1 text-grey"></i>
                 <span class="">
-                    {{selectedCard.date}}
+                    {{selectedCard.sc_date}}
                 </span>
               </span>
             </div>
@@ -45,7 +45,9 @@
               <span title="Время">
                   <i class="far fa-clock mr-1 text-grey"></i>
                   <span class="">
-                      {{selectedCard.time}}
+                      {{selectedCard.sc_begin_time}}
+                      -
+                      {{selectedCard.sc_end_time}}
                   </span>
               </span>
             </div>
@@ -54,12 +56,12 @@
             <div class="tag px-2 font_s" v-for="tag in selectedCard.tags">{{tag.title}}</div>
           </div>
           <div class="py-2">
-            {{selectedCard.about}}
+            {{selectedCard.sc_description}}
           </div>
           <div class="d-flex pt-3">
             <div class="my-auto ">
                 <span class="price">
-                  {{selectedCard.price}}
+                  {{selectedCard.sc_price}}
                 </span>
               <span class="main_color font_xl">руб</span>
             </div>
