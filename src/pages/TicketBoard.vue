@@ -1,7 +1,6 @@
 <template>
   <div>
     <h2 class="my-4 font_xxl" >Доска заявок</h2>
-
     <div class="row mb-4 align-items-center">
       <div class="col-3">
         <vue-select v-model="selected"  :options="options" placeholder="Компетенции" label="text" style="display: block">
@@ -78,14 +77,15 @@
 </template>
 <script>
 
-  //import CardCons from '../components/Modals/CardCons.vue'
   import CardReq from "../components/Modals/CardReq";
   import ReqCons from "../components/Modals/ReqCons";
+  import VueSelect from 'vue-select'
 
   export default {
     components: {
       CardReq,
-      ReqCons
+      ReqCons,
+      VueSelect
     },
     data() {
       return {
