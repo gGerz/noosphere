@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2 class="my-4 font_xxl" >Доска консультаций</h2>
-    <div class="row mb-4">
+    <div class="row mb-4 align-items-center">
       <div class="col-3">
         <vue-select v-model="selected"  :options="options" placeholder="Компетенции" label="text" style="display: block">
           <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
@@ -10,8 +10,19 @@
           <span slot="no-options">Ничего не найдено</span>
         </vue-select>
       </div>
-      <div class="col-3">
+      <div class="col-2 px-0">
+
+          <input type="date" class="form-control search-item" required="required" placeholder="">
+
       </div>
+      <div class="col-3">
+          <div class="d-flex align-items-center">
+            <div class="pr-2 text-grey">Время </div>
+            <input class="form-control mr-2 search-item" type="text" placeholder="От">
+            <input class="form-control mr-2 search-item" type="text" placeholder="До">
+          </div>
+      </div>
+      <div class="col-1 px-0 search-btn btn text-grey">Поиск</div>
       <div class="ml-auto align-items-center d-flex"
            @onclick="createCons()"
            data-toggle="modal" data-target=".create_cons_modal"
@@ -266,6 +277,25 @@
     color: $main_color;
     font-size: 23px;
   }
+
+  .search-item {
+    background: #ffffff00;
+    border: 1px solid rgba(60,60,60,.26);
+    height: 48px;
+  }
+
+  .search-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    height: 48px;
+    background: #E4E4E4;
+    &:hover {
+      background: #d6d6d6;
+    }
+  }
+
 
   /*Настройка vue-select*/
   .clear, .dropdown-toggle::after{

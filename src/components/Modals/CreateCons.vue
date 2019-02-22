@@ -45,7 +45,7 @@
                                 <small id="" class="form-text text-muted">p.s.Через пробелы</small>
                             </div>
                             <div class="form-group">
-                                <label class="m-0">Что я хочу узнать:</label>
+                                <label class="m-0">Описание консультации:</label>
                                 <textarea class="form-control" rows="5"></textarea>
                             </div>
                         </div>

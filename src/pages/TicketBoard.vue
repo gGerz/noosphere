@@ -1,12 +1,29 @@
 <template>
   <div>
     <h2 class="my-4 font_xxl" >Доска заявок</h2>
-    <div class="row mb-4">
+
+    <div class="row mb-4 align-items-center">
       <div class="col-3">
+        <vue-select v-model="selected"  :options="options" placeholder="Компетенции" label="text" style="display: block">
+          <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
+            <div class="py-1">{{ option.text }}</div>
+          </template>
+          <span slot="no-options">Ничего не найдено</span>
+        </vue-select>
+      </div>
+      <div class="col-2 px-0">
+
+        <input type="date" class="form-control search-item" required="required" placeholder="">
 
       </div>
       <div class="col-3">
+        <div class="d-flex align-items-center">
+          <div class="pr-2 text-grey">Время </div>
+          <input class="form-control mr-2 search-item" type="text" placeholder="От">
+          <input class="form-control mr-2 search-item" type="text" placeholder="До">
+        </div>
       </div>
+      <div class="col-1 px-0 search-btn btn text-grey">Поиск</div>
       <div class="ml-auto align-items-center d-flex"
            @onclick="createCons()"
            data-toggle="modal" data-target=".req_cons_modal"
