@@ -8,7 +8,7 @@
           </button>
           <div class="pb-2">
             <p class="mb-0 font_xl">{{selectedCard.sc_title}}</p>
-            <p class="mr-auto mb-0 text-grey font_l" >{{selectedCard.sc_com_id}}</p>
+            <p class="mr-auto mb-0 text-grey font_l" >{{selectedCard.sc_com_id  }}</p>
           </div>
           <div class="d-flex align-items-center py-3">
             <div>

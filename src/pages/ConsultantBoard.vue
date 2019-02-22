@@ -12,7 +12,11 @@
       </div>
       <div class="col-3">
       </div>
-      <div class="ml-auto align-items-center d-flex"><i class="far fa-plus-square mr-2"></i><span class="dashed2">Создать карточку консультации</span></div>
+      <div class="ml-auto align-items-center d-flex"
+           @onclick="createCons()"
+           data-toggle="modal" data-target=".create_cons_modal"
+      ><i class="far fa-plus-square mr-2"></i><span class="dashed2">Создать карточку консультации</span></div>
+      <create-cons />
     </div>
     <div class="row">
       <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 card-pad" @click="selectIndex(i)" data-toggle="modal" data-target=".card_cons_modal" v-for="(con, i) in cons">
@@ -90,9 +94,12 @@
   import axios from 'axios'
   import VueSelect from 'vue-select'
   import CardCons from "../components/Modals/CardCons";
+  import CreateCons from '../components/Modals/CreateCons.vue'
+
   export default {
     components: {
       CardCons,
+      CreateCons,
       VueSelect
     },
     data() {
@@ -241,6 +248,23 @@
 
   .btn-buy {
     max-height: 42px;
+  }
+
+  .dashed2 { //пунктирное подчеркивание
+    color: $main_color;
+    font-size: $font_m;
+    text-decoration: none;
+    border-bottom: 1px dashed $main_color;
+    &:hover{
+      text-decoration: none;
+      color: darken($main_color,20%);
+    }
+  }
+  .fa-plus-square:before {//иконка создания консультации
+    position: relative;
+    top: 4px;
+    color: $main_color;
+    font-size: 23px;
   }
 
   /*Настройка vue-select*/

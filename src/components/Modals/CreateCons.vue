@@ -10,29 +10,43 @@
                 </div>
                 <div class="modal-body signin py-5 px-2 px-sm-5">
                     <div class="row">
-                        <div class="col-lg-7 col-12">
+                        <div class="col-lg-6 col-12">
                             <div class="form-group">
-                                <label class="m-0">Название консультации:</label>
+                                <label class="m-0">Название заявки:</label>
                                 <input type="text" class="form-control inputText" required="required" aria-describedby="emailHelp" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleSelect1">Компетенция:</label>
+                                <input type="text" class="form-control inputText" required="required" placeholder="">
                             </div>
                             <div class="form-group ">
                                 <label class="m-0">Дата:</label>
                                 <input type="date" class="form-control inputText" required="required" placeholder="">
                             </div>
-                            <div class="form-group">
-                                <label class="m-0">Время:</label>
-                                <input type="time" class="form-control inputText" required="required" placeholder="">
+                            <div class="py-3 ">
+                                <label>Время:</label>
+                                <div class="">
+                                    <div class="d-flex align-items-center">
+                                        <input class="form-control mr-2" type="text" placeholder="От">
+                                        <span class="mr-2">—</span>
+                                        <input class="form-control mr-2" type="text" placeholder="До">
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="m-0">Цена:</label>
                                 <input type="text" class="form-control inputText" required="required" placeholder="">
                             </div>
-
                         </div>
-                        <div class="col-lg-5 col-12">
+                        <div class="col-lg-6 col-12">
                             <div class="form-group">
-                                <label class="m-0">Описание консультации:</label>
-                                <textarea class="form-control" rows="10"></textarea>
+                                <label class="m-0">Теги:</label>
+                                <textarea class="form-control" rows="5"></textarea>
+                                <small id="" class="form-text text-muted">p.s.Через пробелы</small>
+                            </div>
+                            <div class="form-group">
+                                <label class="m-0">Что я хочу узнать:</label>
+                                <textarea class="form-control" rows="5"></textarea>
                             </div>
                         </div>
                     </div>

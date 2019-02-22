@@ -1,6 +1,18 @@
 <template>
   <div>
     <h2 class="my-4 font_xxl" >Доска заявок</h2>
+    <div class="row mb-4">
+      <div class="col-3">
+
+      </div>
+      <div class="col-3">
+      </div>
+      <div class="ml-auto align-items-center d-flex"
+           @onclick="createCons()"
+           data-toggle="modal" data-target=".req_cons_modal"
+      ><i class="far fa-plus-square mr-2"></i><span class="dashed2">Создать заявку</span></div>
+      <req-cons />
+    </div>
     <div class="row">
       <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 card-pad" @click="selectIndex(i)" data-toggle="modal" data-target=".card_req_modal" v-for="(con, i) in cons">
         <div class="card">
@@ -49,13 +61,14 @@
 </template>
 <script>
 
-  import CardCons from '../components/Modals/CardCons.vue'
+  //import CardCons from '../components/Modals/CardCons.vue'
   import CardReq from "../components/Modals/CardReq";
+  import ReqCons from "../components/Modals/ReqCons";
 
   export default {
     components: {
       CardReq,
-      CardCons
+      ReqCons
     },
     data() {
       return {
@@ -253,6 +266,23 @@
     color: white;
     background-image: linear-gradient(to right, #0a61c8, #2d96c1);
     border: none;
+  }
+
+  .dashed2 { //пунктирное подчеркивание
+    color: $main_color;
+    font-size: $font_m;
+    text-decoration: none;
+    border-bottom: 1px dashed $main_color;
+    &:hover{
+      text-decoration: none;
+      color: darken($main_color,20%);
+    }
+  }
+  .fa-plus-square:before {//иконка создания консультации
+    position: relative;
+    top: 4px;
+    color: $main_color;
+    font-size: 23px;
   }
 </style>
 
