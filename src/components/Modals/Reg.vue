@@ -62,6 +62,9 @@
             data: formData
           })
           .then(response => {
+            if (response.statusText == "Created") {
+              $('.sign_up_modal').modal('hide');
+            }
           })
           .catch(response => {
           })

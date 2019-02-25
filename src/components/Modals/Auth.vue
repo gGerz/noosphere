@@ -53,7 +53,7 @@
         })
           .then(response => {
             if (response.data.success === true){
-
+              $('.sign_in_modal').modal('hide'); //закрытие модального окна
             }
             localStorage.setItem('token', response.data.data)
             console.log(localStorage.getItem('token'))
