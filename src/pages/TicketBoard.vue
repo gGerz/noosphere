@@ -89,6 +89,21 @@
     },
     data() {
       return {
+        options: [
+          { value: 1, text: 'One' },
+          { value: 2, text: 'two' },
+          { value: 3, text: 'three' },
+          { value: 4, text: 'four' },
+          { value: 4, text: 'four' },
+          { value: 4, text: 'four' },
+          { value: 4, text: 'four' },
+          { value: 4, text: 'four' },
+          { value: 4, text: 'four' },
+          { value: 4, text: 'four' },
+          { value: 4, text: 'four' },
+          { value: 4, text: 'four' },
+        ],
+        selected: '',
         selectedIndex: '',
         selectedCard: '',
         cons: [

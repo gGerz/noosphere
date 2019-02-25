@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 const LOGIN = 'LOGIN'
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 const LOGOUT = 'LOGOUT'
-
+const SAVEUSERINFO = 'SAVEUSERINFO'
 
 Vue.use(Vuex)
 
@@ -25,6 +25,9 @@ export default new Vuex.Store({
     },
     [LOGOUT] (state) {
       state.authorisedStatus = false
+    },
+    [SAVEUSERINFO] (state) {
+      state.userId = localStorage.getItem('userId')
     }
   },
   actions: {
@@ -39,6 +42,13 @@ export default new Vuex.Store({
     logout ({ commit }) {
       localStorage.removeItem('token')
       commit(LOGOUT)
+    },
+    saveUserId ({ commit }, id) {
+      return new Promise( resolve => {
+        localStorage.setItem('userInfo', id)
+        commit(SAVEUSERINFO)
+        resolve()
+      })
     }
   },
   getters: {

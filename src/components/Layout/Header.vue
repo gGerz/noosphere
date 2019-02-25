@@ -19,10 +19,11 @@
             <router-link class="nav-link nav-link-header" to="/about">О сервисе</router-link>
           </li>
           <li class="nav-item" v-if="this.$store.state.authorisedStatus">
-            <router-link class="nav-link nav-link-header" to="/cabinet"></router-link>
+            <router-link class="nav-link nav-link-header" to="/cabinet">
+              LK{{this.$store.state.userName}}
+            </router-link>
           </li>
         </ul>
-        {{test1}}
         <router-link v-if="!this.$store.state.authorisedStatus" class="btn btn-outline-primary m-2 my-sm-0" data-toggle="modal" data-target=".sign_in_modal" to="">Войти</router-link>
         <auth />
         <router-link v-if="!this.$store.state.authorisedStatus" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="modal" data-target=".sign_up_modal" to="">Регистрация</router-link>
