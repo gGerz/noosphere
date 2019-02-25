@@ -97,7 +97,7 @@
       </div>
     </div>
     <card-cons :selectedIndex="selectedIndex"
-              :selectedCard="selectedCard" />
+               :selectedCard="selectedCard" />
   </div>
 </template>
 <script>

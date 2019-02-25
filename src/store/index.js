@@ -1,12 +1,49 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-Vue.use(Vuex);
+const LOGIN = 'LOGIN'
+const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+const LOGOUT = 'LOGOUT'
+
+
+Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    loader: false
+    loader: false,
+    userName: '',
+    userId: '',
+    authorisedStatus: !!localStorage.getItem('token')
   },
-  computed: {
+  mutations: {
+    [LOGIN] (state) {
+      state.pending = true
+    },
+    [LOGIN_SUCCESS] (state, req) {
+      state.authorisedStatus = true
+      state.pending = false
+    },
+    [LOGOUT] (state) {
+      state.authorisedStatus = false
+    }
+  },
+  actions: {
+    login ({ commit }, token) {
+      commit(LOGIN)
+      return new Promise(resolve => {
+        localStorage.setItem('token', token)
+        commit(LOGIN_SUCCESS)
+        resolve()
+      })
+    },
+    logout ({ commit }) {
+      localStorage.removeItem('token')
+      commit(LOGOUT)
+    }
+  },
+  getters: {
+    isLoggedIn: state => {
+      return state.authorisedStatus
+    }
   }
 })
