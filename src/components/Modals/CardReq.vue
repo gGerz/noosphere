@@ -7,8 +7,8 @@
             <span aria-hidden="true">&times;</span>
           </button>
           <div class="pb-2">
-            <p class="mb-0 font_xl">{{selectedCard.title}}</p>
-            <p class="mr-auto mb-0 text-grey font_l" >{{selectedCard.compition}}</p>
+            <p class="mb-0 font_xl">{{selectedCard.pc_title}}</p>
+            <p class="mr-auto mb-0 text-grey font_l" >{{selectedCard.pcCom.competence}}</p>
           </div>
           <div class="d-flex align-items-center py-3">
             <div>
@@ -17,7 +17,7 @@
               <!--<img class="img_master2" :src="photos[i].url" > -->
             </div>
             <div>
-              <div class="font_m">{{selectedCard.author}}</div>
+              <div class="font_m">{{selectedCard.pcUser.p_name}}</div>
             </div>
           </div>
           <div class="d-flex py-2">
@@ -25,7 +25,7 @@
               <span title="Дата">
                 <i class="fas fa-calendar-week mr-1 text-grey"></i>
                 <span class="">
-                    {{selectedCard.date}}
+                    {{selectedCard.pc_date}}
                 </span>
               </span>
             </div>
@@ -33,21 +33,23 @@
               <span title="Время">
                   <i class="far fa-clock mr-1 text-grey"></i>
                   <span class="">
-                      {{selectedCard.time}}
+                      {{selectedCard.pc_begin_time | deleteSeconds}}
+                      -
+                      {{selectedCard.pc_end_time | deleteSeconds}}
                   </span>
               </span>
             </div>
           </div>
           <div class="py-2">
-            <div class="tag px-2 font_s" v-for="tag in selectedCard.tags">{{tag.title}}</div>
+            <div class="tag px-2 font_s" v-for="tag in selectedCard.tagCon">{{tag.tag_name}}</div>
           </div>
           <div class="py-2">
-            {{selectedCard.about}}
+            {{selectedCard.pc_description}}
           </div>
           <div class="d-flex pt-3">
             <div class="my-auto ">
               <span class="price">
-                {{selectedCard.price}}
+                {{selectedCard.pc_price | rounded}}
               </span>
               <span class="main_color font_xl">руб</span>
             </div>
@@ -60,12 +62,20 @@
 </template>
 <script>
     export default {
-        props: ['selectedIndex', 'selectedCard'],
-        data(){
-            return{
+      props: ['selectedIndex', 'selectedCard'],
+      data(){
+          return{
 
-            }
+          }
+      },
+      filters: {
+        rounded(value){
+          return parseInt(value * 100) / 100
+        },
+        deleteSeconds(value){
+          return value.slice(0, -3)
         }
+      }
     }
 </script>
 <style lang="scss" scoped>

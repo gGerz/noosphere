@@ -35,7 +35,7 @@
           <div class="card-body cons-body">
             <div>
               <p class="mb-0 font_xl">{{con.sc_title}}</p>
-              <p class="mr-auto mb-0 text-grey font_l" >{{con.compition}}</p>
+              <p class="mr-auto mb-0 text-grey font_l" >{{con.scCom.competence}}</p>
             </div>
             <div>
               <div class="d-flex align-items-center">
@@ -45,7 +45,7 @@
                   <img class="img_master2" :src="photos[i].url" >
                 </div>
                 <div>
-                  <div class="font_m">{{con.sc_user_id}}</div>
+                  <div class="font_m">{{con.scUser.p_name}}</div>
                   <div class="m-0" title="Рейтинг font_m">
                     <div class="d-flex">
                       <div class="mx-2">
@@ -75,13 +75,13 @@
                 <span title="Время">
                   <i class="far fa-clock mr-1 text-grey"></i>
                   <span class="">
-                    {{con.sc_begin_time}}{{con.sc_end_time}}
+                    {{con.sc_begin_time | deleteSeconds}} - {{con.sc_end_time | deleteSeconds}}
                   </span>
                 </span>
               </div>
             </div>
             <div>
-              <div class="tag px-2 font_s" v-for="tag in con.tags">{{tag.title}}</div>
+              <div class="tag px-2 font_s" v-for="tag in con.tagCon">{{tag.tag_name}}</div>
             </div>
             <div class="d-flex">
               <div class="my-auto ">
@@ -152,9 +152,10 @@
         })
       axios({
         method: 'get',
-        url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings`
+        url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?expand=scUser,scCom,tagCon`
       })
         .then((response) => {
+          console.log("Консультация",response)
           this.cons = response.data
           this.$store.state.loader = false
           console.log(this.cons)
@@ -171,6 +172,9 @@
     filters: {
       rounded(value){
         return parseInt(value * 100) / 100
+      },
+      deleteSeconds(value){
+        return value.slice(0, -3)
       }
     }
   }

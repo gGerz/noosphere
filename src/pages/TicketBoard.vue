@@ -30,19 +30,19 @@
       <req-cons />
     </div>
     <div class="row">
-      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 card-pad" @click="selectIndex(i)" data-toggle="modal" data-target=".card_req_modal" v-for="(con, i) in cons">
+      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 card-pad" @click="selectIndex(i)" data-toggle="modal" data-target=".card_req_modal" v-for="(req, i) in reqs">
         <div class="card">
           <div class="card-body req-body">
             <div>
-              <p class="mb-0 font_xl">{{con.title}}</p>
-              <p class="mr-auto mb-0 text-grey font_l" >{{con.compition}}</p>
+              <p class="mb-0 font_xl">{{req.pc_title}}</p>
+              <p class="mr-auto mb-0 text-grey font_l" >{{req.pcCom.competence}}</p>
             </div>
             <div class="d-flex">
               <div>
                 <span title="Дата">
                   <i class="fas fa-calendar-week mr-1 text-grey"></i>
                   <span class="">
-                    {{con.date}}
+                    {{req.pc_date}}
                   </span>
                 </span>
               </div>
@@ -50,18 +50,18 @@
                 <span title="Время">
                   <i class="far fa-clock mr-1 text-grey"></i>
                   <span class="">
-                    {{con.time}}
+                    {{req.pc_begin_time | deleteSeconds}} - {{req.pc_end_time | deleteSeconds}}
                   </span>
                 </span>
               </div>
             </div>
             <div>
-              <div class="tag px-2 font_s" v-for="tag in con.tags">{{tag.title}}</div>
+              <div class="tag px-2 font_s" v-for="tag in req.tagCon">{{tag.tag_name}}</div>
             </div>
             <div class="d-flex">
               <div class="my-auto ">
                 <span class="price">
-                  {{con.price}}
+                  {{req.pc_price | rounded}}
                 </span>
                 <span class="main_color font_xl">руб</span>
               </div>
@@ -76,7 +76,7 @@
   </div>
 </template>
 <script>
-
+  import axios from 'axios'
   import CardReq from "../components/Modals/CardReq";
   import ReqCons from "../components/Modals/ReqCons";
   import VueSelect from 'vue-select'
@@ -106,107 +106,56 @@
         selected: '',
         selectedIndex: '',
         selectedCard: '',
-        cons: [
-          {
-            title: 'Научите рисовать',
-            compition: 'Искусство',
-            author: 'Пикассо',
-            raiting: '150',
-            date: '31/01/2019',
-            time: '13:00 - 14:00',
-            price: '1 450',
-            tags: [
-              {title: 'Рисование'},
-              {title: 'Масло'},
-              {title: 'Изобразительное искусство'},
-            ],
-            about: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aperiam consectetur culpa dignissimos, eius ex excepturi exercitationem, explicabo molestiae necessitatibus nihil nisi nostrum ratione voluptatem voluptatum? At facilis fugit harum!"
-          },
-          {
-            title: 'Научите верстать',
-            compition: 'Front-end',
-            author: 'Фронтовик Ендович',
-            raiting: '1337',
-            date: '31/01/2019',
-            time: '13:00 - 14:00',
-            price: '150',
-            tags: [
-              {title: 'программирование'},
-              {title: 'дизайн'},
-              {title: 'фреймворк'},
-            ],
-            about: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aperiam consectetur culpa dignissimos, eius ex excepturi exercitationem, explicabo molestiae necessitatibus nihil nisi nostrum ratione voluptatem voluptatum? At facilis fugit harum!"
-          },
-          {
-            title: 'Название',
-            compition: 'Компетенция3',
-            author: 'Имя',
-            raiting: '99',
-            date: '31/01/2019',
-            time: '13:00 - 14:00',
-            price: '150',
-            tags: [
-              {title: 'Тег'},
-              {title: 'Тег'},
-              {title: 'Тег'},
-            ],
-            about: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aperiam consectetur culpa dignissimos, eius ex excepturi exercitationem, explicabo molestiae necessitatibus nihil nisi nostrum ratione voluptatem voluptatum? At facilis fugit harum!"
-          },
-          {
-            title: 'Название',
-            compition: 'Компетенция1',
-            author: 'Имя',
-            raiting: '150',
-            date: '31/01/2019',
-            time: '13:00 - 14:00',
-            price: '150',
-            tags: [
-              {title: 'Тег'},
-              {title: 'Тег'},
-              {title: 'Тег'},
-            ],
-            about: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aperiam consectetur culpa dignissimos, eius ex excepturi exercitationem, explicabo molestiae necessitatibus nihil nisi nostrum ratione voluptatem voluptatum? At facilis fugit harum!"
-          },
-          {
-            title: 'Название',
-            compition: 'Компетенция2',
-            author: 'Имя',
-            raiting: '150',
-            date: '29/01/2019',
-            time: '13:00 - 14:00',
-            price: '150',
-            tags: [
-              {title: 'Тег'},
-              {title: 'Тег'},
-              {title: 'Тег'},
-            ],
-            about: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aperiam consectetur culpa dignissimos, eius ex excepturi exercitationem, explicabo molestiae necessitatibus nihil nisi nostrum ratione voluptatem voluptatum? At facilis fugit harum!"
-          },
-          {
-            title: 'Название',
-            compition: 'Компетенция',
-            author: 'Имя',
-            raiting: '150',
-            date: '30/01/2019',
-            time: '13:00 - 14:00',
-            price: '150',
-            tags: [
-              {title: 'Тег'},
-              {title: 'Тег'},
-              {title: 'Тег'},
-            ],
-            about: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aperiam consectetur culpa dignissimos, eius ex excepturi exercitationem, explicabo molestiae necessitatibus nihil nisi nostrum ratione voluptatem voluptatum? At facilis fugit harum!"
-          }
-        ],
+        reqs: [],
+        tags: [],
+        photos: []
       }
     },
+    mounted () {
+      this.$store.state.loader = true
+      axios({
+        method: 'get',
+        url: `https://jsonplaceholder.typicode.com/photos`
+      })
+              .then((response) => {
+                this.photos = response.data
+                this.$store.state.loader = false
+                console.log(this.photos)
+              })
+              .catch((error) => {
+                console.error(error)
+              })
+      axios({
+        method: 'get',
+        //url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?expand=scUser,scCom,tagCon`
+        url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases?expand=pcCom,pcUser,tagCon`
+      })
+              .then((response) => {
+                console.log("Заявка",response)
+                this.reqs = response.data
+                //this.tags = response.data.tagCon;
+                this.$store.state.loader = false
+                console.log("Респонс",response.data)
+                console.log("Компетенция",response.data[0].pcCom.competence)
+                //console.log("nice",response.data[0].pc_begin_time)
+              })
+              .catch((error) => {
+                console.error(error)
+              })
+    },
     methods: {
-      selectIndex(i){
-        this.selectedCard = this.cons[i]
+      selectIndex(i) {
+        this.selectedCard = this.reqs[i]
+      }
+    },
+    filters: {
+      rounded(value){
+        return parseInt(value * 100) / 100
+      },
+      deleteSeconds(value){
+        return value.slice(0, -3)
       }
     }
-
-
   }
 </script>
 <style lang="scss">

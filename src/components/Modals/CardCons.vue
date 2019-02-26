@@ -8,7 +8,7 @@
           </button>
           <div class="pb-2">
             <p class="mb-0 font_xl">{{selectedCard.sc_title}}</p>
-            <p class="mr-auto mb-0 text-grey font_l" >{{selectedCard.sc_com_id  }}</p>
+            <p class="mr-auto mb-0 text-grey font_l" >{{selectedCard.scCom.competence}}</p>
           </div>
           <div class="d-flex align-items-center py-3">
             <div>
@@ -17,7 +17,7 @@
               <!--<img class="img_master2" :src="photos[i].url" > -->
             </div>
             <div>
-              <div class="font_m">{{selectedCard.sc_user_id}}</div>
+              <div class="font_m">{{selectedCard.scUser.p_name}}</div>
               <div class="m-0" title="Рейтинг font_m">
                 <div class="d-flex">
                   <div class="mx-2">
@@ -45,15 +45,15 @@
               <span title="Время">
                   <i class="far fa-clock mr-1 text-grey"></i>
                   <span class="">
-                      {{selectedCard.sc_begin_time}}
+                      {{selectedCard.sc_begin_time | deleteSeconds}}
                       -
-                      {{selectedCard.sc_end_time}}
+                      {{selectedCard.sc_end_time | deleteSeconds}}
                   </span>
               </span>
             </div>
           </div>
           <div class="py-2">
-            <div class="tag px-2 font_s" v-for="tag in selectedCard.tags">{{tag.title}}</div>
+            <div class="tag px-2 font_s" v-for="tag in selectedCard.tagCon">{{tag.tag_name}}</div>
           </div>
           <div class="py-2">
             {{selectedCard.sc_description}}
@@ -61,7 +61,7 @@
           <div class="d-flex pt-3">
             <div class="my-auto ">
                 <span class="price">
-                  {{selectedCard.sc_price}}
+                  {{selectedCard.sc_price | rounded}}
                 </span>
               <span class="main_color font_xl">руб</span>
             </div>
@@ -78,6 +78,14 @@
     data(){
       return{
 
+      }
+    },
+    filters: {
+      rounded(value){
+        return parseInt(value * 100) / 100
+      },
+      deleteSeconds(value){
+        return value.slice(0, -3)
       }
     }
   }
