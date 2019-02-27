@@ -20,7 +20,9 @@
           </li>
           <li class="nav-item" v-if="this.$store.state.authorisedStatus">
             <router-link class="nav-link nav-link-header" to="/cabinet">
-              личный кабинет
+              <div class="d-flex align-items-center ">
+                <img class="ava_cabinet" src="../../assets/img/ava.jpg">
+              </div>
             </router-link>
           </li>
         </ul>
@@ -29,7 +31,7 @@
         <router-link v-if="!this.$store.state.authorisedStatus" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="modal" data-target=".sign_up_modal" to="">Регистрация</router-link>
         <reg />
         <reg-next />
-        <button v-if="this.$store.state.authorisedStatus" class="btn btn-danger" @click="logout">Выйти</button>
+        <button v-if="this.$store.state.authorisedStatus" class="btn btn-danger" @click="logout">X</button>
       </div>
     </nav>
   </div>
@@ -61,6 +63,13 @@
   }
 </script>
 <style lang="scss">
+  .ava_cabinet {
+    height: 40px;
+    width: 40px!important;
+    object-fit: cover;
+    border-radius: 100%;
+    margin-right: 17px;
+  }
   .menu{
     padding-top: 25px;
   }
