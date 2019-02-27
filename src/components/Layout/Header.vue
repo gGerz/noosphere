@@ -20,7 +20,7 @@
           </li>
           <li class="nav-item" v-if="this.$store.state.authorisedStatus">
             <router-link class="nav-link nav-link-header" to="/cabinet">
-              LK{{this.$store.state.userName}}
+              LK1{{$store.state.userInfo}}
             </router-link>
           </li>
         </ul>

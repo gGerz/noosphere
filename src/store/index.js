@@ -12,7 +12,7 @@ export default new Vuex.Store({
   state: {
     loader: false,
     userName: '',
-    userId: '',
+    userInfo: localStorage.getItem('userInfo'),
     authorisedStatus: !!localStorage.getItem('token')
   },
   mutations: {
@@ -27,7 +27,7 @@ export default new Vuex.Store({
       state.authorisedStatus = false
     },
     [SAVEUSERINFO] (state) {
-      state.userId = localStorage.getItem('userId')
+      state.userInfo = localStorage.getItem('userInfo')
     }
   },
   actions: {
