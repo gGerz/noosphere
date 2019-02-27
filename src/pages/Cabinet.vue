@@ -283,9 +283,7 @@
         axios({
           method: 'get',
           url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/`+this.$store.state.userInfo,
-          headers: {
-            'Authorization': 'Bearer ' + localStorage.token
-          }
+          headers: { 'Authorization': `Bearer ${localStorage.token}` }
         })
             .then((response) => {
               console.log(response)

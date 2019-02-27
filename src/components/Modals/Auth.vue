@@ -56,7 +56,7 @@
               $('.sign_in_modal').modal('hide'); //закрытие модального окна
               this.$store.state.userName = response.data.p_id.p_id
               this.$store.dispatch('login', response.data.data)
-              this.$store.state.userId = response.data.p_id.p_id
+              this.$store.dispatch('saveUserId', response.data.p_id.p_id)
             }
           })
           .catch(error => {
