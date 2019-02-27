@@ -284,7 +284,6 @@
           method: 'get',
           url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/`+this.$store.state.userInfo,
           headers: {
-            'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.token
           }
         })
