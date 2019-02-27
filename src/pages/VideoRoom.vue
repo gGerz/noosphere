@@ -1,14 +1,45 @@
 <template>
-    <div class="container">
-        123
-        132
+    <div class="container ">
+        <p class="h2 py-4 text-center">Видео кабинет</p>
+        <div class="card shadow">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <div class="justify-content-center d-flex">
+                            <div>
+                                <p class="h4">Вы</p>
+                                <div class="video">
+                                    [Видео]
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <div class="justify-content-center d-flex">
+                            <div>
+                                <p class="h4">Ваш собеседник</p>
+                                <div class="video">
+                                    [Видео]
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center py-3">
+                    <div class="btn btn-primary">Завершить звонок</div>
+                </div>
+            </div>
+        </div>
 
     </div>
 </template>
 <style lang="scss" scoped>
 
-    .p720 {
-        width: 12;
+    .video {
+        background: aquamarine;
+        border: darkblue 1px solid;
+        width: 446px;
+        height: 286px;
     }
 
 </style>
