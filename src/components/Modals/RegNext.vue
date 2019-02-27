@@ -26,10 +26,6 @@
                         <div class="pt-3">
                             <button type="submit" class="btn btn-primary btn-shadow" @click="login">Зарегистрировать</button>
                         </div>
-                        <div class="text-center pt-3">
-                            Уже есть аккаунт?
-                            <a href="#" data-toggle="modal" data-target=".sign_in_modal" data-dismiss="modal">Войти</a>
-                        </div>
                     </div>
                 </div>
 
@@ -48,27 +44,9 @@
             }
         },
         methods: {
-            // login() {
-            //     if (this.password === this.resetPassword){
-            //         const formData = new FormData()
-            //         formData.append('email', this.mail)
-            //         formData.append('password', this.password)
-            //         axios({
-            //             method: 'post',
-            //             url: `http://192.168.1.150/noosfera/public_html/api/v1/users`,
-            //             data: formData
-            //         })
-            //             .then(response => {
-            //                 if (response.statusText == "Created") {
-            //                     $('.sign_up_modal').modal('hide');
-            //                 }
-            //             })
-            //             .catch(response => {
-            //             })
-            //     } else {
-            //         alert('Пароли не совпадают')
-            //     }
-            // }
+            login() {
+                console.log('privet')
+            }
         }
     }
 </script>

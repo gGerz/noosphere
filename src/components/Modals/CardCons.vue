@@ -8,7 +8,7 @@
           </button>
           <div class="pb-2">
             <p class="mb-0 font_xl">{{selectedCard.sc_title}}</p>
-            <p class="mr-auto mb-0 text-grey font_l" >{{selectedCard.scCom.competence}}</p>
+            <p class="mr-auto mb-0 text-grey font_l" v-for="comp in selectedCard.scCom">{{comp}}</p>
           </div>
           <div class="d-flex align-items-center py-3">
             <div>
@@ -17,7 +17,7 @@
               <!--<img class="img_master2" :src="photos[i].url" > -->
             </div>
             <div>
-              <div class="font_m">{{selectedCard.scUser.p_name}}</div>
+              <div class="font_m" v-for="name in selectedCard.scUser">{{name}}</div>
               <div class="m-0" title="Рейтинг font_m">
                 <div class="d-flex">
                   <div class="mx-2">

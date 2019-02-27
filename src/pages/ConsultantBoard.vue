@@ -159,6 +159,7 @@
           this.cons = response.data
           this.$store.state.loader = false
           console.log(this.cons)
+          console.log('FFF',this.cons[0].scUser.p_name  )
         })
         .catch((error) => {
           console.error(error)
