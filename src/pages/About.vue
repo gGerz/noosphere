@@ -18,6 +18,8 @@
         <archive-modal />
         <router-link class="btn btn-outline-primary m-2 my-sm-0" data-toggle="modal" data-target=".arbitration_modal" to="">Окно арбитража</router-link>
         <arbitration-modal />
+        <router-link class="btn btn-outline-primary m-2 my-sm-0" data-toggle="modal" data-target=".arbitration_modal" to="/videoroom">Video</router-link>
+
     </div>
 </template>
 <script>
@@ -30,6 +32,8 @@
     import FeedbackMaster from '../components/Modals/FeedbackMaster.vue'
     import ArchiveModal from '../components/Modals/ArchiveModal.vue'
     import ArbitrationModal from '../components/Modals/ArbitrationModal.vue'
+    import VideoRoom from '../pages/VideoRoom.vue'
+
     import axios from 'axios'
 
     export default {
@@ -42,7 +46,8 @@
             FeedbackPupil,
             FeedbackMaster,
             ArchiveModal,
-            ArbitrationModal
+            ArbitrationModal,
+            VideoRoom
         },
         data(){
             return{

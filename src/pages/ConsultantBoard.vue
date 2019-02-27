@@ -114,6 +114,7 @@
     },
     data() {
       return {
+        globalComps: [],
         selectedIndex: '',
         selectedCard: '',
         options: [
