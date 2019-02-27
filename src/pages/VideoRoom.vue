@@ -9,7 +9,7 @@
                             <div>
                                 <p class="h4">Вы</p>
                                 <div class="video">
-                                    [Видео]
+                                    <video id="video1" />
                                 </div>
                             </div>
                         </div>
@@ -19,7 +19,7 @@
                             <div>
                                 <p class="h4">Ваш собеседник</p>
                                 <div class="video">
-                                    [Видео]
+                                    <video id="video2" />
                                 </div>
                             </div>
                         </div>
@@ -30,9 +30,20 @@
                 </div>
             </div>
         </div>
-
     </div>
 </template>
+<script>
+
+    import VueWebcam from 'vue-web-cam'
+    import WebRTC from 'vue-webrtc'
+
+    export default {
+        components: {
+            VueWebcam,
+            WebRTC,
+        }
+    }
+</script>
 <style lang="scss" scoped>
 
     .video {

@@ -57,13 +57,28 @@
               this.$store.state.userName = response.data.p_id.p_id
               this.$store.dispatch('login', response.data.data)
               this.$store.dispatch('saveUserId', response.data.p_id.p_id)
+              this.setComps() //установка доступных компетенций
             }
           })
           .catch(error => {
 
           })
 
-      }
+      },
+      setComps (){
+        // Информация юзера
+        axios({
+          method: 'get',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + '?expand=cpCom',
+          headers: {'Authorization': `Bearer ${localStorage.token}`}
+        })
+            .then((response) => {
+              this.$store.state.userComp = response.data
+            })
+            .catch((error) => {
+              console.error(error)
+            })
+      },
     }
   }
 </script>
