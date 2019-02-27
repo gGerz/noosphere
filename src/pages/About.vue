@@ -30,6 +30,7 @@
     import FeedbackMaster from '../components/Modals/FeedbackMaster.vue'
     import ArchiveModal from '../components/Modals/ArchiveModal.vue'
     import ArbitrationModal from '../components/Modals/ArbitrationModal.vue'
+    import axios from 'axios'
 
     export default {
         components: {
@@ -47,7 +48,24 @@
             return{
 
             }
-        }
+        },
+        mounted() {
+        console.log(localStorage.token)
+        // Информация юзера
+        axios({
+            method: 'get',
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/`+this.$store.state.userInfo,
+            // url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?expand=scUser,scCom,tagCon`,
+            // headers: { 'Authorization': `Bearer ${localStorage.token}` }
+            headers: { 'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6OH0.NYB_TOEip8Ax75eRBtym47hZQwWrlKRlWM0DzVL1r0E`}
+        })
+            .then((response) => {
+                console.log(response)
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+    }
     }
 </script>
 <style lang="scss">

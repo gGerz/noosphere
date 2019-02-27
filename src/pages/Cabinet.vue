@@ -30,7 +30,7 @@
             <div class="d-lg-flex d-md-flex d-block align-items-center">
               <div class="d-flex align-items-center ">
                   <img class="ava_cabinet" src="../assets/img/ava.jpg">
-                  <div class="text-dark h3 m-0">Леонардо да Винчи</div>
+                  <div class="text-dark h3 m-0">{{userInfo.p_name}}</div>
               </div>
               <div class="ml-lg-5 ml-md-5"><a href="" class="dashed text-grey">Изменить данные</a></div>
             </div>
@@ -59,10 +59,10 @@
               <div class="row">
                   <div class="spec col-10 col-xs-12 col-sm-10 col-md-10 col-lg-4 px-3">
                       <div class="text-grey font_s">Компетенции</div>
-                      <div class="d-flex justify-content-between mt-1 mr-4" v-for="competence in competencies">
-                          <div>{{competence.title}}</div>
+                      <div class="d-flex justify-content-between mt-1 mr-4" v-for="competence in userInfo.cpCom">
+                          <div>{{competence.competence}}</div>
                           <div class="d-flex justify-content-between">
-                              <div>{{competence.goodMark}}<span class="text-grey">/{{competence.badMark}}</span></div>
+                              <div>0<span class="text-grey">/1</span></div>
                               <div>
                                   <i class="fas fa-times ml-4"></i>
                               </div>
@@ -207,6 +207,7 @@
     },
     data(){
       return{
+        userInfo: [],
         options: [
           { value: 1, text: 'One' },
           { value: 1, text: 'One' },
@@ -223,23 +224,7 @@
           { value: 2, text: 'Two' },
         ],
         selected: '',
-        competencies: [
-          {
-            title: 'Front',
-            goodMark: '25',
-            badMark: '15',
-          },
-          {
-            title: 'Back',
-            goodMark: '140',
-            badMark: '56',
-          },
-          {
-            title: 'Design',
-            goodMark: '15',
-            badMark: '5',
-          },
-        ],
+        competencies: [],
        ticketConsultations: [
           {
             date: '15/01/2019',
@@ -282,13 +267,13 @@
         // Информация юзера
         axios({
           method: 'get',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/`+this.$store.state.userInfo,
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/`+this.$store.state.userInfo +'?expand=cpCom',
           // url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?expand=scUser,scCom,tagCon`,
-          // headers: { 'Authorization': `Bearer ${localStorage.token}` }
-          headers: { 'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6OH0.NYB_TOEip8Ax75eRBtym47hZQwWrlKRlWM0DzVL1r0E`}
+          headers: { 'Authorization': `Bearer ${localStorage.token}` }
         })
             .then((response) => {
-              console.log(response)
+              this.userInfo = response.data
+              console.log(this.userInfo)
             })
             .catch((error) => {
               console.error(error)
