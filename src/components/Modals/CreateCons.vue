@@ -16,8 +16,15 @@
                                 <input type="text" class="form-control inputText" required="required" aria-describedby="emailHelp" placeholder="">
                             </div>
                             <div class="form-group">
-                                <label for="exampleSelect1">Компетенция:</label>
-                                <input type="text" class="form-control inputText" required="required" placeholder="">
+                                <label for="">Компетенция:</label>
+
+                                <vue-select v-model="selected" label="competence" :options="userInfo.cpCom" placeholder="Компетенции" style="display: block">
+                                    <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
+                                        <div class="py-1">{{ option.competence }}</div>
+                                    </template>
+                                    <span slot="no-options">Ничего не найдено</span>
+                                </vue-select>
+
                             </div>
                             <div class="form-group ">
                                 <label class="m-0">Дата:</label>
@@ -58,6 +65,49 @@
         </div>
     </div>
 </template>
+<script>
+    import VueSelect from 'vue-select'
+    import axios from 'axios'
+
+    export default {
+        components: {
+            VueSelect
+        },
+        data() {
+            return {
+                userInfo: '',
+                selectedIndex: '',
+                selectedCard: '',
+                options: [
+                    { value: 1, text: 'Физика' },
+                    { value: 2, text: 'Химия' },
+                    { value: 3, text: 'Английский язык' }
+                ],
+                selected: '',
+                cons: [],
+                photos: []
+            }
+        },
+        mounted() {
+            if (this.$store.state.authorisedStatus === true) {
+                // Информация юзера
+                axios({
+                    method: 'get',
+                    url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + '?expand=cpCom',
+                    // url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?expand=scUser,scCom,tagCon`,
+                    headers: {'Authorization': `Bearer ${localStorage.token}`}
+                })
+                    .then((response) => {
+                        this.userInfo = response.data
+                        console.log(this.userInfo)
+                    })
+                    .catch((error) => {
+                        console.error(error)
+                    })
+            }
+        }
+    }
+</script>
 <style lang="scss" scoped>
     .inputText {
     }

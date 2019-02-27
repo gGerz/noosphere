@@ -31,7 +31,7 @@
         <router-link v-if="!this.$store.state.authorisedStatus" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="modal" data-target=".sign_up_modal" to="">Регистрация</router-link>
         <reg />
         <reg-next />
-        <button v-if="this.$store.state.authorisedStatus" class="btn btn-danger" @click="logout">X</button>
+        <button v-if="this.$store.state.authorisedStatus" class="btn btn-danger" @click="logout">Выйти</button>
       </div>
     </nav>
   </div>

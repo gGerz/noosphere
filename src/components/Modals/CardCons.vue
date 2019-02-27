@@ -17,7 +17,7 @@
               <!--<img class="img_master2" :src="photos[i].url" > -->
             </div>
             <div>
-              <div class="font_m" v-if="selectedCard.scCom !== undefined">{{selectedCard.scUser.p_name}}</div>
+              <div class="font_m" v-if="selectedCard.scUser !== undefined">{{selectedCard.scUser.p_name}}</div>
               <div class="m-0" title="Рейтинг font_m">
                 <div class="d-flex">
                   <div class="mx-2">
@@ -44,7 +44,7 @@
             <div class="ml-4">
               <span title="Время">
                   <i class="far fa-clock mr-1 text-grey"></i>
-                  <span class="" v-if="selectedCard.scCom !== undefined">
+                  <span class="" v-if="selectedCard.sc_begin_time !== undefined">
                       {{selectedCard.sc_begin_time | deleteSeconds}}
                       -
                       {{selectedCard.sc_end_time | deleteSeconds}}
