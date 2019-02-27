@@ -3,17 +3,15 @@
     <h2 class="my-4 font_xxl" >Доска консультаций</h2>
     <div class="row mb-4 align-items-center">
       <div class="col-3">
-        <vue-select v-model="selected"  :options="options" placeholder="Компетенции" label="text" style="display: block">
+        <vue-select v-model="selected" label="competence" :options="globalComps" placeholder="Компетенции"  style="display: block">
           <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
-            <div class="py-1">{{ option.text }}</div>
+            <div class="py-1">{{ option.competence }}</div>
           </template>
           <span slot="no-options">Ничего не найдено</span>
         </vue-select>
       </div>
       <div class="col-2 px-0">
-
           <input type="date" class="form-control search-item" required="required" placeholder="">
-
       </div>
       <div class="col-3">
           <div class="d-flex align-items-center">
@@ -165,6 +163,19 @@
         .catch((error) => {
           console.error(error)
         })
+        axios({
+          method: 'get',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/coms`,
+        })
+          .then((response) => {
+            this.globalComps = response.data
+
+            console.log('nisu',this.globalComps)
+
+          })
+          .catch((error) => {
+            console.error(error)
+          })
     },
     methods: {
       selectIndex(i){

@@ -3,9 +3,9 @@
     <h2 class="my-4 font_xxl" >Доска заявок</h2>
     <div class="row mb-4 align-items-center">
       <div class="col-3">
-        <vue-select v-model="selected"  :options="options" placeholder="Компетенции" label="text" style="display: block">
+        <vue-select v-model="selected" label="competence" :options="globalComps" placeholder="Компетенции"  style="display: block">
           <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
-            <div class="py-1">{{ option.text }}</div>
+            <div class="py-1">{{ option.competence }}</div>
           </template>
           <span slot="no-options">Ничего не найдено</span>
         </vue-select>
@@ -143,6 +143,19 @@
               .catch((error) => {
                 console.error(error)
               })
+      axios({
+        method: 'get',
+        url: `http://192.168.1.150/noosfera/public_html/api/v1/coms`,
+      })
+              .then((response) => {
+                this.globalComps = response.data
+
+                console.log('nisu',this.globalComps)
+
+              })
+              .catch((error) => {
+                console.error(error)
+              })
     },
     methods: {
       selectIndex(i) {
@@ -164,6 +177,7 @@
   $main_grey: #A6A6A6; //серый
   $danger: #FF3F3F; //красный
   $success: #43C768; //зеленый
+  $white: #FFFFFF; // Белый
   $secondary_grey: #373737;
   $font_card-price: 30px; //34
   $font_xxl: 28px;
@@ -266,5 +280,46 @@
     color: $main_color;
     font-size: 23px;
   }
+
+
+  /*Настройка vue-select*/
+  .clear, .dropdown-toggle::after{
+    display: none;
+  }
+  .dropdown-menu li{
+    background-color: $white;
+
+    :active, :focus, :hover, :target, :visited{
+      color: $main_color!important;
+      background-color: $white!important;
+    }
+  }
+
+  /*Настройка скроллбара для селектов*/
+
+  .dropdown-menu{
+    overflow-y: scroll!important;
+    max-height: 200px!important;
+  }
+
+  .dropdown-menu::-webkit-scrollbar-track {
+    -webkit-box-shadow: none;
+    background-color: $white;
+
+  }
+
+  .dropdown-menu::-webkit-scrollbar {
+    width: 4px;
+    background-color: $white;
+  }
+
+  .dropdown-menu::-webkit-scrollbar-thumb {
+    background-color: $main_color;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+  }
+
+
 </style>
 
