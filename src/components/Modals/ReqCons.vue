@@ -17,14 +17,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="">Компетенция:</label>
-
-                                <vue-select v-model="selected"  :options="options" placeholder="Компетенции" label="text" style="display: block">
-                                    <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
-                                        <div class="py-1">{{ option.text }}</div>
-                                    </template>
-                                    <span slot="no-options">Ничего не найдено</span>
-                                </vue-select>
-
+                                <input type="text" class="form-control inputText" required="required" placeholder="">
                             </div>
                             <div class="form-group ">
                                 <label class="m-0">Дата:</label>
@@ -65,29 +58,7 @@
         </div>
     </div>
 </template>
-<script>
-    import VueSelect from 'vue-select'
 
-    export default {
-        components: {
-            VueSelect
-        },
-        data() {
-            return {
-                selectedIndex: '',
-                selectedCard: '',
-                options: [
-                    { value: 1, text: 'Физика' },
-                    { value: 2, text: 'Химия' },
-                    { value: 3, text: 'Английский язык' }
-                ],
-                selected: '',
-                cons: [],
-                photos: []
-            }
-        }
-    }
-</script>
 <style lang="scss" scoped>
     .inputText {
     }

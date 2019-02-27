@@ -26,6 +26,7 @@
       <div class="ml-auto align-items-center d-flex"
            @onclick="createCons()"
            data-toggle="modal" data-target=".req_cons_modal"
+           v-if="this.$store.state.authorisedStatus"
       ><i class="far fa-plus-square mr-2"></i><span class="dashed2">Создать заявку</span></div>
       <req-cons />
     </div>

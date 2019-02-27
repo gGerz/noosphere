@@ -26,6 +26,7 @@
       <div class="ml-auto align-items-center d-flex"
            @onclick="createCons()"
            data-toggle="modal" data-target=".create_cons_modal"
+           v-if="this.$store.state.authorisedStatus"
       ><i class="far fa-plus-square mr-2"></i><span class="dashed2">Создать карточку консультации</span></div>
       <create-cons />
     </div>
