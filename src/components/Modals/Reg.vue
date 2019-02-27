@@ -64,6 +64,7 @@
           .then(response => {
             if (response.statusText == "Created") {
               $('.sign_up_modal').modal('hide');
+              $('.sign_up_next_modal').modal('show');
             }
           })
           .catch(response => {

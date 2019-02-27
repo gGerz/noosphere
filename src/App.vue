@@ -46,12 +46,11 @@ export default {
   $font_s: 14px;
   $background-color: #f8f8f8;
 
-  html{
-
+  html{ overflow-y: scroll; overflow-x: auto; }
+  body{
+    padding-right: 0 !important;
   }
   body{
-    padding-right: 14px;
-    overflow-y: scroll; overflow-x: auto;
     background-color: $background-color;
   }
   #app{

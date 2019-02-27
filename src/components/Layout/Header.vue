@@ -28,6 +28,7 @@
         <auth />
         <router-link v-if="!this.$store.state.authorisedStatus" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="modal" data-target=".sign_up_modal" to="">Регистрация</router-link>
         <reg />
+        <reg-next />
         <button v-if="this.$store.state.authorisedStatus" class="btn btn-danger" @click="logout">Выйти</button>
       </div>
     </nav>
@@ -36,12 +37,14 @@
 <script>
   import Auth from '../Modals/Auth.vue'
   import Reg from '../Modals/Reg.vue'
+  import RegNext from '../Modals/RegNext.vue'
   import axios from 'axios'
 
   export default {
     components: {
       Auth,
-      Reg
+      Reg,
+      RegNext
     },
     data(){
       return{
