@@ -14,9 +14,6 @@
                             <input type="text" class="form-control inputText" required="required" aria-describedby="" placeholder="Имя"  >
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control inputText" required="required" placeholder="Фамилия">
-                        </div>
-                        <div class="form-group">
                             <input type="text" class="form-control inputText" required="required" placeholder="Телефон" >
                         </div>
                         <div class="form-group pb-4">

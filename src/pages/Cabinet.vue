@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h2 class="my-4 font_xxl" >Личный кабинет</h2>
+      <h2 class="my-4 font_xxl" >Личный кабинет id:{{$store.state.userInfo}}</h2>
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
           <a class="nav-link nav-link-cabinet active" id="home-tab" data-toggle="tab" href="#general" role="tab" aria-controls="home" aria-selected="true"><i class="fas fa-user-graduate"></i>Общее</a>
@@ -196,6 +196,7 @@
 <script>
   import $ from 'jquery'
   import VueSelect from 'vue-select'
+  import axios from 'axios'
 
   import CreateCons from '../components/Modals/CreateCons.vue'
 
@@ -276,6 +277,24 @@
         e.preventDefault()
         $(this).tab('show')
       })
+      console.log(localStorage.token)
+      if (this.$store.state.authorisedStatus === true){
+        // Информация юзера
+        axios({
+          method: 'get',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/`+this.$store.state.userInfo,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.token
+          }
+        })
+            .then((response) => {
+              console.log(response)
+            })
+            .catch((error) => {
+              console.error(error)
+            })
+      }
     }
   }
 </script>

@@ -20,7 +20,7 @@
           </li>
           <li class="nav-item" v-if="this.$store.state.authorisedStatus">
             <router-link class="nav-link nav-link-header" to="/cabinet">
-              LK1{{$store.state.userInfo}}
+              личный кабинет
             </router-link>
           </li>
         </ul>
@@ -58,26 +58,6 @@
         })
       }
     },
-    mounted () {
-      if (this.$store.state.authorisedStatus === true){
-        // Информация юзера
-        axios({
-          method: 'get',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/`+this.$store.state.userId,
-          headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token')}
-        })
-          .then((response) => {
-            console.log(response.data)
-            this.test1 = response.data
-            console.log(this.test1.p_name)
-            // this.state.userName = response.data.data.name
-            // this.$store.state.userInfoId = response.data.data.id
-          })
-          .catch((error) => {
-            console.error(error)
-          })
-      }
-    }
   }
 </script>
 <style lang="scss">
