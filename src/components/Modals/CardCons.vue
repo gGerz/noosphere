@@ -65,7 +65,10 @@
                 </span>
               <span class="main_color font_xl">руб</span>
             </div>
-            <button class="btn btn-outline-primary btn-md ml-auto px-4 btn-buy font_l">Купить</button>
+            <!--<router-link class="btn btn-outline-primary m-2 my-sm-0" data-toggle="modal" data-target=".arbitration_modal" to="/videoroom">Video</router-link>-->
+            <router-link class="ml-auto" to="/videoroom">
+              <span class="btn btn-outline-primary btn-md px-4 btn-buy font_l" v-on:click="closeModal()">Купить</span>
+            </router-link>
           </div>
         </div>
       </div>
@@ -73,7 +76,12 @@
   </div>
 </template>
 <script>
+  import VideoRoom from '../../pages/VideoRoom'
+
   export default {
+    components: {
+      VideoRoom
+    },
     props: ['selectedIndex', 'selectedCard'],
     data(){
       return{
@@ -86,6 +94,11 @@
       },
       deleteSeconds(value){
         return value.slice(0, -3)
+      }
+    },
+    methods: {
+      closeModal() {
+        $('.card_cons_modal').modal('hide');
       }
     }
   }

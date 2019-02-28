@@ -89,7 +89,9 @@
                 </span>
                 <span class="main_color font_xl">руб</span>
               </div>
-              <button class="btn btn-outline-primary btn-md ml-auto px-4 btn-buy font_l">Купить</button>
+              <router-link class="ml-auto" to="/videoroom">
+                <span class="btn btn-outline-primary btn-md px-4 btn-buy font_l">Купить</span>
+              </router-link>
             </div>
           </div>
         </div>

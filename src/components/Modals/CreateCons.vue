@@ -13,11 +13,10 @@
                         <div class="col-lg-6 col-12">
                             <div class="form-group">
                                 <label class="m-0">Название заявки:</label>
-                                <input type="text" class="form-control inputText" required="required" aria-describedby="emailHelp" placeholder="">
+                                <input type="text" v-model="title" class="form-control inputText" required="required" aria-describedby="emailHelp" placeholder="">
                             </div>
                             <div class="form-group">
                                 <label for="">Компетенция:</label>
-
                                 <vue-select v-model="selected" label="competence" :options="$store.state.userComp.cpCom" placeholder="Компетенции" style="display: block">
                                     <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
                                         <div class="py-1">{{ option.competence }}</div>
@@ -28,21 +27,21 @@
                             </div>
                             <div class="form-group ">
                                 <label class="m-0">Дата:</label>
-                                <input type="date" class="form-control inputText" required="required" placeholder="">
+                                <input v-model="date" type="date" class="form-control inputText" required="required" placeholder="">
                             </div>
                             <div class="py-3 ">
                                 <label>Время:</label>
                                 <div class="">
                                     <div class="d-flex align-items-center">
-                                        <input class="form-control mr-2" type="text" placeholder="От">
+                                        <input v-model="begin" class="form-control mr-2" type="text" placeholder="От">
                                         <span class="mr-2">—</span>
-                                        <input class="form-control mr-2" type="text" placeholder="До">
+                                        <input v-model="end" class="form-control mr-2" type="text" placeholder="До">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="m-0">Цена:</label>
-                                <input type="text" class="form-control inputText" required="required" placeholder="">
+                                <input v-model="price" type="text" class="form-control inputText" required="required" placeholder="">
                             </div>
                         </div>
                         <div class="col-lg-6 col-12">
@@ -53,13 +52,13 @@
                             </div>
                             <div class="form-group">
                                 <label class="m-0">Описание консультации:</label>
-                                <textarea class="form-control" rows="5"></textarea>
+                                <textarea v-model="about" class="form-control" rows="5"></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-center">
-                    <button type="submit" class="btn btn-primary btn-shadow" @click="CLICK()">Создать</button>
+                    <button type="submit" class="btn btn-primary btn-shadow" @click="createCon()">Создать</button>
                 </div>
             </div>
         </div>
@@ -75,17 +74,67 @@
         },
         data() {
             return {
+                willCreateId: '',
+                title: '',
+                date: '',
+                begin: '',
+                end: '',
+                price: '',
+                about: '',
                 userInfo: '',
                 selectedIndex: '',
                 selectedCard: '',
-                options: [
-                    { value: 1, text: 'Физика' },
-                    { value: 2, text: 'Химия' },
-                    { value: 3, text: 'Английский язык' }
-                ],
+                options: '',
                 selected: '',
                 cons: [],
                 photos: []
+            }
+        },
+        methods: {
+            createCon () {
+                const formData = new FormData()
+                formData.append('con_title', this.title)
+                formData.append('con_sc_user_id', this.$store.state.userId)
+                formData.append('con_date', this.date)
+                formData.append('con_begin_time', this.begin)
+                formData.append('con_end_time', this.end)
+                formData.append('con_price', this.price)
+                formData.append('con_description', this.about)
+                formData.append('con_com_id', this.selected.com_id)
+
+                axios({
+                    method: 'post',
+                    url: `http://192.168.1.150/noosfera/public_html/api/v1/consultations`,
+                    data: formData
+                })
+                    .then(response => {
+                        this.willCreateId = response.data.con_id
+                        this.createConId()
+                    })
+                    .catch(response => {
+                        console.log(response)
+                    })
+            },
+
+            createConId() {
+
+                const formData1 = new FormData()
+                console.log('thisWillCreateId', this.willCreateId)
+                formData1.set('sc_con_id', this.willCreateId)
+                // console.log(this.$store.state.userInfo) // выводит 13
+
+                //formData1.set('sc_user_id', 5)
+                axios({
+                    method: 'post',
+                    url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings`,
+                    data: formData1
+                })
+                    .then(response => {
+                        console.log('response', response)
+                    })
+                    .catch(response => {
+                        console.log(response)
+                    })
             }
         },
         mounted() {
