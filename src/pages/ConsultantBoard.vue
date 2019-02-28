@@ -20,7 +20,7 @@
             <input class="form-control mr-2 search-item" type="text" placeholder="До">
           </div>
       </div>
-      <div class="col-1 px-0 search-btn btn text-grey">Поиск</div>
+      <div class="col-1 px-0 search-btn btn text-grey" >Поиск</div>
       <div class="ml-auto align-items-center d-flex"
            @onclick="createCons()"
            data-toggle="modal" data-target=".create_cons_modal"
@@ -34,7 +34,7 @@
           <div class="card-body cons-body">
             <div>
               <p class="mb-0 font_xl">{{con.sc_title}}</p>
-              <p class="mr-auto mb-0 text-grey font_l" >{{con.scCom.competence}}</p>
+              <p class="mr-auto mb-0 text-grey font_l" v-if="con.scCom != undefined">{{con.scCom.competence}}</p>
             </div>
             <div>
               <div class="d-flex align-items-center">
@@ -118,6 +118,7 @@
     data() {
       return {
         globalComps: [],
+        searchComp: '',
         selectedIndex: '',
         selectedCard: '',
         options: [
@@ -158,11 +159,10 @@
         url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?expand=scUser,scCom,tagCon`
       })
         .then((response) => {
-          console.log("Консультация",response)
+
           this.cons = response.data
+          console.log("Консультация",this.cons)
           this.$store.state.loader = false
-          console.log(this.cons)
-          console.log('FFF',this.cons[0].scUser.p_name  )
         })
         .catch((error) => {
           console.error(error)
@@ -172,10 +172,8 @@
           url: `http://192.168.1.150/noosfera/public_html/api/v1/coms`,
         })
           .then((response) => {
+            console.log("Компетенция",response.data)
             this.globalComps = response.data
-
-            console.log('nisu',this.globalComps)
-
           })
           .catch((error) => {
             console.error(error)
@@ -184,9 +182,6 @@
     methods: {
       selectIndex(i){
         this.selectedCard = this.cons[i]
-      },
-      take_photo () {
-        this.photo = this.$refs.webcam.getPhoto();
       }
     },
     filters: {
@@ -194,7 +189,7 @@
         return parseInt(value * 100) / 100
       },
       deleteSeconds(value){
-        return value.slice(0, -3)
+        if (value) return value.slice(0, -3)
       }
     }
   }

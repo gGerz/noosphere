@@ -12,11 +12,12 @@
                     <div class="row">
                         <div class="col-lg-6 col-12">
                             <div class="form-group">
-                                <label class="m-0">Название заявки:</label>
+                                <label class="m-0">Название консультации:</label>
                                 <input type="text" v-model="title" class="form-control inputText" required="required" aria-describedby="emailHelp" placeholder="">
                             </div>
                             <div class="form-group">
                                 <label for="">Компетенция:</label>
+                                {{ selected.com_id }}
                                 <vue-select v-model="selected" label="competence" :options="$store.state.userComp.cpCom" placeholder="Компетенции" style="display: block">
                                     <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
                                         <div class="py-1">{{ option.competence }}</div>
@@ -58,7 +59,11 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-center">
-                    <button type="submit" class="btn btn-primary btn-shadow" @click="createCon()">Создать</button>
+                    <router-link class="" to="/videoroom">
+                        <span class="btn btn-primary btn-shadow" v-on:click="closeModal()">
+                            Создать
+                        </span>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -91,24 +96,29 @@
             }
         },
         methods: {
+            closeModal() {
+                $('.create_cons_modal').modal('hide');
+            },
             createCon () {
                 const formData = new FormData()
-                formData.append('con_title', this.title)
-                formData.append('con_sc_user_id', this.$store.state.userId)
-                formData.append('con_date', this.date)
-                formData.append('con_begin_time', this.begin)
-                formData.append('con_end_time', this.end)
-                formData.append('con_price', this.price)
-                formData.append('con_description', this.about)
-                formData.append('con_com_id', this.selected.com_id)
+                console.log('тайтл', this)
+                formData.append('sc_title', this.title)
+                formData.append('sc_user_id', this.$store.state.userId)
+                formData.append('sc_date', this.date)
+                formData.append('sc_begin_time', this.begin)
+                formData.append('sc_end_time', this.end)
+                formData.append('sc_price', this.price)
+                formData.append('sc_description', this.about)
+                // formData.append('sc_com_id', this.option.com_id)
 
                 axios({
                     method: 'post',
-                    url: `http://192.168.1.150/noosfera/public_html/api/v1/consultations`,
+                    url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings`,
                     data: formData
                 })
                     .then(response => {
-                        this.willCreateId = response.data.con_id
+                        console.log("ответ",response.data.sc_id)
+                        this.willCreateId = response.data.sc_id
                         this.createConId()
                     })
                     .catch(response => {
@@ -120,13 +130,14 @@
 
                 const formData1 = new FormData()
                 console.log('thisWillCreateId', this.willCreateId)
-                formData1.set('sc_con_id', this.willCreateId)
+                formData1.set('con_sc_id', this.willCreateId)
+
                 // console.log(this.$store.state.userInfo) // выводит 13
 
                 //formData1.set('sc_user_id', 5)
                 axios({
                     method: 'post',
-                    url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings`,
+                    url: `http://192.168.1.150/noosfera/public_html/api/v1/consultations`,
                     data: formData1
                 })
                     .then(response => {

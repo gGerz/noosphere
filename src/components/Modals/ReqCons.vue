@@ -3,39 +3,46 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel1">Заявка на консультацию</h5>
+                    <h5 class="modal-title" id="exampleModalLabel1">Создать заявку</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body signin px-2 px-sm-5">
+                <div class="modal-body signin py-5 px-2 px-sm-5">
                     <div class="row">
                         <div class="col-lg-6 col-12">
                             <div class="form-group">
                                 <label class="m-0">Название заявки:</label>
-                                <input type="text" class="form-control inputText" required="required" aria-describedby="emailHelp" placeholder="">
+                                <input type="text" v-model="title" class="form-control inputText" required="required" aria-describedby="emailHelp" placeholder="">
                             </div>
                             <div class="form-group">
                                 <label for="">Компетенция:</label>
-                                <input type="text" class="form-control inputText" required="required" placeholder="">
+                                {{ selected.com_id }}
+                                <vue-select v-model="selected" label="competence" :options="globalComps" placeholder="Компетенции"  style="display: block">
+                                    <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
+                                        <div class="py-1">{{ option.competence }}</div>
+                                    </template>
+                                    <span slot="no-options">Ничего не найдено</span>
+                                </vue-select>
+
                             </div>
                             <div class="form-group ">
                                 <label class="m-0">Дата:</label>
-                                <input type="date" class="form-control inputText" required="required" placeholder="">
+                                <input v-model="date" type="date" class="form-control inputText" required="required" placeholder="">
                             </div>
                             <div class="py-3 ">
                                 <label>Время:</label>
                                 <div class="">
                                     <div class="d-flex align-items-center">
-                                        <input class="form-control mr-2" type="text" placeholder="От">
+                                        <input v-model="begin" class="form-control mr-2" type="text" placeholder="От">
                                         <span class="mr-2">—</span>
-                                        <input class="form-control mr-2" type="text" placeholder="До">
+                                        <input v-model="end" class="form-control mr-2" type="text" placeholder="До">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="m-0">Цена:</label>
-                                <input type="text" class="form-control inputText" required="required" placeholder="">
+                                <input v-model="price" type="text" class="form-control inputText" required="required" placeholder="">
                             </div>
                         </div>
                         <div class="col-lg-6 col-12">
@@ -45,20 +52,136 @@
                                 <small id="" class="form-text text-muted">p.s.Через пробелы</small>
                             </div>
                             <div class="form-group">
-                                <label class="m-0">Что я хочу узнать:</label>
-                                <textarea class="form-control" rows="5"></textarea>
+                                <label class="m-0">Описание консультации:</label>
+                                <textarea v-model="about" class="form-control" rows="5"></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-center">
-                    <button type="submit" class="btn btn-primary btn-shadow" @click="CLICK()">Создать</button>
+                    <router-link class="" to="/videoroom">
+                        <span class="btn btn-primary btn-shadow" v-on:click="closeModal()">
+                            Создать
+                        </span>
+                    </router-link>
                 </div>
             </div>
         </div>
     </div>
 </template>
+<script>
+    import VueSelect from 'vue-select'
+    import axios from 'axios'
 
+    export default {
+        components: {
+            VueSelect
+        },
+        data() {
+            return {
+                willCreateId: '',
+                globalComps: [],
+                title: '',
+                date: '',
+                begin: '',
+                end: '',
+                price: '',
+                about: '',
+                userInfo: '',
+                selectedIndex: '',
+                selectedCard: '',
+                options: '',
+                selected: '',
+                cons: [],
+                photos: [],
+                options: []
+            }
+        },
+        methods: {
+            closeModal() {
+                $('.req_cons_modal').modal('hide');
+            },
+            createCon () {
+                const formData = new FormData()
+                console.log('тайтл', this)
+                formData.append('pc_title', this.title)
+                formData.append('pc_user_id', this.$store.state.userId)
+                formData.append('pc_date', this.date)
+                formData.append('pc_begin_time', this.begin)
+                formData.append('pc_end_time', this.end)
+                formData.append('pc_price', this.price)
+                formData.append('pc_description', this.about)
+                // formData.append('sc_com_id', this.option.com_id)
+
+                axios({
+                    method: 'post',
+                    url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases`,
+                    data: formData
+                })
+                    .then(response => {
+                        console.log("ответ",response.data.pc_id)
+                        this.willCreateId = response.data.pc_id
+                        this.createConId()
+                    })
+                    .catch(response => {
+                        console.log(response)
+                    })
+            },
+            createConId() {
+                const formData1 = new FormData()
+                console.log('thisWillCreateId', this.willCreateId)
+                formData1.set('con_pc_id', this.willCreateId)
+
+                // console.log(this.$store.state.userInfo) // выводит 13
+
+                //formData1.set('sc_user_id', 5)
+                axios({
+                    method: 'post',
+                    url: `http://192.168.1.150/noosfera/public_html/api/v1/consultations`,
+                    data: formData1
+                })
+                    .then(response => {
+                        console.log('response', response)
+                    })
+                    .catch(response => {
+                        console.log(response)
+                    })
+            }
+        },
+        mounted() {
+            axios({
+                method: 'get',
+                url: `http://192.168.1.150/noosfera/public_html/api/v1/coms`,
+            })
+                .then((response) => {
+                    this.globalComps = response.data
+
+                    console.log('nisu',this.globalComps)
+
+                })
+                .catch((error) => {
+                    console.error(error)
+                })
+            if (this.$store.state.authorisedStatus === true) {
+                // Информация юзера
+                axios({
+                    method: 'get',
+                    url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + '?expand=cpCom',
+                    // url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?expand=scUser,scCom,tagCon`,
+                    headers: {'Authorization': `Bearer ${localStorage.token}`}
+                })
+                    .then((response) => {
+                        this.$store.state.userComp = response.data
+                        this.userInfo = response.data
+                        console.log(this.userInfo)
+                    })
+                    .catch((error) => {
+                        console.error(error)
+                    })
+            }
+        }
+    }
+</script>
 <style lang="scss" scoped>
     .inputText {
     }

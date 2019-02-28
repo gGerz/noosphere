@@ -36,7 +36,7 @@
           <div class="card-body req-body">
             <div>
               <p class="mb-0 font_xl">{{req.pc_title}}</p>
-              <p class="mr-auto mb-0 text-grey font_l" >{{req.pcCom.competence}}</p>
+              <p class="mr-auto mb-0 text-grey font_l" v-if="req.pcCom != undefined">{{req.pcCom.competence}}</p>
             </div>
             <div class="d-flex">
               <div>
@@ -92,6 +92,7 @@
     },
     data() {
       return {
+        globalComps: [],
         options: [
           { value: 1, text: 'One' },
           { value: 2, text: 'two' },
@@ -130,17 +131,14 @@
               })
       axios({
         method: 'get',
-        //url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?expand=scUser,scCom,tagCon`
-        url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases?expand=pcCom,pcUser,tagCon`
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases?expand=pcCom,pcUser,tagCon`
       })
               .then((response) => {
                 console.log("Заявка",response)
+
                 this.reqs = response.data
-                //this.tags = response.data.tagCon;
                 this.$store.state.loader = false
-                console.log("Респонс",response.data)
-                console.log("Компетенция",response.data[0].pcCom.competence)
-                //console.log("nice",response.data[0].pc_begin_time)
+                console.log("Компетенция",this.reqs)
               })
               .catch((error) => {
                 console.error(error)
@@ -150,10 +148,8 @@
         url: `http://192.168.1.150/noosfera/public_html/api/v1/coms`,
       })
               .then((response) => {
+                console.log("Компетенция",response)
                 this.globalComps = response.data
-
-                console.log('nisu',this.globalComps)
-
               })
               .catch((error) => {
                 console.error(error)
@@ -169,7 +165,7 @@
         return parseInt(value * 100) / 100
       },
       deleteSeconds(value){
-        return value.slice(0, -3)
+        if (value) return value.slice(0, -3)
       }
     }
   }
@@ -283,6 +279,23 @@
     font-size: 23px;
   }
 
+  .search-item {
+    background: #ffffff00;
+    border: 1px solid rgba(60,60,60,.26);
+    height: 48px;
+  }
+
+  .search-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    height: 48px;
+    background: #E4E4E4;
+    &:hover {
+      background: #d6d6d6;
+    }
+  }
 
   /*Настройка vue-select*/
   .clear, .dropdown-toggle::after{
