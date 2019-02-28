@@ -27,7 +27,7 @@ export default new VueRouter({
     {
       path: '/videoroom',
       component: VideoRoom
-    },
+    }
   ],
   mode: 'history'
 })
