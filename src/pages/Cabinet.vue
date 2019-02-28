@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h2 class="my-4 font_xxl" >Личный кабинет id:{{$store.state.userInfo}}</h2>
+      <h2 class="my-4 font_xxl" >Личный кабинет</h2>
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
           <a class="nav-link nav-link-cabinet active" id="home-tab" data-toggle="tab" href="#general" role="tab" aria-controls="home" aria-selected="true"><i class="fas fa-user-graduate"></i>Общее</a>
