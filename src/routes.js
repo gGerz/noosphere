@@ -5,6 +5,7 @@ import TicketBoard from './pages/TicketBoard'
 import About from './pages/About'
 import Cabinet from './pages/Cabinet'
 import VideoRoom from './pages/VideoRoom.vue'
+import AnotherOne from './pages/AnotherOne.vue'
 
 export default new VueRouter({
   routes: [
@@ -27,7 +28,11 @@ export default new VueRouter({
     {
       path: '/videoroom',
       component: VideoRoom
-    }
+    },
+    {
+      path: '/anotherone',
+      component: AnotherOne
+    },
   ],
   mode: 'history'
 })

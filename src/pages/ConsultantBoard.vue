@@ -182,6 +182,7 @@
     methods: {
       selectIndex(i){
         this.selectedCard = this.cons[i]
+        this.$store.state.anotherUserId = this.selectedCard.scUser.p_id
       }
     },
     filters: {

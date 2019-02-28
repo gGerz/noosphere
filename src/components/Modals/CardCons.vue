@@ -11,11 +11,13 @@
             <p class="mr-auto mb-0 text-grey font_l" v-if="selectedCard.scCom !== undefined">{{selectedCard.scCom.competence}}</p>
           </div>
           <div class="d-flex align-items-center py-3">
-            <div>
-              <img class="img_master2" src="../../assets/img/ava.jpg" >
-              <!-- Пока что будет выдавать ошибку в консоль, тк фотки подгружаются после построения карточек-->
-              <!--<img class="img_master2" :src="photos[i].url" > -->
-            </div>
+            <router-link to="/anotherone">
+              <span @click="closeModal">
+                <img class="img_master2" src="../../assets/img/ava.jpg" >
+                  <!-- Пока что будет выдавать ошибку в консоль, тк фотки подгружаются после построения карточек-->
+                  <!--<img class="img_master2" :src="photos[i].url" > -->
+              </span>
+            </router-link>
             <div>
               <div class="font_m" v-if="selectedCard.scUser !== undefined">{{selectedCard.scUser.p_name}}</div>
               <div class="m-0" title="Рейтинг font_m">
@@ -85,7 +87,7 @@
     props: ['selectedIndex', 'selectedCard'],
     data(){
       return{
-
+        selectedProf: ''
       }
     },
     filters: {
@@ -99,6 +101,10 @@
     methods: {
       closeModal() {
         $('.card_cons_modal').modal('hide');
+      },
+      setUser(){
+          $('.card_cons_modal').modal('hide');
+          this.$store.state.anotherUserId = this.selectedCard.scUser.p_id
       }
     }
   }
