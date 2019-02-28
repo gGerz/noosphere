@@ -90,7 +90,6 @@
     },
     data() {
       return {
-        globalComps: [],
         options: [
           { value: 1, text: 'One' },
           { value: 2, text: 'two' },
