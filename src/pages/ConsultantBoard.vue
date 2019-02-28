@@ -105,14 +105,10 @@
   import VueSelect from 'vue-select'
   import CardCons from "../components/Modals/CardCons"
   import CreateCons from '../components/Modals/CreateCons.vue'
-  import VueWebcam from 'vue-web-cam'
-  import WebRTC from 'vue-webrtc'
 
 
   export default {
     components: {
-      VueWebcam,
-      WebRTC,
       CardCons,
       CreateCons,
       VueSelect
