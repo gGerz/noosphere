@@ -30,7 +30,7 @@
       <create-cons />
     </div>
     <div class="row">
-      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 card-pad" @click="selectIndex(i)" data-toggle="modal" data-target=".card_cons_modal" v-for="(con, i) in computedList">
+      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 card-pad" @click="selectIndex(i)" data-toggle="modal" data-target=".card_cons_modal" v-for="(con, i) in cons">
         <div class="card">
           <div class="card-body cons-body">
             <div>
@@ -139,7 +139,8 @@
         ],
         selected: '',
         cons: [],
-        photos: []
+        photos: [],
+          testone: 'Химия'
       }
     },
     mounted () {
@@ -194,13 +195,18 @@
         if (value) return value.slice(0, -3)
       }
     },
-      computed: {
-          computedList () {
-              return this.cons.filter(function (con) {
-                  return con.scCom.competence !== 0
-              })
-          }
-      }
+    // computed: {
+    //   computedList () {
+    //       return this.cons.filter(function (con) {
+    //           if (this.selected !== undefined){
+    //               console.log('1111111111122')
+    //               return this.con.scCom.competence === this.selected.competence
+    //           } else {
+    //               return this.con
+    //           }
+    //       })
+    //   }
+    //   }
   }
 </script>
 <style lang="scss">

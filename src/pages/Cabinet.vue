@@ -27,9 +27,9 @@
             <div class="d-lg-flex d-md-flex d-block align-items-center">
               <div class="d-flex align-items-center ">
                   <img class="ava_cabinet" src="../assets/img/ava.jpg">
-                  <div class="text-dark h3 m-0">{{userInfo.p_name}}</div> {{userInfo}}
+                  <div class="text-dark h3 m-0">{{userInfo.p_name}}</div>
               </div>
-              <div class="ml-lg-5 ml-md-5"><a href="" class="dashed text-grey">Изменить данные</a></div>
+              <div class="ml-lg-5 ml-md-5"><a href="" class="dashed text-grey" v-if="0">Изменить данные</a></div>
             </div>
               <div class="row user_info">
                   <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
@@ -101,13 +101,15 @@
                   </div>
                   <div class="card card-req mb-3" v-for="(con, i) in cons" v-if="con != undefined">
                       <div class="row card-body font_m d-flex align-items-center">
-                          <div class="col-12 col-lg-6 d-flex justify-content-lg-start justify-content-around font_l" v-if="con != null && con.scCom != undefined">{{con.scCom.competence}}</div>
+                          <div class="col-12 col-lg-6 d-flex justify-content-lg-start justify-content-around font_l" v-if="con != null">
+                              {{con.sc_title}}
+                          </div>
                           <div class="col-12 col-lg-6 d-flex d-lg-block text-center d-xl-flex justify-content-lg-end justify-content-around pl-0 mt-2 mt-lg-0">
                               <div class="mr-xl-2" v-if="con.sc_date != undefined">
                                   <i class="fas fa-calendar-week mr-1 text-grey"></i>{{con.sc_date}}
                               </div>
                               <div v-if="con.sc_begin_time != undefined">
-                                  <i class="far fa-clock mr-1 text-grey"></i>{{con.sc_begin_time | deleteSeconds}} - {{con.sc_end_time | deleteSeconds}}
+                                  <i class="far fa-clock mr-1 text-grey"></i>{{con.sc_begin_time}} - {{con.sc_end_time }}
                               </div>
                           </div>
                       </div>
@@ -116,9 +118,38 @@
           </div>
       </div>
       <!-- ВКЛАДКА ЗАЯВКИ -->
-
+        <div class="tab-pane" id="tickets">
+            <div class="cab_card">
+                <div class="card-body-main">
+                    <div class="row mb-4">
+                        <div class="col-3">
+                            <vue-select v-model="selected"  :options="options" placeholder="Компетенции" label="text" style="display: block">
+                                <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
+                                    <div class="py-1">{{ option.text }}</div>
+                                </template>
+                                <span slot="no-options">Ничего не найдено</span>
+                            </vue-select>
+                        </div>
+                    </div>
+                    <div class="card card-req mb-3" v-for="(con, i) in reqs" v-if="con != undefined">
+                        <div class="row card-body font_m d-flex align-items-center">
+                            <div class="col-12 col-lg-6 d-flex justify-content-lg-start justify-content-around font_l" v-if="con != null">
+                                {{con.pc_title}}
+                            </div>
+                            <div class="col-12 col-lg-6 d-flex d-lg-block text-center d-xl-flex justify-content-lg-end justify-content-around pl-0 mt-2 mt-lg-0">
+                                <div class="mr-xl-2" v-if="con.pc_date != undefined">
+                                    <i class="fas fa-calendar-week mr-1 text-grey"></i>{{con.pc_date}}
+                                </div>
+                                <div v-if="con.pc_begin_time != undefined">
+                                    <i class="far fa-clock mr-1 text-grey"></i>{{con.pc_begin_time}} - {{con.pc_end_time }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
       <!-- ВКЛАДКА АРХИВ -->
-
     </div>
   </div>
 </template>
@@ -157,28 +188,7 @@
         selected: '',
         competencies: [],
           cons: [],
-       ticketConsultations: [
-          {
-            date: '15/01/2019',
-            time: '14:05 - 16:05',
-            competencies: 'Как сделать сайт если я знаю только бутстрап '
-          },
-          {
-            date: '13/01/2019',
-            time: '14:05 - 16:05',
-            competencies: 'Как рисовать в стиле суми-ё'
-          },
-          {
-            date: '11/01/2019',
-            time: '14:05',
-            competencies: 'Земледелие'
-          },
-          {
-            date: '06/01/2019',
-            time: '14:05',
-            competencies: 'Здоровье'
-          },
-        ]
+          reqs: []
       }
     },
     methods: {
@@ -240,7 +250,7 @@
         })
             .then((response) => {
               this.userInfo = response.data
-              console.log(this.userInfo)
+              console.log('infouser',this.userInfo.p_id)
             })
             .catch((error) => {
               console.error(error)
@@ -248,11 +258,22 @@
       }
         axios({
             method: 'get',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + 13 + `?expand=conSUser`
+                url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + `?expand=conSUser`
         })
             .then((response) => {
                 this.cons = response.data.conSUser
                 console.log("Консультация",response.data.conSUser)
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+        axios({
+            method: 'get',
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + `?expand=conPUser`
+        })
+            .then((response) => {
+                this.reqs = response.data.conPUser
+                console.log("Заявка",response)
                 //this.$store.state.loader = false
             })
             .catch((error) => {

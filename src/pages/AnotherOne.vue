@@ -15,7 +15,8 @@
                 </div>
                 <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
                     <div>Пол</div>
-                    <div>{{anotherUserInfo.p_gender}}</div>
+                    <div v-if="anotherUserInfo.p_gender">Мужской</div>
+                    <div v-else>Женский</div>
                 </div>
                 <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
                     <div>Дата рождения</div>

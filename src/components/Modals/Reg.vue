@@ -66,7 +66,9 @@
             console.log('Ответ регистрации',response)
 
             if (response.statusText == "Created") {
-
+              this.mail = ''
+              this.password = ''
+              this.resetPassword = ''
               this.$store.state.newId = response.data.id
               console.log('Регистрация',response.data.id)
               $('.sign_up_modal').modal('hide');
