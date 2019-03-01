@@ -53,33 +53,39 @@
     },
     methods: {
       reg() {
-        if (this.password === this.resetPassword){
-          const formData = new FormData()
-          formData.append('email', this.mail)
-          formData.append('password', this.password)
-          axios({
-            method: 'post',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/users`,
-            data: formData
-          })
-          .then(response => {
-            console.log('Ответ регистрации',response)
+        if (this.password !== '' && this.resetPassword !== '' && this.mail !== ''
+        ) {
+          if (this.password === this.resetPassword){
+            const formData = new FormData()
+            formData.append('email', this.mail)
+            formData.append('password', this.password)
+            axios({
+              method: 'post',
+              url: `http://192.168.1.150/noosfera/public_html/api/v1/users`,
+              data: formData
+            })
+                    .then(response => {
+                      console.log('Ответ регистрации',response)
 
-            if (response.statusText == "Created") {
-              this.mail = ''
-              this.password = ''
-              this.resetPassword = ''
-              this.$store.state.newId = response.data.id
-              console.log('Регистрация',response.data.id)
-              $('.sign_up_modal').modal('hide');
-              $('.sign_up_next_modal').modal('show');
-            }
-          })
-          .catch(response => {
-          })
-        } else {
-          alert('Пароли не совпадают')
+                      if (response.statusText == "Created") {
+                        this.mail = ''
+                        this.password = ''
+                        this.resetPassword = ''
+                        this.$store.state.newId = response.data.id
+                        console.log('Регистрация',response.data.id)
+                        $('.sign_up_modal').modal('hide');
+                        $('.sign_up_next_modal').modal('show');
+                      }
+
+                    })
+                    .catch(error => {
+                      alert('Ошибка сервера')
+                    })
+          } else {
+            alert('Пароли не совпадают')
+          }
         }
+        else alert('Заполните все поля')
       }
     }
   }
