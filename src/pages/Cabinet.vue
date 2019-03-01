@@ -100,7 +100,6 @@
                       </div>
                   </div>
                   <div class="card card-req mb-3" v-for="(con, i) in cons">
-                      {{ cons}}
                       <div class="row card-body font_m d-flex align-items-center">
                           <div class="col-12 col-lg-6 d-flex justify-content-lg-start justify-content-around font_l" v-if="con.scCom != undefined">{{con.scCom.competence}}</div>
                           <div class="col-12 col-lg-6 d-flex d-lg-block text-center d-xl-flex justify-content-lg-end justify-content-around pl-0 mt-2 mt-lg-0">

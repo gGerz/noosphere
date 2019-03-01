@@ -7,7 +7,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
           <div class="pb-2">
-            <p class="mb-0 font_xl">{{selectedCard.sc_title}}</p>{{selectedCard}}
+            <p class="mb-0 font_xl">{{selectedCard.sc_title}}</p>
             <p class="mr-auto mb-0 text-grey font_l" v-if="selectedCard.scCom !== undefined">{{selectedCard.scCom.competence}}</p>
           </div>
           <div class="d-flex align-items-center py-3">

@@ -17,7 +17,6 @@
                             </div>
                             <div class="form-group">
                                 <label for="">Компетенция:</label>
-                                {{ selected.com_id }}
                                 <vue-select v-model="selected" label="competence" :options="globalComps" placeholder="Компетенции"  style="display: block">
                                     <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
                                         <div class="py-1">{{ option.competence }}</div>
@@ -60,7 +59,7 @@
                 </div>
                 <div class="modal-footer justify-content-center">
                     <router-link class="" to="/videoroom">
-                        <span class="btn btn-primary btn-shadow" v-on:click="closeModal()">
+                        <span class="btn btn-primary btn-shadow" v-on:click="createCon()">
                             Создать
                         </span>
                     </router-link>
@@ -111,7 +110,8 @@
                 formData.append('pc_end_time', this.end)
                 formData.append('pc_price', this.price)
                 formData.append('pc_description', this.about)
-                formData.append('sc_com_id', this.selected.com_id)
+                this.compCons = this.selected.com_id
+                formData.append('pc_com_id', this.compCons)
 
                 axios({
                     method: 'post',
@@ -126,6 +126,7 @@
                     .catch(response => {
                         console.log(response)
                     })
+                this.closeModal()
             },
             createConId() {
                 const formData1 = new FormData()

@@ -34,7 +34,6 @@
           <div class="card-body cons-body">
             <div>
               <p class="mb-0 font_xl">{{con.sc_title}}
-              all: {{con}}
               </p>
               <p class="mr-auto mb-0 text-grey font_l" v-if="con.scCom != undefined">{{con.scCom.competence}}</p>
             </div>
@@ -193,7 +192,14 @@
       deleteSeconds(value){
         if (value) return value.slice(0, -3)
       }
-    }
+    },
+      computed: {
+          computedList () {
+              return this.cons.filter(function (con) {
+                  return con.scCom.competence == "Химия"
+              })
+          }
+      }
   }
 </script>
 <style lang="scss">

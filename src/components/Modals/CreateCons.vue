@@ -92,7 +92,8 @@
                 options: '',
                 selected: '',
                 cons: [],
-                photos: []
+                photos: [],
+                compCons: ''
             }
         },
         methods: {
@@ -109,7 +110,8 @@
                 formData.append('sc_end_time', this.end)
                 formData.append('sc_price', this.price)
                 formData.append('sc_description', this.about)
-                // formData.append('sc_com_id', this.option.com_id)
+                this.compCons = this.selected.com_id
+                formData.append('sc_com_id', this.compCons)
 
                 axios({
                     method: 'post',
