@@ -99,9 +99,9 @@
                           </vue-select>
                       </div>
                   </div>
-                  <div class="card card-req mb-3" v-for="(con, i) in cons">
+                  <div class="card card-req mb-3" v-for="(con, i) in cons" v-if="con != undefined">
                       <div class="row card-body font_m d-flex align-items-center">
-                          <div class="col-12 col-lg-6 d-flex justify-content-lg-start justify-content-around font_l" v-if="con.scCom != undefined">{{con.scCom.competence}}</div>
+                          <div class="col-12 col-lg-6 d-flex justify-content-lg-start justify-content-around font_l" v-if="con != null && con.scCom != undefined">{{con.scCom.competence}}</div>
                           <div class="col-12 col-lg-6 d-flex d-lg-block text-center d-xl-flex justify-content-lg-end justify-content-around pl-0 mt-2 mt-lg-0">
                               <div class="mr-xl-2" v-if="con.sc_date != undefined">
                                   <i class="fas fa-calendar-week mr-1 text-grey"></i>{{con.sc_date}}
@@ -116,78 +116,9 @@
           </div>
       </div>
       <!-- ВКЛАДКА ЗАЯВКИ -->
-      <div class="tab-pane " id="tickets">
-        <div class="cab_card">
-            <div class="card-body-main">
-              <div class="row mb-4">
-                <div class="col-3">
-                  <vue-select v-model="selected"  :options="options" placeholder="Компетенции" label="text" style="display: block">
-                    <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
-                      <div class="py-1">{{ option.text }}</div>
-                    </template>
-                    <span slot="no-options">Ничего не найдено</span>
-                  </vue-select>
-                </div>
-              </div>
-                <div class="card card-req mb-3" v-for="(item, i) in ticketConsultations">
-                    <div class="row card-body font_m d-flex align-items-center">
-                        <div class="col-12 col-lg-6 d-flex justify-content-lg-start justify-content-around font_l">{{item.competencies}}</div>
-                        <div class="col-12 col-lg-3 d-flex d-lg-block text-center d-xl-flex justify-content-lg-end justify-content-around pl-0 mt-2 mt-lg-0">
-                            <div class="mr-xl-2">
-                                <i class="fas fa-calendar-week mr-1 text-grey"></i>{{item.date}}
-                            </div>
-                            <div>
-                                <i class="far fa-clock mr-1 text-grey"></i>{{item.time}}
-                            </div>
-                        </div>
 
-                        <div class="col-md-12 col-lg-3 d-flex d-lg-block text-center d-xl-flex justify-content-lg-end justify-content-around font_s pl-0 mt-2 mt-lg-0">
-                            <div class="">
-                                <a href="#" class="text-success"><i class="fas fa-pencil-alt mr-2"></i>Изменить</a>
-                            </div>
-                            <div class="ml-xl-4">
-                                <a href="#" class="text-danger" @click="cancelTicket(i)"><i class="fas fa-times mr-2"></i>Отменить</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-      </div>
       <!-- ВКЛАДКА АРХИВ -->
-      <div class="tab-pane" id="archive">
-          <div class="cab_card">
-              <div class="card-body-main">
-                  <div class="row mb-4">
-                      <div class="col-3">
-                          <vue-select v-model="selected"  :options="options" placeholder="Компетенции" label="text" style="display: block">
-                              <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
-                                  <div class="py-1">{{ option.text }}</div>
-                              </template>
-                              <span slot="no-options">Ничего не найдено</span>
-                          </vue-select>
-                      </div>
-                  </div>
-                  <div class="card card-req mb-3" v-for="(item, i) in cons">
-                      <div class="row card-body font_m d-flex align-items-center">
-                          <div class="col-12 col-lg-6 d-flex justify-content-lg-start justify-content-around font_l">{{item.competencies}}</div>
-                          <div class="col-12 col-lg-3 d-flex d-lg-block text-center d-xl-flex justify-content-lg-end justify-content-around pl-0 mt-2 mt-lg-0">
-                              <div class="mr-xl-2">
-                                  <i class="fas fa-calendar-week mr-1 text-grey"></i>{{item.date}}
-                              </div>
-                              <div>
-                                  <i class="far fa-clock mr-1 text-grey"></i>{{item.time}}
-                              </div>
-                          </div>
 
-                          <div class="col-md-12 col-lg-3 d-flex d-lg-block text-center d-xl-flex justify-content-lg-end justify-content-around font_s pl-0 mt-2 mt-lg-0">
-                             Вы: учитель
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
     </div>
   </div>
 </template>
@@ -264,7 +195,7 @@
             })
                 .then((response) => {
                     this.userInfo = response.data
-                    console.log(this.userInfo)
+                    console.log('инфа',this.userInfo)
                 })
                 .catch((error) => {
                     console.error(error)
@@ -317,12 +248,12 @@
       }
         axios({
             method: 'get',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?expand=scUser,scCom,tagCon`
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + 13 + `?expand=conSUser`
         })
             .then((response) => {
-                this.cons = response.data
-                console.log("Консультация",this.cons)
-                this.$store.state.loader = false
+                this.cons = response.data.conSUser
+                console.log("Консультация",response.data.conSUser)
+                //this.$store.state.loader = false
             })
             .catch((error) => {
                 console.error(error)

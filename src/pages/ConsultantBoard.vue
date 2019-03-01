@@ -3,6 +3,7 @@
     <h2 class="my-4 font_xxl" >Доска консультаций</h2>
     <div class="row mb-4 align-items-center">
       <div class="col-3">
+              {{selected.competence}}
         <vue-select v-model="selected" label="competence" :options="globalComps" placeholder="Компетенции"  style="display: block">
           <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
             <div class="py-1">{{ option.competence }}</div>
@@ -29,7 +30,7 @@
       <create-cons />
     </div>
     <div class="row">
-      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 card-pad" @click="selectIndex(i)" data-toggle="modal" data-target=".card_cons_modal" v-for="(con, i) in cons">
+      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 card-pad" @click="selectIndex(i)" data-toggle="modal" data-target=".card_cons_modal" v-for="(con, i) in computedList">
         <div class="card">
           <div class="card-body cons-body">
             <div>
@@ -196,7 +197,7 @@
       computed: {
           computedList () {
               return this.cons.filter(function (con) {
-                  return con.scCom.competence == "Химия"
+                  return con.scCom.competence !== 0
               })
           }
       }
