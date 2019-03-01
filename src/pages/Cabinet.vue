@@ -12,9 +12,6 @@
         <li class="nav-item">
           <a class="nav-link nav-link-cabinet" id="messages-tab" data-toggle="tab" href="#tickets" role="tab" aria-controls="messages" aria-selected="false"><i class="far fa-list-alt"></i>Мои заявки</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link nav-link-cabinet" id="settings-tab" data-toggle="tab" href="#archive" role="tab" aria-controls="settings" aria-selected="false"><i class="far fa-calendar-times"></i>Архив занятий</a>
-        </li>
             <div class="ml-auto" @onclick="createCons()"
                  data-toggle="modal" data-target=".create_cons_modal"
             ><i class="far fa-plus-square mr-2"></i><span class="dashed2">Создать карточку консультации</span></div>
@@ -30,42 +27,47 @@
             <div class="d-lg-flex d-md-flex d-block align-items-center">
               <div class="d-flex align-items-center ">
                   <img class="ava_cabinet" src="../assets/img/ava.jpg">
-                  <div class="text-dark h3 m-0">{{userInfo.p_name}}</div>
+                  <div class="text-dark h3 m-0">{{userInfo.p_name}}</div> {{userInfo}}
               </div>
               <div class="ml-lg-5 ml-md-5"><a href="" class="dashed text-grey">Изменить данные</a></div>
             </div>
               <div class="row user_info">
                   <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
                       <div>E-mail</div>
-                      <div>leo228@mail.ru</div>
+                      <div>-</div>
                   </div>
                   <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
                       <div>Телефон</div>
-                      <div>+7 999 888 77 66</div>
+                      <div>-</div>
                   </div>
                   <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
                       <div>Пароль</div>
-                      <div>**********</div>
+                      <div>-</div>
                   </div>
                   <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
                       <div>Дата рождения</div>
-                      <div>15.04.1452</div>
+                      <div>{{userInfo.p_date}}</div>
                   </div>
                   <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto mx-sm-0">
                       <div>Пол</div>
-                      <div>Мужской</div>
+                      <div v-if="userInfo.p_gender">Мужской</div>
+                      <div v-else>Женский</div>
                   </div>
               </div>
               <div class="row">
                   <div class="spec col-10 col-xs-12 col-sm-10 col-md-10 col-lg-4 px-3">
                       <div class="text-grey font_s">Компетенции</div>
+                      <span class="ml-auto" @onclick="createComp()"
+                           data-toggle="modal" data-target=".create_comp_modal"
+                      >
+                          <i class="far fa-plus-square mr-2"></i>
+                          <span class="dashed2">Создать</span>
+                      </span>
+                      <create-comp @updateUserInfo="updateUserInfo"></create-comp>
                       <div class="d-flex justify-content-between mt-1 mr-4" v-for="competence in userInfo.cpCom">
                           <div>{{competence.competence}}</div>
                           <div class="d-flex justify-content-between">
-                              <div>0<span class="text-grey">/1</span></div>
-                              <div>
-                                  <i class="fas fa-times ml-4"></i>
-                              </div>
+                              <i @click="deleteComp(competence.com_id)" class="fas fa-times mr-2"></i>
                           </div>
                       </div>
                   </div>
@@ -74,7 +76,7 @@
                           <div class="text-grey font_s">О себе</div>
                           <div class="card about_user">
                               <div class="card-body">
-                                  <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer facilisis nisl vel mauris posuere, et posuere erat ullamcorper. Fusce dignissim maximus elit, eu hendrerit leo scelerisque non. Suspendisse ultrices libero id urna consectetur accumsan. Quisque lobortis sapien non ultrices auctor. Sed dolor magna, blandit ut justo id, vestibulum porta risus. Nam vitae sodales magna. Nullam sagittis feugiat tempus.</span>
+                                  <span>{{userInfo.p_description}}</span>
                               </div>
                           </div>
                       </div>
@@ -97,20 +99,17 @@
                           </vue-select>
                       </div>
                   </div>
-                  <div class="card card-req mb-3" v-for="(item, i) in ticketConsultations">
+                  <div class="card card-req mb-3" v-for="(con, i) in cons">
+                      {{ cons}}
                       <div class="row card-body font_m d-flex align-items-center">
-                          <div class="col-12 col-lg-6 d-flex justify-content-lg-start justify-content-around font_l">{{item.competencies}}</div>
-                          <div class="col-12 col-lg-3 d-flex d-lg-block text-center d-xl-flex justify-content-lg-end justify-content-around pl-0 mt-2 mt-lg-0">
-                              <div class="mr-xl-2">
-                                  <i class="fas fa-calendar-week mr-1 text-grey"></i>{{item.date}}
+                          <div class="col-12 col-lg-6 d-flex justify-content-lg-start justify-content-around font_l" v-if="con.scCom != undefined">{{con.scCom.competence}}</div>
+                          <div class="col-12 col-lg-6 d-flex d-lg-block text-center d-xl-flex justify-content-lg-end justify-content-around pl-0 mt-2 mt-lg-0">
+                              <div class="mr-xl-2" v-if="con.sc_date != undefined">
+                                  <i class="fas fa-calendar-week mr-1 text-grey"></i>{{con.sc_date}}
                               </div>
-                              <div>
-                                  <i class="far fa-clock mr-1 text-grey"></i>{{item.time}}
+                              <div v-if="con.sc_begin_time != undefined">
+                                  <i class="far fa-clock mr-1 text-grey"></i>{{con.sc_begin_time | deleteSeconds}} - {{con.sc_end_time | deleteSeconds}}
                               </div>
-                          </div>
-
-                          <div class="col-md-12 col-lg-3 d-flex d-lg-block text-center d-xl-flex justify-content-lg-end justify-content-around font_s pl-0 mt-2 mt-lg-0">
-                              Вы: учитель
                           </div>
                       </div>
                   </div>
@@ -170,7 +169,7 @@
                           </vue-select>
                       </div>
                   </div>
-                  <div class="card card-req mb-3" v-for="(item, i) in ticketConsultations">
+                  <div class="card card-req mb-3" v-for="(item, i) in cons">
                       <div class="row card-body font_m d-flex align-items-center">
                           <div class="col-12 col-lg-6 d-flex justify-content-lg-start justify-content-around font_l">{{item.competencies}}</div>
                           <div class="col-12 col-lg-3 d-flex d-lg-block text-center d-xl-flex justify-content-lg-end justify-content-around pl-0 mt-2 mt-lg-0">
@@ -199,11 +198,13 @@
   import axios from 'axios'
 
   import CreateCons from '../components/Modals/CreateCons.vue'
+  import CreateComp from '../components/Modals/CreateComp.vue'
 
   export default{
     components: {
       VueSelect,
-        CreateCons
+        CreateCons,
+        CreateComp
     },
     data(){
       return{
@@ -225,6 +226,7 @@
         ],
         selected: '',
         competencies: [],
+          cons: [],
        ticketConsultations: [
           {
             date: '15/01/2019',
@@ -250,11 +252,46 @@
       }
     },
     methods: {
-      cancelTicket(i){
-        this.ticketConsultations.splice(i, 1)
-      },
-      createCons() {
-      }
+        cancelTicket(i){
+            this.ticketConsultations.splice(i, 1)
+        },
+        deleteComp(id) {
+            console.log(id)
+
+            axios({
+                method: 'get',
+                url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + '?expand=cpCom',
+                headers: {'Authorization': `Bearer ${localStorage.token}`}
+            })
+                .then((response) => {
+                    this.userInfo = response.data
+                    console.log(this.userInfo)
+                })
+                .catch((error) => {
+                    console.error(error)
+                })
+
+
+
+        },
+        updateUserInfo () {
+            console.log('privet')
+            if (this.$store.state.authorisedStatus === true) {
+                // Информация юзера
+                axios({
+                    method: 'get',
+                    url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + '?expand=cpCom',
+                    headers: {'Authorization': `Bearer ${localStorage.token}`}
+                })
+                    .then((response) => {
+                        this.userInfo = response.data
+                        console.log(this.userInfo)
+                    })
+                    .catch((error) => {
+                        console.error(error)
+                    })
+            }
+        }
     },
     mounted() {
       // Переключение вкладок
@@ -279,6 +316,18 @@
               console.error(error)
             })
       }
+        axios({
+            method: 'get',
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?expand=scUser,scCom,tagCon`
+        })
+            .then((response) => {
+                this.cons = response.data
+                console.log("Консультация",this.cons)
+                this.$store.state.loader = false
+            })
+            .catch((error) => {
+                console.error(error)
+            })
     }
   }
 </script>

@@ -13,6 +13,7 @@ export default new Vuex.Store({
   state: {
     loader: false,
     anotherUserId: '',
+    newId: '',
     userComp: '',
     userName: '',
     userId: localStorage.getItem('userId'),

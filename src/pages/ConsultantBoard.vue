@@ -33,15 +33,17 @@
         <div class="card">
           <div class="card-body cons-body">
             <div>
-              <p class="mb-0 font_xl">{{con.sc_title}}</p>
+              <p class="mb-0 font_xl">{{con.sc_title}}
+              all: {{con}}
+              </p>
               <p class="mr-auto mb-0 text-grey font_l" v-if="con.scCom != undefined">{{con.scCom.competence}}</p>
             </div>
             <div>
               <div class="d-flex align-items-center">
                 <div>
-                  <!--<img class="img_master2" src="../assets/img/ava.jpg" >  статичная картинка  -->
+                  <img class="img_master2" src="../assets/img/ava.jpg" >
                   <!-- Пока что будет выдавать ошибку в консоль, тк фотки подгружаются после построения карточек-->
-                  <img class="img_master2" :src="photos[i].url" >
+                  <!--<img class="img_master2" :src="photos[i].url" >-->
                 </div>
                 <div>
                   <div class="font_m">{{con.scUser.p_name}}</div>
@@ -142,24 +144,23 @@
     },
     mounted () {
       this.$store.state.loader = true
-      axios({
-        method: 'get',
-        url: `https://jsonplaceholder.typicode.com/photos`
-      })
-        .then((response) => {
-          this.photos = response.data
-          this.$store.state.loader = false
-          console.log(this.photos)
-        })
-        .catch((error) => {
-          console.error(error)
-        })
+      // axios({
+      //   method: 'get',
+      //   url: `https://jsonplaceholder.typicode.com/photos`
+      // })
+      //   .then((response) => {
+      //     this.photos = response.data
+      //     this.$store.state.loader = false
+      //     console.log(this.photos)
+      //   })
+      //   .catch((error) => {
+      //     console.error(error)
+      //   })
       axios({
         method: 'get',
         url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?expand=scUser,scCom,tagCon`
       })
         .then((response) => {
-
           this.cons = response.data
           console.log("Консультация",this.cons)
           this.$store.state.loader = false

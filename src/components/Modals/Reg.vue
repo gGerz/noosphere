@@ -27,7 +27,7 @@
               </label>
             </div>
             <div class="pt-3">
-              <button type="submit" class="btn btn-primary btn-shadow" @click="login">Зарегистрировать</button>
+              <button type="submit" class="btn btn-primary btn-shadow" @click="reg">Зарегистрировать</button>
             </div>
             <div class="text-center pt-3">
               Уже есть аккаунт?
@@ -48,10 +48,11 @@
         mail: '',
         password: '',
         resetPassword: '',
+        newId: ''
       }
     },
     methods: {
-      login() {
+      reg() {
         if (this.password === this.resetPassword){
           const formData = new FormData()
           formData.append('email', this.mail)
@@ -62,7 +63,12 @@
             data: formData
           })
           .then(response => {
+            console.log('Ответ регистрации',response)
+
             if (response.statusText == "Created") {
+
+              this.$store.state.newId = response.data.id
+              console.log('Регистрация',response.data.id)
               $('.sign_up_modal').modal('hide');
               $('.sign_up_next_modal').modal('show');
             }

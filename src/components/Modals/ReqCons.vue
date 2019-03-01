@@ -111,7 +111,7 @@
                 formData.append('pc_end_time', this.end)
                 formData.append('pc_price', this.price)
                 formData.append('pc_description', this.about)
-                // formData.append('sc_com_id', this.option.com_id)
+                formData.append('sc_com_id', this.selected.com_id)
 
                 axios({
                     method: 'post',

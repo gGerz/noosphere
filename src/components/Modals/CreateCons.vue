@@ -60,7 +60,7 @@
                 </div>
                 <div class="modal-footer justify-content-center">
                     <router-link class="" to="/videoroom">
-                        <span class="btn btn-primary btn-shadow" v-on:click="closeModal()">
+                        <span class="btn btn-primary btn-shadow" v-on:click="createCon()">
                             Создать
                         </span>
                     </router-link>
@@ -124,17 +124,13 @@
                     .catch(response => {
                         console.log(response)
                     })
+                this.closeModal()
             },
 
             createConId() {
-
                 const formData1 = new FormData()
                 console.log('thisWillCreateId', this.willCreateId)
                 formData1.set('con_sc_id', this.willCreateId)
-
-                // console.log(this.$store.state.userInfo) // выводит 13
-
-                //formData1.set('sc_user_id', 5)
                 axios({
                     method: 'post',
                     url: `http://192.168.1.150/noosfera/public_html/api/v1/consultations`,
@@ -150,11 +146,9 @@
         },
         mounted() {
             if (this.$store.state.authorisedStatus === true) {
-                // Информация юзера
                 axios({
                     method: 'get',
                     url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + '?expand=cpCom',
-                    // url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?expand=scUser,scCom,tagCon`,
                     headers: {'Authorization': `Bearer ${localStorage.token}`}
                 })
                     .then((response) => {
