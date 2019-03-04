@@ -34,15 +34,12 @@
                         <div class="row user_info">
                             <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
                                 <div>E-mail</div>
-                                <div>-</div>
+                                <div>{{userInfo.pUser.email}}</div>
                             </div>
-                            <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
-                                <div>Телефон</div>
-                                <div>-</div>
-                            </div>
+
                             <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
                                 <div>Пароль</div>
-                                <div>-</div>
+                                <div>******</div>
                             </div>
                             <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
                                 <div>Дата рождения</div>
@@ -53,21 +50,27 @@
                                 <div v-if="userInfo.p_gender">Мужской</div>
                                 <div v-else>Женский</div>
                             </div>
+                            <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
+
+                            </div>
                         </div>
                         <div class="row">
                             <div class="spec col-10 col-xs-12 col-sm-10 col-md-10 col-lg-4 px-3">
-                                <div class="text-grey font_s">Компетенции</div>
-                                <span class="ml-auto" @onclick="createComp()"
-                                      data-toggle="modal" data-target=".create_comp_modal"
-                                >
-                          <i class="far fa-plus-square mr-2"></i>
-                          <span class="dashed2">Создать</span>
-                      </span>
+                                <div class="text-grey font_s d-flex ">
+                                    Компетенции
+                                    <span class="ml-auto" @onclick="createComp()"
+                                          data-toggle="modal" data-target=".create_comp_modal"
+                                    >
+
+                                <span class="dashed2">Создать</span>
+                                </span>
+                                </div>
+
                                 <create-comp @updateUserInfo="updateUserInfo"></create-comp>
                                 <div class="d-flex justify-content-between mt-1 mr-4" v-for="competence in userInfo.cpCom">
                                     <div>{{competence.competence}}</div>
                                     <div class="d-flex justify-content-between">
-                                        <i @click="deleteComp(competence.com_id)" class="fas fa-times mr-2"></i>
+                                        <!--<i @click="deleteComp(competence.com_id)" class="fas fa-times mr-2"></i>-->
                                     </div>
                                 </div>
                             </div>
@@ -249,7 +252,7 @@
           // Информация юзера
           axios({
             method: 'get',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + '?expand=cpCom',
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + '?expand=cpCom,pUser',
             // url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?expand=scUser,scCom,tagCon`,
             headers: {'Authorization': `Bearer ${localStorage.token}`}
           })
