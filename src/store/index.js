@@ -49,6 +49,8 @@ export default new Vuex.Store({
     },
     logout ({ commit }) {
       localStorage.removeItem('token')
+      localStorage.removeItem('userInfo')
+      localStorage.removeItem('userId')
       commit(LOGOUT)
     },
     saveUserProfileId ({ commit }, id) {

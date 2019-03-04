@@ -1,5 +1,5 @@
 <template>
-  <div class="modal fade sign_up_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+  <div class="modal fade sign_up_modal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
     <div class="modal-dialog " role="document">
       <div class="modal-content ">
         <div class="modal-header">
@@ -11,7 +11,7 @@
         <div class="modal-body signin">
           <div class="py-5 px-5">
             <div class="form-group">
-              <input type="email" class="form-control inputText" required="required" aria-describedby="emailHelp" placeholder="Email"  v-model="mail">
+              <input type="email" class="form-control inputText" required="required" aria-describedby="emailHelp" placeholder="Email" v-model="mail">
             </div>
             <div class="form-group">
               <input type="password" class="form-control inputText" required="required" placeholder="Пароль" v-model="password">
@@ -22,7 +22,7 @@
 
             <div class="form-field pt-2">
               <label class="text-center d-inline-block">
-                <input type="checkbox" name="terms">
+                <input type="checkbox" name="terms" v-model="checkbox">
                 Я принимаю условия <a href="#">Пользовательского соглашения</a>.
               </label>
             </div>
@@ -41,6 +41,9 @@
   </div>
 </template>
 <script>
+
+
+
   import axios from 'axios'
   export default {
     data(){
@@ -48,7 +51,8 @@
         mail: '',
         password: '',
         resetPassword: '',
-        newId: ''
+        newId: '',
+        checkbox: false
       }
     },
     methods: {
@@ -56,37 +60,54 @@
         if (this.password !== '' && this.resetPassword !== '' && this.mail !== ''
         ) {
           if (this.password === this.resetPassword){
-            const formData = new FormData()
-            formData.append('email', this.mail)
-            formData.append('password', this.password)
-            axios({
-              method: 'post',
-              url: `http://192.168.1.150/noosfera/public_html/api/v1/users`,
-              data: formData
-            })
-                    .then(response => {
-                      console.log('Ответ регистрации',response)
+            if(this.checkbox) {
+              const formData = new FormData()
+              formData.append('email', this.mail)
+              formData.append('password', this.password)
+              axios({
+                method: 'post',
+                url: `http://192.168.1.150/noosfera/public_html/api/v1/users`,
+                data: formData
+              })
+                      .then(response => {
+                        console.log('Ответ регистрации',response)
 
-                      if (response.statusText == "Created") {
-                        this.mail = ''
-                        this.password = ''
-                        this.resetPassword = ''
-                        this.$store.state.newId = response.data.id
-                        console.log('Регистрация',response.data.id)
-                        $('.sign_up_modal').modal('hide');
-                        $('.sign_up_next_modal').modal('show');
-                      }
+                        if (response.statusText == "Created") {
+                          this.mail = ''
+                          this.password = ''
+                          this.resetPassword = ''
+                          this.$store.state.newId = response.data.id
+                          console.log('Регистрация',response.data.id)
+                          $('.sign_up_modal').modal('hide');
+                          $('.sign_up_next_modal').modal('show');
+                        }
 
-                    })
-                    .catch(error => {
-                      alert('Ошибка сервера')
-                    })
+                      })
+                      .catch(error => {
+                        alert('Ошибка сервера')
+                      })
+            }
+            else {
+              alert('Вы должны принять пользовательское соглашение')
+            }
           } else {
             alert('Пароли не совпадают')
           }
         }
         else alert('Заполните все поля')
-      }
+      },
+      clearName() {
+        this.mail = ''
+      },
+    },
+    mounted() {
+      console.log('опа',this)
+      $('.sign_up_modal').on('hide.bs.modal', function (e) {
+        e.target.__vue__.mail = ''
+        e.target.__vue__.password = ''
+        e.target.__vue__.resetPassword = ''
+        e.target.__vue__.checkbox = false
+      })
     }
   }
 </script>

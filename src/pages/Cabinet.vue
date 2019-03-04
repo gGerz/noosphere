@@ -161,125 +161,129 @@
   import CreateCons from '../components/Modals/CreateCons.vue'
   import CreateComp from '../components/Modals/CreateComp.vue'
 
-  export default{
-    components: {
-      VueSelect,
-        CreateCons,
-        CreateComp
-    },
-    data(){
-      return{
-        userInfo: [],
-        options: [
-          { value: 1, text: 'One' },
-          { value: 1, text: 'One' },
-          { value: 1, text: 'One' },
-          { value: 1, text: 'One' },
-          { value: 1, text: 'One' },
-          { value: 1, text: 'One' },
-          { value: 2, text: 'Two' },
-          { value: 2, text: 'Two' },
-          { value: 2, text: 'Two' },
-          { value: 2, text: 'Two' },
-          { value: 2, text: 'Two' },
-          { value: 2, text: 'Two' },
-          { value: 2, text: 'Two' },
-        ],
-        selected: '',
-        competencies: [],
-          cons: [],
-          reqs: []
+  export default {
+      components: {
+          VueSelect,
+          CreateCons,
+          CreateComp
+      },
+      data() {
+          return {
+              userInfo: [],
+              options: [
+                  {value: 1, text: 'One'},
+                  {value: 1, text: 'One'},
+                  {value: 1, text: 'One'},
+                  {value: 1, text: 'One'},
+                  {value: 1, text: 'One'},
+                  {value: 1, text: 'One'},
+                  {value: 2, text: 'Two'},
+                  {value: 2, text: 'Two'},
+                  {value: 2, text: 'Two'},
+                  {value: 2, text: 'Two'},
+                  {value: 2, text: 'Two'},
+                  {value: 2, text: 'Two'},
+                  {value: 2, text: 'Two'},
+              ],
+              selected: '',
+              competencies: [],
+              cons: [],
+              reqs: []
+          }
+      },
+      methods: {
+          cancelTicket(i) {
+              this.ticketConsultations.splice(i, 1)
+          },
+          deleteComp(id) {
+              console.log(id)
+
+              axios({
+                  method: 'get',
+                  url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + '?expand=cpCom',
+                  headers: {'Authorization': `Bearer ${localStorage.token}`}
+              })
+                  .then((response) => {
+                      this.userInfo = response.data
+                      console.log('инфа', this.userInfo)
+                  })
+                  .catch((error) => {
+                      console.error(error)
+                  })
+
+
+          },
+          updateUserInfo() {
+              console.log('privet')
+              if (this.$store.state.authorisedStatus === true) {
+                  // if (this.$store.state.userInfo)
+                  // Информация юзера
+                  axios({
+                      method: 'get',
+                      url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + '?expand=cpCom',
+                      headers: {'Authorization': `Bearer ${localStorage.token}`}
+                  })
+                      .then((response) => {
+                          this.userInfo = response.data
+                          console.log(this.userInfo)
+                      })
+                      .catch((error) => {
+                          console.error(error)
+                      })
+              }
+          }
+      },
+      mounted() {
+          // Переключение вкладок
+          $('#lk-tabs a').on('click', function (e) {
+              e.preventDefault()
+              $(this).tab('show')
+          })
+          console.log(localStorage.token)
+          if (this.$store.state.authorisedStatus === true) {
+              if (this.$store.state.userInfo !== null) {
+                  // Информация юзера
+                  axios({
+                      method: 'get',
+                      url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + '?expand=cpCom',
+                      // url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?expand=scUser,scCom,tagCon`,
+                      headers: {'Authorization': `Bearer ${localStorage.token}`}
+                  })
+                      .then((response) => {
+                          this.userInfo = response.data
+                          console.log('infouser', this.userInfo.p_id)
+                      })
+                      .catch((error) => {
+                          console.error(error)
+                      })
+              }
+              axios({
+                  method: 'get',
+                  url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + `?expand=conSUser`
+              })
+                  .then((response) => {
+                      this.cons = response.data.conSUser
+                      console.log("Консультация",response.data.conSUser)
+                  })
+                  .catch((error) => {
+                      console.error(error)
+                  })
+              axios({
+                  method: 'get',
+                  url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + `?expand=conPUser`
+              })
+                  .then((response) => {
+                      this.reqs = response.data.conPUser
+                      console.log("Заявка",response)
+                      //this.$store.state.loader = false
+                  })
+                  .catch((error) => {
+                      console.error(error)
+                  })
+          } else {
+              // ОТКРЫТЬ МОДАЛКУ ПРОДОЛЖЕНИЯ РЕГИСТРАЦИИ
+          }
       }
-    },
-    methods: {
-        cancelTicket(i){
-            this.ticketConsultations.splice(i, 1)
-        },
-        deleteComp(id) {
-            console.log(id)
-
-            axios({
-                method: 'get',
-                url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + '?expand=cpCom',
-                headers: {'Authorization': `Bearer ${localStorage.token}`}
-            })
-                .then((response) => {
-                    this.userInfo = response.data
-                    console.log('инфа',this.userInfo)
-                })
-                .catch((error) => {
-                    console.error(error)
-                })
-
-
-
-        },
-        updateUserInfo () {
-            console.log('privet')
-            if (this.$store.state.authorisedStatus === true) {
-                // Информация юзера
-                axios({
-                    method: 'get',
-                    url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + '?expand=cpCom',
-                    headers: {'Authorization': `Bearer ${localStorage.token}`}
-                })
-                    .then((response) => {
-                        this.userInfo = response.data
-                        console.log(this.userInfo)
-                    })
-                    .catch((error) => {
-                        console.error(error)
-                    })
-            }
-        }
-    },
-    mounted() {
-      // Переключение вкладок
-      $('#lk-tabs a').on('click', function (e) {
-        e.preventDefault()
-        $(this).tab('show')
-      })
-      console.log(localStorage.token)
-      if (this.$store.state.authorisedStatus === true){
-        // Информация юзера
-        axios({
-          method: 'get',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/`+this.$store.state.userInfo +'?expand=cpCom',
-          // url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?expand=scUser,scCom,tagCon`,
-          headers: { 'Authorization': `Bearer ${localStorage.token}` }
-        })
-            .then((response) => {
-              this.userInfo = response.data
-              console.log('infouser',this.userInfo.p_id)
-            })
-            .catch((error) => {
-              console.error(error)
-            })
-      }
-        axios({
-            method: 'get',
-                url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + `?expand=conSUser`
-        })
-            .then((response) => {
-                this.cons = response.data.conSUser
-                console.log("Консультация",response.data.conSUser)
-            })
-            .catch((error) => {
-                console.error(error)
-            })
-        axios({
-            method: 'get',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + `?expand=conPUser`
-        })
-            .then((response) => {
-                this.reqs = response.data.conPUser
-                console.log("Заявка",response)
-                //this.$store.state.loader = false
-            })
-            .catch((error) => {
-                console.error(error)
-            })
-    }
   }
 </script>
 <style lang="scss">

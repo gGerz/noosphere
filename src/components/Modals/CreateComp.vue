@@ -16,6 +16,7 @@
                         <span slot="no-options">Ничего не найдено</span>
                     </vue-select>
                 </div>
+                <div v-show="error">Компетенция уже добавлена</div>
                 <div class="modal-footer justify-content-center">
 
                         <span class="btn btn-primary btn-shadow" v-on:click="createComp()">
@@ -36,6 +37,7 @@
         },
         data() {
             return {
+                error: false,
                 willCreateId: '',
                 title: '',
                 date: '',

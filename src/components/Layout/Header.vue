@@ -50,7 +50,6 @@
     },
     data(){
       return{
-        test1: ''
       }
     },
     methods: {
@@ -59,7 +58,7 @@
           this.$router.push('/')
         })
       }
-    },
+    }
   }
 </script>
 <style lang="scss">

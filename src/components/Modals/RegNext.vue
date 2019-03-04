@@ -101,6 +101,12 @@
         },
         mounted() {
             this.newId = this.$store.state.newId
+            $('.sign_up_next_modal').on('hide.bs.modal', function (e) {
+                e.target.__vue__.name = ''
+                e.target.__vue__.gender = 'Выберите пол...'
+                e.target.__vue__.date = ''
+                e.target.__vue__.about = ''
+            })
         }
     }
 </script>

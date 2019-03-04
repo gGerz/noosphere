@@ -16,8 +16,8 @@
                                 <input type="text" v-model="title" class="form-control inputText" required="required" aria-describedby="emailHelp" placeholder="">
                             </div>
                             <div class="form-group">
-                                <label for="">Компетенция:</label>
-                                {{ selected.com_id }}
+                                <label>Компетенция:</label>
+                                <!--{{ selected.com_id }}-->
                                 <vue-select v-model="selected" label="competence" :options="$store.state.userComp.cpCom" placeholder="Компетенции" style="display: block">
                                     <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
                                         <div class="py-1">{{ option.competence }}</div>
@@ -48,22 +48,25 @@
                         <div class="col-lg-6 col-12">
                             <div class="form-group">
                                 <label class="m-0">Теги:</label>
-                                <textarea class="form-control" rows="5"></textarea>
-                                <small id="" class="form-text text-muted">p.s.Через пробелы</small>
+                                <div class="d-flex pb-3">
+                                    <input type="text" class="form-control inputText" v-model="currentTag"/>
+                                    <button class="btn btn-primary ml-2" @click="addTag">+</button>
+                                </div>
+                                <div class="tag" v-for="tag in tags">{{tag}}</div>
+                                <!--<textarea class="form-control" rows="5"></textarea>-->
+                                <!--<small id="" class="form-text text-muted">p.s.Через пробелы</small>-->
                             </div>
                             <div class="form-group">
                                 <label class="m-0">Описание консультации:</label>
-                                <textarea v-model="about" class="form-control" rows="5"></textarea>
+                                <textarea v-model="about" class="form-control textarea" rows="5"></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-center">
-                    <router-link class="" to="/videoroom">
-                        <span class="btn btn-primary btn-shadow" v-on:click="createCon()">
-                            Создать
-                        </span>
-                    </router-link>
+                    <span class="btn btn-primary btn-shadow" v-on:click="createCon()">
+                        Создать
+                    </span>
                 </div>
             </div>
         </div>
@@ -79,6 +82,8 @@
         },
         data() {
             return {
+                currentTag: '',
+                tags: [],
                 willCreateId: '',
                 title: '',
                 date: '',
@@ -97,6 +102,12 @@
             }
         },
         methods: {
+            addTag () {
+                if (this.currentTag != '') {
+                    this.tags.push(this.currentTag)
+                    this.currentTag = ''
+                }
+            },
             closeModal() {
                 $('.create_cons_modal').modal('hide');
             },
@@ -162,10 +173,21 @@
                         console.error(error)
                     })
             }
+
+            $('.create_cons_modal').on('hide.bs.modal', function (e) {
+                e.target.__vue__.title = ''
+                e.target.__vue__.selected = ''
+                e.target.__vue__.date = ''
+                e.target.__vue__.begin = ''
+                e.target.__vue__.end = ''
+                e.target.__vue__.price = ''
+                e.target.__vue__.about = ''
+            })
         }
     }
 </script>
 <style lang="scss" scoped>
+    $main_grey: #A6A6A6;
     .inputText {
     }
     .btn-shadow {
@@ -187,5 +209,29 @@
     }
     .modal {
         color: #555;
+    }
+    .tag {
+        /*cursor: pointer;*/
+        background-color: #ECECEC;
+        color: $main_grey;
+        position: relative;
+        margin-left: 11px;
+        margin-right: 11px;
+        height: 24px!important;
+        display: inline-flex;
+        align-items: center;
+        padding-left: .2rem!important;
+        padding-right: .5rem!important;
+        margin-bottom: 7px;
+        transition: .1s;
+
+        &:before{
+            transition: .1s;
+            content: '';
+            position: absolute;
+            margin-left: -27px;
+            border: 12px solid transparent;
+            border-right: 12px solid #ECECEC;
+        }
     }
 </style>
