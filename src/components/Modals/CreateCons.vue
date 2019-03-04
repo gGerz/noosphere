@@ -52,13 +52,13 @@
                                     <input type="text" class="form-control inputText" v-model="currentTag"/>
                                     <button class="btn btn-primary ml-2" @click="addTag">+</button>
                                 </div>
-                                <div class="tag" v-for="tag in tags">{{tag}}</div>
+                                <div class="tag" v-for="tag in tags">{{tag}} <i class="far fa-plus-square mr-2"></i> </div>
                                 <!--<textarea class="form-control" rows="5"></textarea>-->
                                 <!--<small id="" class="form-text text-muted">p.s.Через пробелы</small>-->
                             </div>
                             <div class="form-group">
                                 <label class="m-0">Описание консультации:</label>
-                                <textarea v-model="about" class="form-control textarea" rows="5"></textarea>
+                                <textarea v-model="about" class="form-control textarea-resize-n" rows="5"></textarea>
                             </div>
                         </div>
                     </div>
@@ -139,7 +139,6 @@
                     })
                 this.closeModal()
             },
-
             createConId() {
                 const formData1 = new FormData()
                 console.log('thisWillCreateId', this.willCreateId)
@@ -173,7 +172,6 @@
                         console.error(error)
                     })
             }
-
             $('.create_cons_modal').on('hide.bs.modal', function (e) {
                 e.target.__vue__.title = ''
                 e.target.__vue__.selected = ''
@@ -182,6 +180,7 @@
                 e.target.__vue__.end = ''
                 e.target.__vue__.price = ''
                 e.target.__vue__.about = ''
+                e.target.__vue__.tags = []
             })
         }
     }
@@ -233,5 +232,8 @@
             border: 12px solid transparent;
             border-right: 12px solid #ECECEC;
         }
+    }
+    .textarea-resize-n {
+        resize: none;
     }
 </style>

@@ -38,77 +38,64 @@
     </div>
 </template>
 <script>
-    import axios from 'axios'
-    export default {
-        data(){
-            return{
-                mail: '',
-                password: '',
-                resetPassword: '',
-                newId: [],
-                name: '',
-                date: '',
-                about: '',
-                gender: 'Выберите пол...',
-                genderType: '1'
-            }
-        },
-        methods: {
-            regNext() {
-                this.newId = this.$store.state.newId
-                console.log('Стор',this.$store.state.newId)
-                console.log('Локал',this.newId)
-                const formData = new FormData()
-
-
-
-
-                if ( this.gender != 'Выберите пол...' &&
-                    this.name !== '' &&
-                    this.date !== '' &&
-                    this.about !== ''
-                ) {
-
-                    formData.set('p_name', this.name)
-                    formData.set('p_date', this.date)
-                    formData.set('p_description', this.about)
-                    formData.set('p_user_id', parseInt(this.$store.state.newId))
-                    if (this.gender == 'Женский') {
-                        this.genderType = 0;
-                    }
-
-                    formData.set('p_gender', this.genderType)
-                    axios({
-                        method: 'post',
-                        url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles`,
-                        data: formData
-                    })
-                        .then(response => {
-                            console.log('response', response)
-                            if (response.statusText == 'Created') {
-                                $('.sign_up_next_modal').modal('hide');
-                            }
-                        })
-                        .catch(response => {
-                            console.log(response)
-                        })
-
-                }
-                else alert('Заполните все поля')
-
-
-            }
-        },
-        mounted() {
-            this.newId = this.$store.state.newId
-            $('.sign_up_next_modal').on('hide.bs.modal', function (e) {
-                e.target.__vue__.name = ''
-                e.target.__vue__.gender = 'Выберите пол...'
-                e.target.__vue__.date = ''
-                e.target.__vue__.about = ''
+  import axios from 'axios'
+  export default {
+    data(){
+      return{
+        mail: '',
+        password: '',
+        resetPassword: '',
+        newId: '',
+        name: '',
+        date: '',
+        about: '',
+        gender: 'Выберите пол...',
+        genderType: '1'
+      }
+    },
+    methods: {
+      regNext() {
+        const formData = new FormData()
+        if ( this.gender != 'Выберите пол...' &&
+          this.name !== '' &&
+          this.date !== '' &&
+          this.about !== ''
+        ) {
+          formData.set('p_name', this.name)
+          formData.set('p_date', this.date)
+          formData.set('p_description', this.about)
+          formData.set('p_user_id', parseInt(this.$store.state.userId))
+          if (this.gender == 'Женский') {
+            this.genderType = 0;
+          }
+          formData.set('p_gender', this.genderType)
+          axios({
+            method: 'post',
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles`,
+            data: formData
+          })
+            .then(response => {
+              if (response.statusText == 'Created') {
+                this.$store.dispatch('saveUserProfileId', response.data.p_id)
+                $('.sign_up_next_modal').modal('hide');
+              }
+            })
+            .catch(response => {
+              console.log(response)
             })
         }
+        else alert('Заполните все поля')
+      }
+    },
+    mounted() {
+      $('.sign_up_next_modal').on('hide.bs.modal', function (e) {
+        e.target.__vue__.name = ''
+        e.target.__vue__.gender = 'Выберите пол...'
+        e.target.__vue__.date = ''
+        e.target.__vue__.about = ''
+      })
     }
+  }
 </script>
 <style lang="scss" scoped>
     .inputText {

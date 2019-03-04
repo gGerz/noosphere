@@ -52,13 +52,67 @@
         password: '',
         resetPassword: '',
         newId: '',
-        checkbox: false
+        checkbox: false,
+        errors: []
       }
     },
     methods: {
+      validEmail(email) {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+      },
+      regtwo() {
+
+        if (!this.mail) {
+          this.errors.push('Укажите электронную почту.');
+        } else if (!this.validEmail(this.mail)) {
+          this.errors.push('Укажите корректный адрес электронной почты.');
+        }
+
+        if (!this.password) {
+          this.errors.push('Введите пароль');
+        }
+
+        if (this.password !== this.resetPassword) {
+          this.errors.push('Пароли не совподают');
+        }
+
+
+
+
+
+        if (!this.errors.length) {
+          const formData = new FormData()
+          formData.append('email', this.mail)
+          formData.append('password', this.password)
+          axios({
+            method: 'post',
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/users`,
+            data: formData
+          })
+                  .then(response => {
+                    console.log('Ответ регистрации',response)
+
+                    if (response.statusText == "Created") {
+                      this.mail = ''
+                      this.password = ''
+                      this.resetPassword = ''
+                      // this.$store.state.newId = response.data.id
+                      // console.log('Регистрация',response.data.id)
+                      $('.sign_up_modal').modal('hide');
+                      $('.sign_up_next_modal').modal('show');
+                    }
+
+                  })
+                  .catch(error => {
+                    alert('Ошибка сервера')
+                    console.log('ERROR: ',error)
+                    console.log('RESPONSE: ',error)
+                  })
+        }
+      },
       reg() {
-        if (this.password !== '' && this.resetPassword !== '' && this.mail !== ''
-        ) {
+        if (this.password !== '' && this.resetPassword !== '' && this.mail !== '') {
           if (this.password === this.resetPassword){
             if(this.checkbox) {
               const formData = new FormData()
@@ -69,23 +123,23 @@
                 url: `http://192.168.1.150/noosfera/public_html/api/v1/users`,
                 data: formData
               })
-                      .then(response => {
-                        console.log('Ответ регистрации',response)
+                .then(response => {
+                  console.log('Id нового пользователя',response.data.id)
+                  if (response.statusText == "Created") {
+                    this.mail = ''
+                    this.password = ''
+                    this.resetPassword = ''
+                    this.$store.dispatch('saveUserId', response.data.id)
+                    // this.$store.state.newId = response.data.id
+                    // console.log('Регистрация',response.data.id)
+                    $('.sign_up_modal').modal('hide');
+                    $('.sign_up_next_modal').modal('show');
+                  }
 
-                        if (response.statusText == "Created") {
-                          this.mail = ''
-                          this.password = ''
-                          this.resetPassword = ''
-                          this.$store.state.newId = response.data.id
-                          console.log('Регистрация',response.data.id)
-                          $('.sign_up_modal').modal('hide');
-                          $('.sign_up_next_modal').modal('show');
-                        }
-
-                      })
-                      .catch(error => {
-                        alert('Ошибка сервера')
-                      })
+                })
+                .catch(error => {
+                  alert('Ошибка сервера')
+                })
             }
             else {
               alert('Вы должны принять пользовательское соглашение')

@@ -63,7 +63,7 @@ export default new Vuex.Store({
     saveUserId ({ commit }, id) {
       return new Promise( resolve => {
         localStorage.setItem('userId', id)
-        commit(SAVEUSERINFO)
+        commit(SAVEUSERID)
         resolve()
       })
     }
