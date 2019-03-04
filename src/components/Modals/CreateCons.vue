@@ -52,7 +52,7 @@
                                     <input type="text" class="form-control inputText" v-model="currentTag"/>
                                     <button class="btn btn-primary ml-2" @click="addTag">+</button>
                                 </div>
-                                <div class="tag" v-for="tag in tags">{{tag}} <i class="far fa-plus-square mr-2"></i> </div>
+                                <div class="tag" v-for="tag in tags">{{tag}} <span aria-hidden="true">&times;</span></div>
                                 <!--<textarea class="form-control" rows="5"></textarea>-->
                                 <!--<small id="" class="form-text text-muted">p.s.Через пробелы</small>-->
                             </div>

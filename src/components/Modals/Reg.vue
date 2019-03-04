@@ -12,12 +12,15 @@
           <div class="py-5 px-5">
             <div class="form-group">
               <input type="email" class="form-control inputText" required="required" aria-describedby="emailHelp" placeholder="Email" v-model="mail">
+              <div v-show="emailEr" class="text-danger font_s">Такой email уже зарегистрирован</div>
             </div>
             <div class="form-group">
               <input type="password" class="form-control inputText" required="required" placeholder="Пароль" v-model="password">
+              <div v-show="passEr" class="text-danger font_s">Введите пароль</div>
             </div>
             <div class="form-group pb-4">
               <input type="password" class="form-control inputText" required="required" placeholder="Подтвердите пароль" v-model="resetPassword">
+              <div v-show="passProfEr" class="text-danger font_s">Пароли не совподают</div>
             </div>
 
             <div class="form-field pt-2">
@@ -28,6 +31,9 @@
             </div>
             <div class="pt-3">
               <button type="submit" class="btn btn-primary btn-shadow" @click="reg">Зарегистрировать</button>
+            </div>
+            <div v-for="error in errors" class="">
+              {{error}}
             </div>
             <div class="text-center pt-3">
               Уже есть аккаунт?
@@ -48,6 +54,9 @@
   export default {
     data(){
       return{
+        emailEr: false,
+        passEr: false,
+        passProfEr: false,
         mail: '',
         password: '',
         resetPassword: '',
@@ -61,56 +70,30 @@
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
       },
-      regtwo() {
 
-        if (!this.mail) {
-          this.errors.push('Укажите электронную почту.');
-        } else if (!this.validEmail(this.mail)) {
-          this.errors.push('Укажите корректный адрес электронной почты.');
-        }
-
-        if (!this.password) {
-          this.errors.push('Введите пароль');
-        }
-
-        if (this.password !== this.resetPassword) {
-          this.errors.push('Пароли не совподают');
-        }
-
-
-
-
-
-        if (!this.errors.length) {
-          const formData = new FormData()
-          formData.append('email', this.mail)
-          formData.append('password', this.password)
-          axios({
-            method: 'post',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/users`,
-            data: formData
-          })
-                  .then(response => {
-                    console.log('Ответ регистрации',response)
-
-                    if (response.statusText == "Created") {
-                      this.mail = ''
-                      this.password = ''
-                      this.resetPassword = ''
-                      // this.$store.state.newId = response.data.id
-                      // console.log('Регистрация',response.data.id)
-                      $('.sign_up_modal').modal('hide');
-                      $('.sign_up_next_modal').modal('show');
-                    }
-
-                  })
-                  .catch(error => {
-                    alert('Ошибка сервера')
-                    console.log('ERROR: ',error)
-                    console.log('RESPONSE: ',error)
-                  })
-        }
-      },
+      // regtest() {
+      //
+      //   this.emailEr = false
+      //   this.passEr = false
+      //   this.passProfEr = false
+      //
+      //   if (this.mail == '') {
+      //     this.emailEr = true
+      //   }
+      //   if (this.password == '') {
+      //     this.passEr = true
+      //   }
+      //   if (this.password !== this.resetPassword) {
+      //     this.passProfEr = true
+      //   }
+      //
+      //
+      //   if (
+      //     this.passProfEr == 0
+      //   ) {
+      //
+      //   }
+      // },
       reg() {
         if (this.password !== '' && this.resetPassword !== '' && this.mail !== '') {
           if (this.password === this.resetPassword){
@@ -124,6 +107,7 @@
                 data: formData
               })
                 .then(response => {
+                  console.log(response)
                   console.log('Id нового пользователя',response.data.id)
                   if (response.statusText == "Created") {
                     this.mail = ''
@@ -137,15 +121,18 @@
                   }
 
                 })
-                .catch(error => {
-                  alert('Ошибка сервера')
+                .catch(response => {
+                  if (response.message == 'Request failed with status code 422') {
+                    this.emailEr = true
+                  }
+                  console.log(this)
                 })
             }
             else {
               alert('Вы должны принять пользовательское соглашение')
             }
           } else {
-            alert('Пароли не совпадают')
+            this.passProfEr = true
           }
         }
         else alert('Заполните все поля')
@@ -161,11 +148,14 @@
         e.target.__vue__.password = ''
         e.target.__vue__.resetPassword = ''
         e.target.__vue__.checkbox = false
+        e.target.__vue__.emailValidation = false
       })
     }
   }
 </script>
 <style lang="scss" scoped>
+  $font_s: 14px;
+  .font_s {font-size: $font_s;}
   .inputText {
     height: 52px;
   }
