@@ -176,7 +176,7 @@
       this.$store.state.loader = true
       axios({
         method: 'get',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings`
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings`
       })
         .then((response) => {
           this.cons = response.data
@@ -222,10 +222,10 @@
         this.$store.state.loader = true
         axios({
           method: 'get',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?page=`+ i +`&expand=scCom&sort=sc_date`
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?page=`+ i
         })
                 .then((response) => {
-                  this.cons = response.data.items
+                  this.cons = response.data
                   console.log("Консультация "+i,this.cons)
                   this.$store.state.loader = false
                 })
