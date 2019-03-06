@@ -20,6 +20,7 @@
             <div class="form-group">
               <input type="password" class="form-control inputText" required="required" placeholder="Пароль" v-model="password">
               <div v-show="passEr" class="text-danger font_s">Введите пароль</div>
+              <div v-show="passLongEr" class="text-danger font_s">Этот пароль слишком большой!</div>
             </div>
             <div class="form-group pb-4">
               <input type="password" class="form-control inputText" required="required" placeholder="Подтвердите пароль" v-model="resetPassword">
@@ -61,6 +62,7 @@
         emailEr: false,
         passEr: false,
         passProfEr: false,
+        passLongEr: false,
         checkEr: false,
         emailServEr: false,
         emailValEr: false,
@@ -80,6 +82,7 @@
       reg() {
         this.emailEr = false
         this.passEr = false
+        this.passLongEr = false
         this.passProfEr = false
         this.checkEr = false
         this.emailValEr = false
@@ -87,10 +90,12 @@
         if (this.mail == '') this.emailEr = true
         else if (!this.validEmail(this.mail)) this.emailValEr = true
         if (this.password == '') this.passEr = true
+        else if (this.password.length > 30) this.passLongEr = true
         else if (this.password !== this.resetPassword) this.passProfEr = true
         if (this.checkbox === false) this.checkEr = true
         if ( this.emailEr === false &&
                 this.passEr === false &&
+                this.passLongEr === false &&
                 this.passProfEr === false &&
                 this.checkEr === false &&
                 this.emailValEr === false

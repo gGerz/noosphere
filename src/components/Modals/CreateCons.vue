@@ -19,7 +19,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Компетенция:</label>
-                                <!--{{ selected.com_id }}-->
+
                                 <vue-select v-model="selected" label="competence" :options="$store.state.userComp.cpCom" placeholder="Компетенции" style="display: block">
                                     <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
                                         <div class="py-1">{{ option.competence }}</div>

@@ -9,7 +9,7 @@
                             <div>
                                 <p class="h4">Вы</p>
                                 <div class="video">
-                                    [Видео]
+
                                 </div>
                             </div>
                         </div>
@@ -34,6 +34,32 @@
     </div>
 </template>
 <script>
+
+    import $ from 'jquery'
+
+  export default {
+    mounted() {
+      let style = document.createElement('style')
+      style.setAttribute('src', '../mgVideoChat/mgVideoChat-1.13.2.css')
+      document.head.appendChild(style)
+
+
+      let mgVideoChat = document.createElement('script')
+      mgVideoChat.setAttribute('src', '../mgVideoChat/mgVideoChat-1.13.2-min.js')
+      document.head.appendChild(mgVideoChat)
+
+      let commonScript = document.createElement('script')
+      commonScript.setAttribute('src', '../common/js/menu.js')
+      document.head.appendChild(commonScript)
+
+
+      $(document).ready(function(){
+        $('#mgVideoChat').mgVideoChat({
+          wsURL: 'ws://www.magnoliyan.com:8080?room=1'
+        });
+      });
+    }
+  }
 </script>
 <style lang="scss" scoped>
 
