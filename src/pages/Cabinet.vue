@@ -368,13 +368,13 @@
     .user_info {
         padding-top: 38px;
         padding-bottom: 50px;
-        max-width: 900px;
         div {
-            width: 132px;
+
             div:first-child{
                 font-size: $font_s;
                 padding-bottom: 4px;
                 color: $main_grey;
+                padding-right: 15px ;
             }
             div:nth-child(2){
                 padding-bottom: 13px;

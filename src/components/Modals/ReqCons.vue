@@ -112,14 +112,12 @@
                 formData.append('pc_description', this.about)
                 this.compCons = this.selected.com_id
                 formData.append('pc_com_id', this.compCons)
-
                 axios({
                     method: 'post',
                     url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases`,
                     data: formData
                 })
                     .then(response => {
-                        console.log("ответ",response.data.pc_id)
                         this.willCreateId = response.data.pc_id
                         this.createConId()
                     })
@@ -133,8 +131,6 @@
                 console.log('thisWillCreateId', this.willCreateId)
                 formData1.set('con_pc_id', this.willCreateId)
 
-                // console.log(this.$store.state.userInfo) // выводит 13
-
                 //formData1.set('sc_user_id', 5)
                 axios({
                     method: 'post',
@@ -142,10 +138,8 @@
                     data: formData1
                 })
                     .then(response => {
-                        console.log('response', response)
                     })
                     .catch(response => {
-                        console.log(response)
                     })
             }
         },

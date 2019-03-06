@@ -46,7 +46,7 @@
                   <!--<img class="img_master2" :src="photos[i].url" >-->
                 </div>
                 <div>
-                  <div class="font_m">{{con.scUser.p_name}}</div>
+                  <div class="font_m" v-if="con.scUser !== undefined">{{con.scUser.p_name}}</div>
                   <div class="m-0" title="Рейтинг font_m">
                     <div class="d-flex">
                       <div class="mx-2">
@@ -91,14 +91,30 @@
                 </span>
                 <span class="main_color font_xl">руб</span>
               </div>
-              <router-link class="ml-auto" to="/videoroom">
-                <span class="btn btn-outline-primary btn-md px-4 btn-buy font_l">Купить</span>
-              </router-link>
+                <span class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="changeStateCons(i)">Купить</span>
+
             </div>
           </div>
         </div>
       </div>
     </div>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination d-flex justify-content-center">
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+        <li class="page-item" v-for="n in 3"><a class="page-link" href="#" @click="getPage(n)">{{n}}</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
     <card-cons :selectedIndex="selectedIndex"
                :selectedCard="selectedCard" />
   </div>
@@ -123,6 +139,7 @@
         searchComp: '',
         selectedIndex: '',
         selectedCard: '',
+        carrentPage: 1,
         options: [
           { value: 1, text: 'One' },
           { value: 2, text: 'two' },
@@ -144,7 +161,6 @@
       }
     },
     mounted () {
-      this.$store.state.loader = true
       // axios({
       //   method: 'get',
       //   url: `https://jsonplaceholder.typicode.com/photos`
@@ -157,9 +173,10 @@
       //   .catch((error) => {
       //     console.error(error)
       //   })
+      this.$store.state.loader = true
       axios({
         method: 'get',
-        url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?expand=scUser,scCom,tagCon`
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings`
       })
         .then((response) => {
           this.cons = response.data
@@ -169,6 +186,8 @@
         .catch((error) => {
           console.error(error)
         })
+
+
         axios({
           method: 'get',
           url: `http://192.168.1.150/noosfera/public_html/api/v1/coms`,
@@ -182,6 +201,38 @@
           })
     },
     methods: {
+      changeStateCons(i) {
+
+        const formData = new FormData()
+        formData.set('sc_type', 2)
+        axios({
+          method: 'PUT',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings/`+ this.cons[i].sc_id,
+          data: formData
+        })
+                .then((response) => {
+                  console.log(response)
+                })
+                .catch((error) => {
+                  console.error(error)
+                })
+      },
+      getPage(i) {
+        console.log('страница', i)
+        this.$store.state.loader = true
+        axios({
+          method: 'get',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?page=`+ i +`&expand=scCom&sort=sc_date`
+        })
+                .then((response) => {
+                  this.cons = response.data.items
+                  console.log("Консультация "+i,this.cons)
+                  this.$store.state.loader = false
+                })
+                .catch((error) => {
+                  console.error(error)
+                })
+      },
       selectIndex(i){
         this.selectedCard = this.cons[i]
         this.$store.state.anotherUserId = this.selectedCard.scUser.p_id

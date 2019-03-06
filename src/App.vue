@@ -2,8 +2,8 @@
   <div id="app">
     <div class="container">
       <Header />
-      <loader v-if="this.$store.state.loader" />
       <Content />
+      <loader v-if="this.$store.state.loader" />
     </div>
   </div>
 </template>

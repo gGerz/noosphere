@@ -75,7 +75,7 @@
           return parseInt(value * 100) / 100
         },
         deleteSeconds(value){
-          return value.slice(0, -3)
+          if (value) return value.slice(0, -3)
         }
       },
       methods: {

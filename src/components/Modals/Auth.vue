@@ -12,14 +12,19 @@
           <div class="py-5 px-5">
             <div class="form-group">
               <input type="email" class="form-control inputText" required="required" aria-describedby="emailHelp" placeholder="Email" v-model="mail">
+              <div v-show="mailEr" class="text-danger font_s">Введите email</div>
+              <div v-show="mailValEr" class="text-danger font_s">Введите корректный email</div>
             </div>
             <div class="form-group pb-4">
               <input type="password" class="form-control inputText" required="required" placeholder="Пароль" v-model="password">
+              <div v-show="passEr" class="text-danger font_s">Введите пароль</div>
+              <div v-show="passCorEr" class="text-danger font_s">Неверный email или пароль</div>
             </div>
             <button type="submit" class="btn btn-primary btn-shadow" @click="login">Войти</button>
             <div class="text-center">
               <div class="form-bottom pt-4">
-                <a href="">Забыли пароль?</a>
+                <a href="#" @click="sad = true">Забыли пароль?</a>
+                <div v-show="sad" class="font_s">Очень жаль.</div>
               </div>
               <div class="form-bottom pt-4">
                 У вас еще нет аккаунта?
@@ -39,35 +44,52 @@
       return{
         mail: '',
         password: '',
+        mailEr: false,
+        passEr: false,
+        passCorEr: false,
+        mailValEr: false,
+        sad: false
       }
     },
     methods: {
+      validEmail(email) {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+      },
       login() {
-        const formData = new FormData()
-        formData.append('email', this.mail)
-        formData.append('password', this.password)
-        axios({
-          method: 'post',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/user/login`,
-          data: formData
-        })
-          .then(response => {
-            if (response.data.success === true){
-              console.log('Otvet avtorizacii')
-              console.log(response)
-              $('.sign_in_modal').modal('hide'); //закрытие модального окна
-              this.$store.dispatch('login', response.data.data)
-              this.$store.dispatch('saveUserId', response.data.id)
-              if (response.data.p_id.p_id !== null){
-                this.$store.dispatch('saveUserProfileId', response.data.p_id.p_id)
-              }
-              this.setComps() //установка доступных компетенций
-            }
+        this.mailEr = false
+        this.passEr = false
+        this.mailValEr = false
+        this.passCorEr = false
+        if (this.mail === '') this.mailEr = true
+        else if (!this.validEmail(this.mail)) this.mailValEr = true
+        if (this.password === '') this.passEr = true
+        if (this.mailEr === false && this.passEr === false && this.mailValEr === false) {
+          const formData = new FormData()
+          formData.append('email', this.mail)
+          formData.append('password', this.password)
+          axios({
+            method: 'post',
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/user/login`,
+            data: formData
           })
-          .catch(error => {
+                  .then(response => {
+                    if (response.data.success === true){
+                      $('.sign_in_modal').modal('hide'); //закрытие модального окна
+                      this.$store.dispatch('login', response.data.data)
+                      this.$store.dispatch('saveUserId', response.data.id)
+                      if (response.data.p_id.p_id !== null){
+                        this.$store.dispatch('saveUserProfileId', response.data.p_id.p_id)
+                      }
+                      //this.setComps() //установка доступных компетенций
+                    }
+                    else if (response.data.message === 'Incorrect password' || response.data.message === 'Incorrect email') this.passCorEr = true
 
-          })
-
+                  })
+                  .catch(error => {
+                    console.log('Ошибка',error)
+                  })
+        }
       },
       // setComps (){
       //   // Информация юзера
@@ -83,13 +105,12 @@
       //         console.error(error)
       //       })
       // },
-
     },
       mounted() {
-          console.log('опа',this)
           $('.sign_in_modal').on('hide.bs.modal', function (e) {
               e.target.__vue__.mail = ''
               e.target.__vue__.password = ''
+              e.target.__vue__.sad = false
           })
       }
   }
