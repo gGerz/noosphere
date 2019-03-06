@@ -206,7 +206,7 @@
         const formData = new FormData()
         formData.set('sc_type', 2)
         axios({
-          method: 'PUT',
+          method: 'put',
           url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings/`+ this.cons[i].sc_id,
           data: formData
         })

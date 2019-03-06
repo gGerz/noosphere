@@ -184,7 +184,7 @@
           formData.append('sc_description', this.about)
           this.compCons = this.selected.com_id
           formData.append('sc_com_id', this.compCons)
-
+          formData.append('sc_type', 1)
           // for (let i = 0; i < this.tags.length; i++) {
           //   formData.append('payment_location[]', this.tags[i]) // Отправка названий налички
           // }
