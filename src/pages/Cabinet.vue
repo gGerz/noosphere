@@ -23,11 +23,11 @@
             <!-- ВКЛАДКА ОБЩЕЕ -->
             <div class="tab-pane active" id="general">
                 <div class="cab_card">
-                    <div class="card-body-main">
-                        <div class="d-lg-flex d-md-flex d-block align-items-center">
-                            <div class="d-flex align-items-center ">
+                    <div class="card-body-main mw100">
+                        <div class="d-lg-flex d-md-flex d-block align-items-center  flex-nowrap">
+                            <div class="d-flex align-items-center w100 ">
                                 <img class="ava_cabinet" src="../assets/img/ava.jpg">
-                                <div class="text-dark h3 m-0">{{userInfo.p_name}}</div>
+                                <div class="text-dark h3 m-0 text-truncate main-item-name ">{{userInfo.p_name}}</div>
                             </div>
                             <div class="ml-lg-5 ml-md-5"><a href="" class="dashed text-grey" v-if="0">Изменить данные</a></div>
                         </div>
@@ -177,21 +177,7 @@
     data() {
       return {
         userInfo: [],
-        options: [
-          {value: 1, text: 'One'},
-          {value: 1, text: 'One'},
-          {value: 1, text: 'One'},
-          {value: 1, text: 'One'},
-          {value: 1, text: 'One'},
-          {value: 1, text: 'One'},
-          {value: 2, text: 'Two'},
-          {value: 2, text: 'Two'},
-          {value: 2, text: 'Two'},
-          {value: 2, text: 'Two'},
-          {value: 2, text: 'Two'},
-          {value: 2, text: 'Two'},
-          {value: 2, text: 'Two'},
-        ],
+        options: [],
         selected: '',
         competencies: [],
         cons: [],
@@ -501,5 +487,11 @@
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
         border-radius: 5px;
+    }
+    .w100 {
+        width: 100%;
+    }
+    .mw100 {
+        max-width: 100%;
     }
 </style>

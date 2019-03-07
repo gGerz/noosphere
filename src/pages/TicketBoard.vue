@@ -10,18 +10,18 @@
           <span slot="no-options">Ничего не найдено</span>
         </vue-select>
       </div>
-      <div class="col-2 px-0">
+      <!--<div class="col-2 px-0">-->
 
-        <input type="date" class="form-control search-item" required="required" placeholder="">
+        <!--<input type="date" class="form-control search-item" required="required" placeholder="">-->
 
-      </div>
-      <div class="col-3">
-        <div class="d-flex align-items-center">
-          <div class="pr-2 text-grey">Время </div>
-          <input class="form-control mr-2 search-item" type="text" placeholder="От">
-          <input class="form-control mr-2 search-item" type="text" placeholder="До">
-        </div>
-      </div>
+      <!--</div>-->
+      <!--<div class="col-3">-->
+        <!--<div class="d-flex align-items-center">-->
+          <!--<div class="pr-2 text-grey">Время </div>-->
+          <!--<input class="form-control mr-2 search-item" type="text" placeholder="От">-->
+          <!--<input class="form-control mr-2 search-item" type="text" placeholder="До">-->
+        <!--</div>-->
+      <!--</div>-->
       <div class="col-1 px-0 search-btn btn text-grey">Поиск</div>
       <div class="ml-auto align-items-center d-flex"
            @onclick="createCons()"

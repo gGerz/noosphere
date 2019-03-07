@@ -199,7 +199,7 @@
       createConId() {
         const formData1 = new FormData()
         console.log('thisWillCreateId', this.willCreateId)
-        formData1.set('con_sc_id', this.willCreateId)
+        formData1.set('con_pc_id', this.willCreateId)
         axios({
           method: 'post',
           url: `http://192.168.1.150/noosfera/public_html/api/v1/consultations`,
@@ -207,7 +207,9 @@
         })
           .then(response => {
           })
-          .catch(response => {
+          .catch((error) => {
+            console.error(error)
+            console.log(error)
           })
       }
     },
@@ -224,6 +226,7 @@
           })
           .catch((error) => {
             console.error(error)
+            console.log(error)
           })
       }
       $('.create_cons_modal').on('hide.bs.modal', function (e) {

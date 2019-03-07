@@ -7,7 +7,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
           <div class="pb-2">
-            <p class="mb-0 font_xl">{{selectedCard.pc_title}}</p>
+            <p class="mb-0 font_xl wrap-break">{{selectedCard.pc_title}}</p>
             <p class="mr-auto mb-0 text-grey font_l" v-if="selectedCard.pcCom !== undefined">{{selectedCard.pcCom.competence}}</p>
           </div>
           <div class="d-flex align-items-center py-3">
@@ -17,7 +17,7 @@
               <!--<img class="img_master2" :src="photos[i].url" > -->
             </div>
             <div>
-              <div class="font_m" v-if="selectedCard.pcUser !== undefined">{{selectedCard.pcUser.p_name}}</div>
+              <div class="font_m card-item-name text-truncate" v-if="selectedCard.pcUser !== undefined">{{selectedCard.pcUser.p_name}}</div>
             </div>
           </div>
           <div class="d-flex py-2">
@@ -43,7 +43,7 @@
           <div class="py-2">
             <div class="tag px-2 font_s" v-for="tag in selectedCard.tagCon">{{tag.tag_name}}</div>
           </div>
-          <div class="py-2">
+          <div class="py-2 wrap-break">
             {{selectedCard.pc_description}}
           </div>
           <div class="d-flex pt-3">
@@ -192,5 +192,10 @@
     .btn-buy {
         max-height: 42px;
     }
-
+    .card-item-name {
+      width: 330px;
+    }
+    .wrap-break {
+      word-wrap: break-word;
+    }
 </style>

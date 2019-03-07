@@ -46,7 +46,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="m-0">Цена:</label>
-                                <input v-model="price" type="text" class="form-control inputText" required="required" placeholder="">
+                                <input v-model="price" type="number" class="form-control inputText" required="required" placeholder="">
                                 <div v-show="priceEr" class="text-danger font_s">Введите цену</div>
                             </div>
                         </div>
@@ -195,13 +195,20 @@
             data: formData
           })
             .then(response => {
-              this.willCreateId = response.data.sc_id
-              this.createConId()
+              console.log('Статус',response.status)
+              if (response.status === 201) {
+                console.log('Дата: ',response.data)
+                this.willCreateId = response.data.sc_id
+                this.createConId()
+                this.closeModal()
+              }
+              else console.log('Консультация не создана, сервер возвращает ошибку:', response.status)
             })
             .catch(response => {
               console.log(response)
+              console.log('Консультация не создана, сервер возвращает ошибку:', response.status)
             })
-          this.closeModal()
+
         }
       },
       createConId() {

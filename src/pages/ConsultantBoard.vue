@@ -3,7 +3,6 @@
     <h2 class="my-4 font_xxl" >Доска консультаций</h2>
     <div class="row mb-4 align-items-center">
       <div class="col-3">
-              {{selected.competence}}
         <vue-select v-model="selected" label="competence" :options="globalComps" placeholder="Компетенции"  style="display: block">
           <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
             <div class="py-1">{{ option.competence }}</div>
@@ -11,16 +10,16 @@
           <span slot="no-options">Ничего не найдено</span>
         </vue-select>
       </div>
-      <div class="col-2 px-0">
-          <input type="date" class="form-control search-item" required="required" placeholder="">
-      </div>
-      <div class="col-3">
-          <div class="d-flex align-items-center">
-            <div class="pr-2 text-grey">Время </div>
-            <input class="form-control mr-2 search-item" type="text" placeholder="От">
-            <input class="form-control mr-2 search-item" type="text" placeholder="До">
-          </div>
-      </div>
+      <!--<div class="col-2 px-0">-->
+          <!--<input type="date" class="form-control search-item" required="required" placeholder="">-->
+      <!--</div>-->
+      <!--<div class="col-3">-->
+          <!--<div class="d-flex align-items-center">-->
+            <!--<div class="pr-2 text-grey">Время </div>-->
+            <!--<input class="form-control mr-2 search-item" type="text" placeholder="От">-->
+            <!--<input class="form-control mr-2 search-item" type="text" placeholder="До">-->
+          <!--</div>-->
+      <!--</div>-->
       <div class="col-1 px-0 search-btn btn text-grey" >Поиск</div>
       <div class="ml-auto align-items-center d-flex"
            @onclick="createCons()"
@@ -46,7 +45,7 @@
                   <!--<img class="img_master2" :src="photos[i].url" >-->
                 </div>
                 <div>
-                  <div class="font_m" v-if="con.scUser !== undefined">{{con.scUser.p_name}}</div>
+                  <div class="font_m text-truncate card-item-name" v-if="con.scUser !== undefined">{{con.scUser.p_name}}</div>
                   <div class="m-0" title="Рейтинг font_m">
                     <div class="d-flex">
                       <div class="mx-2">
@@ -101,14 +100,14 @@
     <nav aria-label="Page navigation example">
       <ul class="pagination d-flex justify-content-center">
         <li class="page-item">
-          <a class="page-link" href="#" aria-label="Previous">
+          <a class="page-link" href="#" aria-label="Previous" @click="getPage(currentPage - 1)">
             <span aria-hidden="true">&laquo;</span>
             <span class="sr-only">Previous</span>
           </a>
         </li>
-        <li class="page-item" v-for="n in 3"><a class="page-link" href="#" @click="getPage(n)">{{n}}</a></li>
+        <li class="page-item" v-for="n in page"><a class="page-link" href="#" @click="getPage(n)">{{n}}</a></li>
         <li class="page-item">
-          <a class="page-link" href="#" aria-label="Next">
+          <a class="page-link" href="#" aria-label="Next" @click="getPage(currentPage + 1)">
             <span aria-hidden="true">&raquo;</span>
             <span class="sr-only">Next</span>
           </a>
@@ -136,10 +135,11 @@
     data() {
       return {
         globalComps: [],
+        page: '',
+        currentPage: 1,
         searchComp: '',
         selectedIndex: '',
         selectedCard: '',
-        carrentPage: 1,
         options: [
           { value: 1, text: 'One' },
           { value: 2, text: 'two' },
@@ -180,7 +180,8 @@
       })
         .then((response) => {
           this.cons = response.data
-          console.log("Консультация",this.cons)
+          this.page = response.data[0].countSc
+          console.log('Всего страниц', this.page)
           this.$store.state.loader = false
         })
         .catch((error) => {
@@ -203,35 +204,40 @@
     methods: {
       changeStateCons(i) {
 
-        const formData = new FormData()
-        formData.set('sc_type', 2)
-        axios({
-          method: 'put',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings/`+ this.cons[i].sc_id,
-          data: formData
-        })
-                .then((response) => {
-                  console.log(response)
-                })
-                .catch((error) => {
-                  console.error(error)
-                })
+          const formData = new FormData()
+          formData.set('sc_type', 2)
+          console.log('нойс')
+          axios({
+            method: 'put',
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings/`+ this.cons[i].sc_id,
+            data: formData
+          })
+                  .then((response) => {
+                    console.log(response)
+                  })
+                  .catch((error) => {
+                    console.error(error)
+                  })
+
       },
       getPage(i) {
-        console.log('страница', i)
-        this.$store.state.loader = true
-        axios({
-          method: 'get',
+        if (i < this.page && i > 0) {
+          console.log('страница', i)
+          this.$store.state.loader = true
+          axios({
+            method: 'get',
             url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?page=`+ i
-        })
-                .then((response) => {
-                  this.cons = response.data
-                  console.log("Консультация "+i,this.cons)
-                  this.$store.state.loader = false
-                })
-                .catch((error) => {
-                  console.error(error)
-                })
+          })
+                  .then((response) => {
+                    this.cons = response.data
+                    console.log("Консультация "+i,this.cons)
+                    this.$store.state.loader = false
+                  })
+                  .catch((error) => {
+                    console.error(error)
+                  })
+          this.currentPage = i
+        }
       },
       selectIndex(i){
         this.selectedCard = this.cons[i]
@@ -379,6 +385,10 @@
     &:hover {
       background: #d6d6d6;
     }
+  }
+
+  .card-item-name {
+    width: 230px;
   }
 
 
