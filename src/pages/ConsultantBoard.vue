@@ -180,8 +180,8 @@
         })
         .then((response) => {
           this.cons = response.data
-          this.page = response.data[0].countSc
-          console.log('Всего страниц', this.page)
+          this.page = Math.ceil((response.data[0].countSc-1) / 21)
+          console.log('Всего записей', response.data[0].countSc-1 , this.page)
           this.$store.state.loader = false
         })
         .catch((error) => {
@@ -206,18 +206,18 @@
         console.log('а сейчас будет поиск по компетенции', i)
         if (i != 0) {
           axios({
-            method: 'get',
+            method: 'post',
             url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?SellingConsultationSearch[sc_com_id]=` + i
           })
-                  .then((response) => {
-                    this.cons = response.data
-                    this.page = response.data[0].countSc
-                    console.log('Всего страниц', this.page)
-                    this.$store.state.loader = false
-                  })
-                  .catch((error) => {
-                    console.error(error)
-                  })
+            .then((response) => {
+              this.cons = response.data
+              this.page = Math.ceil((response.data[0].countSc-1) / 21)
+              console.log('Всего страниц', this.page)
+              this.$store.state.loader = false
+            })
+            .catch((error) => {
+              console.error(error)
+            })
         }
       },
       changeStateCons(i) {
@@ -237,7 +237,7 @@
           })
       },
       getPage(i) {
-        if (i < this.page && i > 0) {
+        if (i <= this.page && i > 0) {
           console.log('страница', i)
           this.$store.state.loader = true
           axios({

@@ -20,7 +20,7 @@
                             <div v-show="dateEr" class="text-danger font_s">Введите дату рождения</div>
                         </div>
                         <div class="form-group">
-                            <textarea type="text" class="form-control inputText textarea-resize-n" required="required" placeholder="Описание" rows="4" v-model="about"></textarea>
+                            <textarea type="text" class="form-control textarea-resize-n" required="required" placeholder="Описание" rows="4" v-model="about"></textarea>
                             <div v-show="aboutEr" class="text-danger font_s">Введите описание</div>
                         </div>
                         <div class="form-group">

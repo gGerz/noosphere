@@ -67,10 +67,12 @@
                                 </div>
 
                                 <create-comp @updateUserInfo="updateUserInfo"></create-comp>
+
                                 <div class="d-flex justify-content-between mt-1 mr-4" v-for="competence in userInfo.cpCom">
+
                                     <div>{{competence.competence}}</div>
                                     <div class="d-flex justify-content-between">
-                                        <!--<i @click="deleteComp(competence.com_id)" class="fas fa-times mr-2"></i>-->
+                                        <i @click="deleteComp(competence.com_id)" class="fas fa-times mr-2"></i>
                                     </div>
                                 </div>
                             </div>
@@ -190,15 +192,17 @@
       },
       deleteComp(id) {
         console.log(id)
-
+        const formData = new FormData()
+        formData.set('cp_p_id', this.userInfo.p_user_id)
+        formData.set('cp_com_id', id)
         axios({
-          method: 'get',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + '?expand=cpCom',
-          headers: {'Authorization': `Bearer ${localStorage.token}`}
+          method: 'post',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/competence/kill`,
+          data: formData
         })
           .then((response) => {
-            this.userInfo = response.data
-            console.log('инфа', this.userInfo)
+            console.log('инфа', response)
+            window.location.reload()
           })
           .catch((error) => {
             console.error(error)
