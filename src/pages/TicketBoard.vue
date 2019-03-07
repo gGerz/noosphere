@@ -156,6 +156,24 @@
               })
     },
     methods: {
+      consFindComp(i) {
+        console.log('а сейчас будет поиск по компетенции', i)
+        if (i != 0) {
+          axios({
+            method: 'get',
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?SellingConsultationSearch[sc_com_id]=` + i
+          })
+                  .then((response) => {
+                    this.cons = response.data
+                    this.page = response.data[0].countSc
+                    console.log('Всего страниц', this.page)
+                    this.$store.state.loader = false
+                  })
+                  .catch((error) => {
+                    console.error(error)
+                  })
+        }
+      },
       selectIndex(i) {
         this.selectedCard = this.reqs[i]
       }

@@ -20,7 +20,7 @@
             <!--<input class="form-control mr-2 search-item" type="text" placeholder="До">-->
           <!--</div>-->
       <!--</div>-->
-      <div class="col-1 px-0 search-btn btn text-grey" >Поиск</div>
+      <div class="col-1 px-0 search-btn btn text-grey" @click="consFindComp(selected.com_id)">Поиск</div>
       <div class="ml-auto align-items-center d-flex"
            @onclick="createCons()"
            data-toggle="modal" data-target=".create_cons_modal"
@@ -177,7 +177,7 @@
       axios({
         method: 'get',
             url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings`
-      })
+        })
         .then((response) => {
           this.cons = response.data
           this.page = response.data[0].countSc
@@ -202,23 +202,39 @@
           })
     },
     methods: {
-      changeStateCons(i) {
-
-          const formData = new FormData()
-          formData.set('sc_type', 2)
-          console.log('нойс')
+      consFindComp(i) {
+        console.log('а сейчас будет поиск по компетенции', i)
+        if (i != 0) {
           axios({
-            method: 'put',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings/`+ this.cons[i].sc_id,
-            data: formData
+            method: 'get',
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?SellingConsultationSearch[sc_com_id]=` + i
           })
                   .then((response) => {
-                    console.log(response)
+                    this.cons = response.data
+                    this.page = response.data[0].countSc
+                    console.log('Всего страниц', this.page)
+                    this.$store.state.loader = false
                   })
                   .catch((error) => {
                     console.error(error)
                   })
-
+        }
+      },
+      changeStateCons(i) {
+        const formData = new FormData()
+        formData.set('sc_type', 2)
+        console.log('нойс')
+        axios({
+          method: 'put',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings/`+ this.cons[i].sc_id,
+          data: formData
+        })
+          .then((response) => {
+            console.log(response)
+          })
+          .catch((error) => {
+            console.error(error)
+          })
       },
       getPage(i) {
         if (i < this.page && i > 0) {
