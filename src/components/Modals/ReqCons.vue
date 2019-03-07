@@ -186,14 +186,18 @@
             url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases`,
             data: formData
           })
+
             .then(response => {
-              this.willCreateId = response.data.pc_id
-              this.createConId()
+              if (response.status === 201) {
+                this.willCreateId = response.data.pc_id
+                this.createConId()
+                this.closeModal()
+              }
             })
             .catch(response => {
               console.log(response)
+              alert('Ошибка сервера, консультация не создана')
             })
-          this.closeModal()
         }
       },
       createConId() {

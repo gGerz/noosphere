@@ -197,18 +197,15 @@
             .then(response => {
               console.log('Статус',response.status)
               if (response.status === 201) {
-                console.log('Дата: ',response.data)
                 this.willCreateId = response.data.sc_id
                 this.createConId()
                 this.closeModal()
               }
-              else console.log('Консультация не создана, сервер возвращает ошибку:', response.status)
             })
             .catch(response => {
               console.log(response)
-              console.log('Консультация не создана, сервер возвращает ошибку:', response.status)
+              alert('Ошибка сервера, консультация не создана')
             })
-
         }
       },
       createConId() {
