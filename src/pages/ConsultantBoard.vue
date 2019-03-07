@@ -204,9 +204,9 @@
     methods: {
       consFindComp(i) {
         console.log('а сейчас будет поиск по компетенции', i)
-        if (i != 0) {
+        if (i !== 0) {
           axios({
-            method: 'post',
+            method: 'get',
             url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?SellingConsultationSearch[sc_com_id]=` + i
           })
             .then((response) => {
