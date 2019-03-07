@@ -97,12 +97,12 @@
           //     if (1) {//response.data.indexOf($store.state.userComp.cpCom
           //       console.log('hi1')
           this.globalComps = response.data
-        }
-    })
-  .catch((error) => {
-    console.error(error)
-  })
-  }
+
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+    }
   }
 </script>
 <style lang="scss" scoped>
