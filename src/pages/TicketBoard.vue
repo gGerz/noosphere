@@ -22,7 +22,7 @@
           <!--<input class="form-control mr-2 search-item" type="text" placeholder="До">-->
         <!--</div>-->
       <!--</div>-->
-      <div class="col-1 px-0 search-btn btn text-grey">Поиск</div>
+      <div class="col-1 px-0 search-btn btn text-grey" @click="consFindComp(selected.com_id)">Поиск</div>
       <div class="ml-auto align-items-center d-flex"
            @onclick="createCons()"
            data-toggle="modal" data-target=".req_cons_modal"
@@ -161,10 +161,10 @@
         if (i != 0) {
           axios({
             method: 'get',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?SellingConsultationSearch[sc_com_id]=` + i
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases?PurchaseConsultationSearch[pc_com_id]=` + i
           })
                   .then((response) => {
-                    this.cons = response.data
+                    this.reqs = response.data
                     this.page = response.data[0].countSc
                     console.log('Всего страниц', this.page)
                     this.$store.state.loader = false
