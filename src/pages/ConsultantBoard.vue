@@ -222,11 +222,11 @@
       },
       changeStateCons(i) {
         const formData = new FormData()
-        formData.set('sc_type', 2)
-        console.log('нойс')
+        formData.set('sc_id', this.cons[i].sc_id)
+        console.log('нойс', this.cons[i].sc_id, this.cons[i])
         axios({
-          method: 'put',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings/`+ this.cons[i].sc_id,
+          method: 'post',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/selling/drop`,
           data: formData
         })
           .then((response) => {
