@@ -1,4 +1,5 @@
 <template>
+    <!--<div id="mgVideoChat"></div>-->
     <div class="container ">
         <p class="h2 py-4 text-center">Видео кабинет</p>
         <div class="card shadow">
@@ -30,36 +31,15 @@
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 <script>
-
     import $ from 'jquery'
-
-  export default {
-    mounted() {
-      let style = document.createElement('style')
-      style.setAttribute('src', '../mgVideoChat/mgVideoChat-1.13.2.css')
-      document.head.appendChild(style)
-
-
-      let mgVideoChat = document.createElement('script')
-      mgVideoChat.setAttribute('src', '../mgVideoChat/mgVideoChat-1.13.2-min.js')
-      document.head.appendChild(mgVideoChat)
-
-      let commonScript = document.createElement('script')
-      commonScript.setAttribute('src', '../common/js/menu.js')
-      document.head.appendChild(commonScript)
-
-
-      $(document).ready(function(){
+    $(document).ready(function(){
         $('#mgVideoChat').mgVideoChat({
-          wsURL: 'ws://www.magnoliyan.com:8080?room=1'
+            wsURL: 'ws://www.myserverdomain.com:8080?room=1' //domain:port and room id info
         });
-      });
-    }
-  }
+    });
 </script>
 <style lang="scss" scoped>
 

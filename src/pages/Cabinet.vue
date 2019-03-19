@@ -29,12 +29,12 @@
                                 <img class="ava_cabinet" src="../assets/img/ava.jpg">
                                 <div class="text-dark h3 m-0 text-truncate main-item-name ">{{userInfo.p_name}}</div>
                             </div>
-                            <div class="ml-lg-5 ml-md-5"><a href="" class="dashed text-grey" v-if="0">Изменить данные</a></div>
+                            <div class="ml-lg-5 ml-md-5"><a href="" class="dashed text-grey">Изменить данные</a></div>
                         </div>
                         <div class="row user_info">
                             <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
                                 <div>E-mail</div>
-                                <div>{{userInfo.pUser.email}}</div>
+                                <div>{{email}}</div>
                             </div>
 
                             <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
@@ -51,25 +51,21 @@
                                 <div v-else>Женский</div>
                             </div>
                             <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
-
                             </div>
                         </div>
                         <div class="row">
                             <div class="spec col-10 col-xs-12 col-sm-10 col-md-10 col-lg-4 px-3">
                                 <div class="text-grey font_s d-flex ">
                                     Компетенции
-                                    <span class="ml-auto" @onclick="createComp()"
-                                          data-toggle="modal" data-target=".create_comp_modal"
-                                    >
-
-                                <span class="dashed2">Создать</span>
-                                </span>
+                                    <span class="ml-auto"
+                                          @onclick="createComp()"
+                                          data-toggle="modal"
+                                          data-target=".create_comp_modal">
+                                    <span class="dashed2">Создать</span>
+                                    </span>
                                 </div>
-
                                 <create-comp @updateUserInfo="updateUserInfo"></create-comp>
-
                                 <div class="d-flex justify-content-between mt-1 mr-4" v-for="competence in userInfo.cpCom">
-
                                     <div>{{competence.competence}}</div>
                                     <div class="d-flex justify-content-between">
                                         <i @click="deleteComp(competence.com_id)" class="fas fa-times mr-2"></i>
@@ -104,16 +100,16 @@
                                 </vue-select>
                             </div>
                         </div>
-                        <div class="card card-req mb-3" v-for="(con, i) in cons" v-if="con != undefined">
+                        <div class="card card-req mb-3" v-for="(con, i) in cons" v-if="con !== undefined">
                             <div class="row card-body font_m d-flex align-items-center">
                                 <div class="col-12 col-lg-6 d-flex justify-content-lg-start justify-content-around font_l" v-if="con != null">
                                     {{con.sc_title}}
                                 </div>
                                 <div class="col-12 col-lg-6 d-flex d-lg-block text-center d-xl-flex justify-content-lg-end justify-content-around pl-0 mt-2 mt-lg-0">
-                                    <div class="mr-xl-2" v-if="con.sc_date != undefined">
+                                    <div class="mr-xl-2" v-if="con.sc_date !== undefined">
                                         <i class="fas fa-calendar-week mr-1 text-grey"></i>{{con.sc_date}}
                                     </div>
-                                    <div v-if="con.sc_begin_time != undefined">
+                                    <div v-if="con.sc_begin_time !== undefined">
                                         <i class="far fa-clock mr-1 text-grey"></i>{{con.sc_begin_time}} - {{con.sc_end_time }}
                                     </div>
                                 </div>
@@ -178,6 +174,7 @@
     },
     data() {
       return {
+          email: '',
         userInfo: [],
         options: [],
         selected: '',
@@ -191,7 +188,6 @@
         this.ticketConsultations.splice(i, 1)
       },
       deleteComp(id) {
-        console.log(id)
         const formData = new FormData()
         formData.set('cp_p_id', this.userInfo.p_user_id)
         formData.set('cp_com_id', id)
@@ -201,7 +197,6 @@
           data: formData
         })
           .then((response) => {
-            console.log('инфа', response)
             window.location.reload()
           })
           .catch((error) => {
@@ -211,10 +206,7 @@
 
       },
       updateUserInfo() {
-        console.log('privet')
         if (this.$store.state.authorisedStatus === true) {
-          // if (this.$store.state.userInfo)
-          // Информация юзера
           axios({
             method: 'get',
             url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + '?expand=cpCom',
@@ -222,7 +214,6 @@
           })
             .then((response) => {
               this.userInfo = response.data
-              console.log(this.userInfo)
             })
             .catch((error) => {
               console.error(error)
@@ -236,59 +227,53 @@
         e.preventDefault()
         $(this).tab('show')
       })
-      console.log(localStorage.token)
-      if (this.$store.state.authorisedStatus === true) {
-        if (this.$store.state.userInfo !== null) {
-          // Информация юзера
-          axios({
-            method: 'get',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + '?expand=cpCom,pUser',
-            // url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?expand=scUser,scCom,tagCon`,
-            headers: {'Authorization': `Bearer ${localStorage.token}`}
-          })
-            .then((response) => {
-              this.userInfo = response.data
-              console.log('infouser', this.userInfo.p_id)
-            })
-            .catch((error) => {
-              console.error(error)
-            })
-          axios({
-            method: 'get',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + `?expand=conSUser`
-          })
-            .then((response) => {
-              this.cons = response.data.conSUser
-              console.log("Консультация",response.data.conSUser)
-            })
-            .catch((error) => {
-              console.error(error)
-            })
-          axios({
-            method: 'get',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + `?expand=conPUser`
-          })
-            .then((response) => {
-              this.reqs = response.data.conPUser
-              console.log("Заявка",response)
-              //this.$store.state.loader = false
-            })
-            .catch((error) => {
-              console.error(error)
-            })
-        } else {
-          // ОТКРЫТЬ МОДАЛКУ ПРОДОЛЖЕНИЯ РЕГИСТРАЦИИ
-          console.log('priffet')
-
-          $('.sign_up_next_modal').modal('show');
-          console.log('priffet2')
-        }
-
-      }
+    if (this.$store.state.userInfo !== null) {
+      // Информация юзера
+      axios({
+        method: 'get',
+        url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + '?expand=cpCom,pUser',
+        // url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?expand=scUser,scCom,tagCon`,
+        headers: {'Authorization': `Bearer ${localStorage.token}`}
+      })
+        .then((response) => {
+          this.userInfo = response.data
+            this.email = this.userInfo.pUser.email
+            console.log(this.userInfo)
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+      axios({
+        method: 'get',
+        url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + `?expand=conSUser`
+      })
+        .then((response) => {
+          this.cons = response.data.conSUser
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+      axios({
+        method: 'get',
+        url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + `?expand=conPUser`
+      })
+        .then((response) => {
+          this.reqs = response.data.conPUser
+          //this.$store.state.loader = false
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+    } else {
+      // ОТКРЫТЬ МОДАЛКУ ПРОДОЛЖЕНИЯ РЕГИСТРАЦИИ
+      $('.sign_up_next_modal').modal('show');
     }
+
+  }
   }
 </script>
 <style lang="scss">
+
     $main_color: #0D84FB; //синиий
     $main_grey: #A6A6A6; //серый
     $danger: #FF3F3F; //красный

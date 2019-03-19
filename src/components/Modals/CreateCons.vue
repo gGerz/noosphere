@@ -195,7 +195,6 @@
             data: formData
           })
             .then(response => {
-              console.log('Статус',response.status)
               if (response.status === 201) {
                 this.willCreateId = response.data.sc_id
                 this.createConId()
@@ -203,14 +202,11 @@
               }
             })
             .catch(response => {
-              console.log(response)
-              alert('Ошибка сервера, консультация не создана')
             })
         }
       },
       createConId() {
         const formData1 = new FormData()
-        console.log('thisWillCreateId', this.willCreateId)
         formData1.set('con_sc_id', this.willCreateId)
         axios({
           method: 'post',
@@ -233,7 +229,6 @@
           .then((response) => {
             this.$store.state.userComp = response.data
             this.userInfo = response.data
-            console.log(this.userInfo)
           })
           .catch((error) => {
             console.error(error)

@@ -20,7 +20,7 @@
           </li>
           <li class="nav-item" v-if="this.$store.state.authorisedStatus">
             <div v-if="this.$store.state.userInfo === null" class="d-flex align-items-center" data-toggle="modal" data-target=".sign_up_next_modal">
-              <img class="ava_cabinet" src="../../assets/img/ava.jpg">
+              <img class="ava_cabinet" src="../../assets/img/ava.jpg">s
             </div>
             <router-link v-else class="nav-link nav-link-header" to="/cabinet">
               <div class="d-flex align-items-center ">
