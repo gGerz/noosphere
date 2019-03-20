@@ -57,4 +57,7 @@ export default {
     font-family: Roboto;
     min-height: 1080px;
   }
+  i{
+    cursor: pointer;
+  }
 </style>

@@ -20,11 +20,11 @@
           </li>
           <li class="nav-item" v-if="this.$store.state.authorisedStatus">
             <div v-if="this.$store.state.userInfo === null" class="d-flex align-items-center" data-toggle="modal" data-target=".sign_up_next_modal">
-              <img class="ava_cabinet" src="../../assets/img/ava.jpg">s
+              <img class="img_master2" src="../../assets/img/ava.jpg">s
             </div>
             <router-link v-else class="nav-link nav-link-header" to="/cabinet">
               <div class="d-flex align-items-center ">
-                <img class="ava_cabinet" src="../../assets/img/ava.jpg">
+                <img class="img_master2" src="../../assets/img/ava.jpg">
               </div>
             </router-link>
           </li>
@@ -34,7 +34,6 @@
         <router-link v-if="!this.$store.state.authorisedStatus" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="modal" data-target=".sign_up_modal" to="">Регистрация</router-link>
         <reg />
         <reg-next />
-        <button v-if="this.$store.state.authorisedStatus" class="btn btn-danger" @click="logout">Выйти</button>
       </div>
     </nav>
   </div>
@@ -54,20 +53,13 @@
     data(){
       return{
       }
-    },
-    methods: {
-      logout () {
-        this.$store.dispatch('logout', {}).then(() => {
-          this.$router.push('/')
-        })
-      }
     }
   }
 </script>
 <style lang="scss">
-  .ava_cabinet {
-    height: 40px;
-    width: 40px!important;
+  .img_master2 {
+    width: 53px; //63
+    height: 53px!important; //63
     object-fit: cover;
     border-radius: 100%;
     margin-right: 17px;
@@ -78,5 +70,9 @@
   .nav-link-header {
     padding-right: .9rem!important;
     padding-left: .9rem!important;
+  }
+  .navbar-nav{
+    display: flex;
+    align-items: center;
   }
 </style>

@@ -12,9 +12,13 @@
                 <li class="nav-item">
                     <a class="nav-link nav-link-cabinet" id="messages-tab" data-toggle="tab" href="#tickets" role="tab" aria-controls="messages" aria-selected="false"><i class="far fa-list-alt"></i>Мои заявки</a>
                 </li>
-                <div class="ml-auto" @onclick="createCons()"
-                     data-toggle="modal" data-target=".create_cons_modal"
-                ><i class="far fa-plus-square mr-2"></i><span class="dashed2">Создать карточку консультации</span></div>
+                <div class="ml-auto"
+                     data-toggle="modal"
+                     data-target=".create_cons_modal"
+                >
+                    <i class="far fa-plus-square mr-2"></i>
+                    <span class="dashed2">Создать карточку консультации</span>
+                </div>
                 <create-cons />
             </ul>
         </div>
@@ -29,7 +33,10 @@
                                 <img class="ava_cabinet" src="../assets/img/ava.jpg">
                                 <div class="text-dark h3 m-0 text-truncate main-item-name ">{{userInfo.p_name}}</div>
                             </div>
-                            <div class="ml-lg-5 ml-md-5" style="width: 180px"><a href="" class="dashed text-grey">Изменить данные</a></div>
+                            <div class="ml-lg-5 ml-md-5" style="width: 180px">
+                                <button style="width: 100%" class="btn btn-outline-primary mb-2">Изменить данные</button>
+                                <button style="width: 100%" class="btn btn-outline-danger" @click="logout">Выйти</button>
+                            </div>
                         </div>
                         <div class="row user_info">
                             <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
@@ -43,7 +50,7 @@
                             </div>
                             <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
                                 <div>Дата рождения</div>
-                                <div>{{userInfo.p_date}}</div>
+                                <div>{{userInfo.p_date}}({{userInfo.p_date | getAges}})</div>
                             </div>
                             <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto mx-sm-0">
                                 <div>Пол</div>
@@ -181,27 +188,32 @@
   import CreateCons from '../components/Modals/CreateCons.vue'
   import CreateComp from '../components/Modals/CreateComp.vue'
 
-  export default {
+    export default {
     components: {
-      VueSelect,
-      CreateCons,
-      CreateComp,
-      RegNext
+        VueSelect,
+        CreateCons,
+        CreateComp,
+        RegNext
     },
     data() {
-      return {
-        email: '',
-        userComps: [],
-        selectedUserComp: '',
-        globalComps : [],
-        selectedComp: '',
-        userInfo: [],
-        options: [],
-        selected: '',
-        competencies: [],
-        cons: [],
-        reqs: []
-      }
+        return {
+            email: '',
+            userComps: [],
+            selectedUserComp: '',
+            globalComps : [],
+            selectedComp: '',
+            userInfo: [],
+            options: [],
+            selected: '',
+            competencies: [],
+            cons: [],
+            reqs: []
+        }
+    },
+    filters: {
+        getAges(value){
+            return ((new Date().getTime() - new Date(value)) / (24 * 3600 * 365.25 * 1000)) | 0;
+        }
     },
     methods: {
 
@@ -278,6 +290,13 @@
                 })
         },
         //Добавление компетенции пользователя
+
+        //выход из системы
+        logout () {
+            this.$store.dispatch('logout', {}).then(() => {
+                this.$router.push('/')
+            })
+        }
     },
     mounted() {
       // Переключение вкладок
@@ -407,6 +426,7 @@
         font-size: 23px;
     }
     .dashed { //пунктирное подчеркивание
+        cursor: pointer;
         font-size: $font_s;
         text-decoration: none;
         border-bottom: 1px dashed $main_grey;
@@ -417,6 +437,7 @@
         }
     }
     .dashed2 { //пунктирное подчеркивание
+        cursor: pointer;
         color: $main_color;
         font-size: $font_m;
         text-decoration: none;
@@ -450,8 +471,8 @@
     }
 
     .ava_cabinet {
-        height: 40px;
-        width: 40px!important;
+        height: 100px;
+        width: 100px!important;
         object-fit: cover;
         border-radius: 100%;
         margin-right: 17px;
