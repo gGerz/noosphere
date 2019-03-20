@@ -72,13 +72,11 @@
           data: formData1
         })
           .then(response => {
-            console.log('response', response)
-            window.location.reload()
+            $('.create_comp_modal').modal('hide');
+            this.$emit('updateUserInfo')
           })
           .catch(response => {
-            console.log(response)
           })
-        this.$emit('updateUserInfo')
       }
     },
     mounted() {

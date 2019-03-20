@@ -188,7 +188,6 @@
           console.error(error)
         })
 
-
         axios({
           method: 'get',
           url: `http://192.168.1.150/noosfera/public_html/api/v1/coms`,

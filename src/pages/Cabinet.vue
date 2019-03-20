@@ -29,7 +29,7 @@
                                 <img class="ava_cabinet" src="../assets/img/ava.jpg">
                                 <div class="text-dark h3 m-0 text-truncate main-item-name ">{{userInfo.p_name}}</div>
                             </div>
-                            <div class="ml-lg-5 ml-md-5"><a href="" class="dashed text-grey">Изменить данные</a></div>
+                            <div class="ml-lg-5 ml-md-5" style="width: 180px"><a href="" class="dashed text-grey">Изменить данные</a></div>
                         </div>
                         <div class="row user_info">
                             <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
@@ -64,7 +64,7 @@
                                     <span class="dashed2">Создать</span>
                                     </span>
                                 </div>
-                                <create-comp @updateUserInfo="updateUserInfo"></create-comp>
+                                <create-comp @updateUserInfo="getUserInfo"></create-comp>
                                 <div class="d-flex justify-content-between mt-1 mr-4" v-for="competence in userInfo.cpCom">
                                     <div>{{competence.competence}}</div>
                                     <div class="d-flex justify-content-between">
@@ -92,20 +92,28 @@
                     <div class="card-body-main">
                         <div class="row mb-4">
                             <div class="col-3">
-                                <vue-select v-model="selected"  :options="options" placeholder="Компетенции" label="text" style="display: block">
+                                <vue-select v-model="selectedUserComp" :options="userComps" label="competence" placeholder="Компетенции">
                                     <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
-                                        <div class="py-1">{{ option.text }}</div>
+                                        <div class="py-1">{{ option.competence }}</div>
                                     </template>
                                     <span slot="no-options">Ничего не найдено</span>
                                 </vue-select>
                             </div>
                         </div>
                         <div class="card card-req mb-3" v-for="(con, i) in cons" v-if="con !== undefined">
-                            <div class="row card-body font_m d-flex align-items-center">
-                                <div class="col-12 col-lg-6 d-flex justify-content-lg-start justify-content-around font_l" v-if="con != null">
-                                    {{con.sc_title}}
+                            <div class="row card-body font_m d-flex align-items-center justify-content-between">
+                                <div class="d-flex font_l">
+                                    <div>
+                                        <i class="fas fa-times mr-2"></i>
+                                    </div>
+                                    <div>
+                                        <i class="fas fa fa-cog mr-2"></i>
+                                    </div>
+                                    <div v-if="con != null">
+                                        {{con.sc_title}}
+                                    </div>
                                 </div>
-                                <div class="col-12 col-lg-6 d-flex d-lg-block text-center d-xl-flex justify-content-lg-end justify-content-around pl-0 mt-2 mt-lg-0">
+                                <div class="d-flex">
                                     <div class="mr-xl-2" v-if="con.sc_date !== undefined">
                                         <i class="fas fa-calendar-week mr-1 text-grey"></i>{{con.sc_date}}
                                     </div>
@@ -124,24 +132,32 @@
                     <div class="card-body-main">
                         <div class="row mb-4">
                             <div class="col-3">
-                                <vue-select v-model="selected"  :options="options" placeholder="Компетенции" label="text" style="display: block">
+                                <vue-select v-model="selectedComp"  :options="globalComps" label="competence" placeholder="Компетенции">
                                     <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
-                                        <div class="py-1">{{ option.text }}</div>
+                                        <div class="py-1">{{ option.competence }}</div>
                                     </template>
                                     <span slot="no-options">Ничего не найдено</span>
                                 </vue-select>
                             </div>
                         </div>
                         <div class="card card-req mb-3" v-for="(con, i) in reqs" v-if="con != undefined">
-                            <div class="row card-body font_m d-flex align-items-center">
-                                <div class="col-12 col-lg-6 d-flex justify-content-lg-start justify-content-around font_l" v-if="con != null">
-                                    {{con.pc_title}}
+                            <div class="row card-body font_m d-flex align-items-center justify-content-between">
+                                <div class="d-flex font_l">
+                                    <div>
+                                        <i class="fas fa-times mr-2"></i>
+                                    </div>
+                                    <div>
+                                        <i class="fas fa fa-cog mr-2"></i>
+                                    </div>
+                                    <div v-if="con != null">
+                                        {{con.pc_title}}
+                                    </div>
                                 </div>
-                                <div class="col-12 col-lg-6 d-flex d-lg-block text-center d-xl-flex justify-content-lg-end justify-content-around pl-0 mt-2 mt-lg-0">
-                                    <div class="mr-xl-2" v-if="con.pc_date != undefined">
+                                <div class="d-flex">
+                                    <div class="mr-xl-2" v-if="con.pc_date !== undefined">
                                         <i class="fas fa-calendar-week mr-1 text-grey"></i>{{con.pc_date}}
                                     </div>
-                                    <div v-if="con.pc_begin_time != undefined">
+                                    <div v-if="con.pc_begin_time !== undefined">
                                         <i class="far fa-clock mr-1 text-grey"></i>{{con.pc_begin_time}} - {{con.pc_end_time }}
                                     </div>
                                 </div>
@@ -174,7 +190,11 @@
     },
     data() {
       return {
-          email: '',
+        email: '',
+        userComps: [],
+        selectedUserComp: '',
+        globalComps : [],
+        selectedComp: '',
         userInfo: [],
         options: [],
         selected: '',
@@ -184,42 +204,80 @@
       }
     },
     methods: {
-      cancelTicket(i) {
-        this.ticketConsultations.splice(i, 1)
-      },
-      deleteComp(id) {
-        const formData = new FormData()
-        formData.set('cp_p_id', this.userInfo.p_user_id)
-        formData.set('cp_com_id', id)
-        axios({
-          method: 'post',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/competence/kill`,
-          data: formData
-        })
-          .then((response) => {
-            window.location.reload()
-          })
-          .catch((error) => {
-            console.error(error)
-          })
 
-
-      },
-      updateUserInfo() {
-        if (this.$store.state.authorisedStatus === true) {
-          axios({
-            method: 'get',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + '?expand=cpCom',
-            headers: {'Authorization': `Bearer ${localStorage.token}`}
-          })
-            .then((response) => {
-              this.userInfo = response.data
+        //Получение информации юзера
+        getUserInfo(){
+            axios({
+                method: 'get',
+                url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + '?expand=cpCom,pUser',
+                headers: {'Authorization': `Bearer ${localStorage.token}`}
             })
-            .catch((error) => {
-              console.error(error)
+                .then((response) => {
+                    this.userInfo = response.data //общая информация
+                    this.email = this.userInfo.pUser.email //почта
+                    this.userComps = this.userInfo.cpCom //компетенции пользователя
+                })
+                .catch((error) => {
+                    console.error(error)
+                })
+        },
+        //Получение консультаций юзера
+        getCons(){
+            axios({
+                method: 'get',
+                url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + `?expand=conSUser`
             })
-        }
-      }
+                .then((response) => {
+                    this.cons = response.data.conSUser
+                })
+                .catch((error) => {
+                    console.error(error)
+                })
+        },
+        //Получение заявок юзера
+        getTickets(){
+            axios({
+                method: 'get',
+                url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + `?expand=conPUser`
+            })
+                .then((response) => {
+                    this.reqs = response.data.conPUser
+                })
+                .catch((error) => {
+                    console.error(error)
+                })
+        },
+        //Получение всех компетенций
+        getComps(){
+            axios({
+                method: 'get',
+                url: `http://192.168.1.150/noosfera/public_html/api/v1/coms`,
+            })
+                .then((response) => {
+                    this.globalComps = response.data
+                })
+                .catch((error) => {
+                    console.error(error)
+                })
+        },
+        //Удаление компетенции пользователя
+        deleteComp(id) {
+            const formData = new FormData()
+            formData.set('cp_p_id', this.userInfo.p_user_id)
+            formData.set('cp_com_id', id)
+            axios({
+                method: 'post',
+                url: `http://192.168.1.150/noosfera/public_html/api/v1/competence/kill`,
+                data: formData
+            })
+                .then((response) => {
+                    this.getUserInfo()
+                })
+                .catch((error) => {
+                    console.error(error)
+                })
+        },
+        //Добавление компетенции пользователя
     },
     mounted() {
       // Переключение вкладок
@@ -228,47 +286,14 @@
         $(this).tab('show')
       })
     if (this.$store.state.userInfo !== null) {
-      // Информация юзера
-      axios({
-        method: 'get',
-        url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + '?expand=cpCom,pUser',
-        // url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?expand=scUser,scCom,tagCon`,
-        headers: {'Authorization': `Bearer ${localStorage.token}`}
-      })
-        .then((response) => {
-          this.userInfo = response.data
-            this.email = this.userInfo.pUser.email
-            console.log(this.userInfo)
-        })
-        .catch((error) => {
-          console.error(error)
-        })
-      axios({
-        method: 'get',
-        url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + `?expand=conSUser`
-      })
-        .then((response) => {
-          this.cons = response.data.conSUser
-        })
-        .catch((error) => {
-          console.error(error)
-        })
-      axios({
-        method: 'get',
-        url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + `?expand=conPUser`
-      })
-        .then((response) => {
-          this.reqs = response.data.conPUser
-          //this.$store.state.loader = false
-        })
-        .catch((error) => {
-          console.error(error)
-        })
+        this.getUserInfo()
+        this.getComps()
+        this.getCons()
+        this.getTickets()
     } else {
       // ОТКРЫТЬ МОДАЛКУ ПРОДОЛЖЕНИЯ РЕГИСТРАЦИИ
       $('.sign_up_next_modal').modal('show');
     }
-
   }
   }
 </script>
@@ -413,6 +438,7 @@
     .cab_card { //тело вкладки
         display: -ms-flexbox;
         display: flex;
+        min-height: 500px;
         word-wrap: break-word;
         background-color: #fff;
         background-clip: border-box;
