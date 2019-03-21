@@ -50,7 +50,7 @@
                             </div>
                             <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
                                 <div>Дата рождения</div>
-                                <div>{{userInfo.p_date}}({{userInfo.p_date | getAges}})</div>
+                                <div>{{userInfo.p_date}}({{userInfo.p_date | getAges}} лет)</div>
                             </div>
                             <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto mx-sm-0">
                                 <div>Пол</div>
