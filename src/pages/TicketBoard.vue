@@ -22,7 +22,7 @@
           <!--<input class="form-control mr-2 search-item" type="text" placeholder="До">-->
         <!--</div>-->
       <!--</div>-->
-      <div class="col-1 px-0 search-btn btn text-grey" @click="consFindComp(selected.com_id)">Поиск</div>
+      <div class="col-1 px-0 search-btn btn text-grey" @click="consFindComp">Поиск</div>
       <div class="ml-auto align-items-center d-flex"
            @onclick="createCons()"
            data-toggle="modal" data-target=".req_cons_modal"
@@ -31,12 +31,15 @@
       <req-cons />
     </div>
     <div class="row">
+      <div class="stub" v-if="reqs.length === 0">
+        Извините, ничего не найдено
+      </div>
       <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 card-pad" @click="selectIndex(i)" data-toggle="modal" data-target=".card_req_modal" v-for="(req, i) in reqs">
         <div class="card">
           <div class="card-body req-body">
             <div>
               <p class="mb-0 font_xl">{{req.pc_title}}</p>
-              <p class="mr-auto mb-0 text-grey font_l" v-if="req.pcCom != undefined">{{req.pcCom.competence}}</p>
+              <p class="mr-auto mb-0 text-grey font_l" v-if="req.pcCom !== undefined">{{req.pcCom.competence}}</p>
             </div>
             <div class="d-flex">
               <div>
@@ -156,22 +159,39 @@
               })
     },
     methods: {
-      consFindComp(i) {
-        console.log('а сейчас будет поиск по компетенции', i)
-        if (i != 0) {
+      consFindComp() {
+        if (this.selected === null){
           axios({
             method: 'get',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases?PurchaseConsultationSearch[pc_com_id]=` + i
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases`
           })
-                  .then((response) => {
-                    this.reqs = response.data
-                    this.page = response.data[0].countSc
-                    console.log('Всего страниц', this.page)
-                    this.$store.state.loader = false
-                  })
-                  .catch((error) => {
-                    console.error(error)
-                  })
+              .then((response) => {
+                this.reqs = response.data
+                console.log(this.reqs)
+                if (response.length === 0){
+                  this.page = Math.ceil((response.data[0].countSc-1) / 21)
+                }
+                this.$store.state.loader = false
+              })
+              .catch((error) => {
+                console.error(error)
+              })
+        } else
+        if (this.selected.com_id !== 0) {
+          axios({
+            method: 'get',
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases?PurchaseConsultationSearch[pc_com_id]=` + this.selected.com_id
+          })
+              .then((response) => {
+                this.reqs = response.data
+                if (response.length === 0){
+                  this.page = Math.ceil((response.data[0].countSc-1) / 21)
+                }
+                this.$store.state.loader = false
+              })
+              .catch((error) => {
+                console.error(error)
+              })
         }
       },
       selectIndex(i) {
@@ -215,6 +235,14 @@
     color: $main_color;
     font-weight: 600;
   }
+  .stub{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 500px;
+  }
+
   body {
     color: $secondary_grey;
   }

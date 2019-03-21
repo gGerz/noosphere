@@ -29,6 +29,9 @@
       <create-cons />
     </div>
     <div class="row">
+      <div class="stub" v-if="cons.length === 0">
+        Извините, ничего не найдено
+      </div>
       <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 card-pad" @click="selectIndex(i)" data-toggle="modal" data-target=".card_cons_modal" v-for="(con, i) in cons">
         <div class="card">
           <div class="card-body cons-body">
@@ -97,7 +100,7 @@
         </div>
       </div>
     </div>
-    <nav aria-label="Page navigation example">
+    <nav aria-label="Page navigation example" v-if="cons.length !== 0">
       <ul class="pagination d-flex justify-content-center">
         <li class="page-item">
           <a class="page-link" href="#" aria-label="Previous" @click="getPage(currentPage - 1)">
@@ -314,6 +317,14 @@
   .font_s {font-size: $font_s;}
   .text-grey {
     color: $main_grey;
+  }
+
+  .stub{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 500px;
   }
 
   body {
