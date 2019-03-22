@@ -1,31 +1,23 @@
 <template>
   <div>
     <h2 class="my-4 font_xxl" >Доска консультаций</h2>
-    <div class="row mb-4 align-items-center">
-      <div class="col-3">
-        <vue-select v-model="selected" label="competence" :options="globalComps" placeholder="Компетенции"  style="display: block">
-          <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
-            <div class="py-1">{{ option.competence }}</div>
-          </template>
-          <span slot="no-options">Ничего не найдено</span>
-        </vue-select>
+    <div class="headline mb-4 align-items-center">
+      <div class="search-bar">
+        <div class="w-100">
+          <vue-select v-model="selected" label="competence" :options="globalComps" placeholder="Компетенции"  style="display: block">
+            <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
+              <div class="py-1">{{ option.competence }}</div>
+            </template>
+            <span slot="no-options">Ничего не найдено</span>
+          </vue-select>
+        </div>
+        <div class="ml-3 px-3 search-btn btn text-grey" @click="consFindComp">Поиск</div>
       </div>
-      <!--<div class="col-2 px-0">-->
-          <!--<input type="date" class="form-control search-item" required="required" placeholder="">-->
-      <!--</div>-->
-      <!--<div class="col-3">-->
-          <!--<div class="d-flex align-items-center">-->
-            <!--<div class="pr-2 text-grey">Время </div>-->
-            <!--<input class="form-control mr-2 search-item" type="text" placeholder="От">-->
-            <!--<input class="form-control mr-2 search-item" type="text" placeholder="До">-->
-          <!--</div>-->
-      <!--</div>-->
-      <div class="col-1 px-0 search-btn btn text-grey" @click="consFindComp">Поиск</div>
-      <div class="ml-auto align-items-center d-flex"
+      <div class="align-items-center d-flex justify-content-center create-cons"
            @onclick="createCons()"
            data-toggle="modal" data-target=".create_cons_modal"
            v-if="this.$store.state.authorisedStatus"
-      ><i class="far fa-plus-square mr-2"></i><span class="dashed2">Создать карточку консультации</span></div>
+      ><i class="far fa-plus-square mr-2"></i><span class="dashed2">Создать консультацию</span></div>
       <create-cons />
     </div>
     <div class="row">
@@ -330,6 +322,29 @@
   body {
     color: $secondary_grey;
   }
+
+  .headline {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .search-bar {
+    display: flex;
+    width: 350px;
+  }
+
+  @media (max-width: 767px) {
+    .headline {
+      display: block;
+    }
+    .search-bar {
+      width: 100%;
+    }
+    .create-cons {
+      padding-top: 20px;
+    }
+  }
+
 
   .card-pad {
     padding-right: 12px!important;
