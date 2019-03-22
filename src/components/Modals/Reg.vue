@@ -19,13 +19,14 @@
             </div>
             <div class="form-group">
               <input type="password" class="form-control inputText" required="required" placeholder="Пароль" v-model="password">
+              <div v-show="password.length < 7 && password.length !== 0" class="text-danger font_s">Пароль должен содержать от 7 до 30 символов</div>
               <div v-show="passEr" class="text-danger font_s">Введите пароль</div>
               <div v-show="passLongEr" class="text-danger font_s">Пароль должен содержать от 7 до 30 символов</div>
               <div v-show="passCharEr" class="text-danger font_s">Пароль не должен содержать спец. символы</div>
             </div>
             <div class="form-group pb-4">
               <input type="password" class="form-control inputText" required="required" placeholder="Подтвердите пароль" v-model="resetPassword">
-              <div v-show="passProfEr" class="text-danger font_s">Пароли не совподают</div>
+              <div v-show="passProfEr" class="text-danger font_s">Пароли не совпадают</div>
             </div>
 
             <div class="form-field pt-2">
@@ -36,7 +37,7 @@
               <div v-show="checkEr" class="text-danger font_s">Вы должны принять пользовательское соглашение</div>
             </div>
             <div class="pt-3">
-              <button type="submit" class="btn btn-primary btn-shadow" @click="reg">Зарегистрировать</button>
+              <button type="submit" class="btn btn-primary btn-shadow" :disabled="password.length < 7" @click="reg">Зарегистрировать</button>
             </div>
             <div v-for="error in errors" class="">
               {{error}}
