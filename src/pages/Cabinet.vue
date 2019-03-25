@@ -34,7 +34,8 @@
                                 <div class="text-dark h3 m-0 text-truncate main-item-name ">{{userInfo.p_name}}</div>
                             </div>
                             <div class="ml-lg-5 ml-md-5" style="width: 180px">
-                                <button style="width: 100%" class="btn btn-outline-primary mb-2">Изменить данные</button>
+                                <button style="width: 100%" class="btn btn-outline-primary mb-2" @click="changeUserInfo">Изменить данные</button>
+                                <update-user-info :userInfo="userInfo"/>
                                 <button style="width: 100%" class="btn btn-outline-danger" @click="logout">Выйти</button>
                             </div>
                         </div>
@@ -185,12 +186,14 @@
   import axios from 'axios'
   import RegNext from '../components/Modals/RegNext'
 
+  import UpdateUserInfo from '../components/Modals/UpdateUserInfo.vue'
   import CreateCons from '../components/Modals/CreateCons.vue'
   import CreateComp from '../components/Modals/CreateComp.vue'
 
     export default {
     components: {
         VueSelect,
+        UpdateUserInfo,
         CreateCons,
         CreateComp,
         RegNext
@@ -290,7 +293,10 @@
                 })
         },
         //Добавление компетенции пользователя
-
+        //Вызов модального окна изменения данных
+        changeUserInfo() {
+            $('.update_user_info_modal').modal('show');
+        },
         //выход из системы
         logout () {
             this.$store.dispatch('logout', {}).then(() => {
