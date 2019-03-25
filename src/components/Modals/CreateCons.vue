@@ -89,6 +89,7 @@
       return {
         currentTag: '',
         tags: [],
+        tagIds: [],
         willCreateId: '',
         title: '',
         date: '',
@@ -112,13 +113,29 @@
         aboutEr: '',
         priceEr: '',
         titleLenEr: '',
-        test: ''
+        test: '',
+        consId: '',
       }
     },
     methods: {
       addTag () {
         if (this.currentTag != '') {
           this.tags.push(this.currentTag)
+          //console.log('Тег',this.currentTag,' n ', this.tags)
+          const formData = new FormData()
+          formData.append('tag_name', this.currentTag)
+          axios({
+            method: 'post',
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/tags`,
+            data: formData
+          })
+            .then(response => {
+              console.log(response)
+              this.tagIds.push(response.data.tag_id)
+            })
+            .catch(response => {
+            })
+
           this.currentTag = ''
         }
       },
@@ -169,11 +186,6 @@
           //   .then(response => {
           //   })
           //   .catch(response => {
-          //   })
-
-
-
-
           const formData = new FormData()
           formData.append('sc_title', this.title)
           formData.append('sc_user_id', this.$store.state.userId)
@@ -198,10 +210,28 @@
               if (response.status === 201) {
                 this.willCreateId = response.data.sc_id
                 this.createConId()
+
                 this.closeModal()
               }
             })
             .catch(response => {
+            })
+        }
+      },
+      createTags() {
+        console.log('2:')
+        for (let i = 0; i < this.tagIds.length; i++) {
+          const formData3 = new FormData()
+          console.log(this.tags)
+          formData3.append('tc_tag_id', this.tagIds[i])
+          formData3.append('tc_con_id', this.consId)
+          axios({
+            method: 'post',
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/tag_cons`,
+            data: formData3
+          })
+            .then(response => {
+              console.log('Теги: ',response)
             })
         }
       },
@@ -214,6 +244,10 @@
           data: formData1
         })
           .then(response => {
+            this.consId = response.data.con_id
+            console.log('1:')
+            console.log('con_id: ', this.consId)
+            this.createTags()
           })
           .catch(response => {
           })
