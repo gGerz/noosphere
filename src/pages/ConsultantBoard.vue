@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="my-4 font_xxl" >Доска консультаций</h2>
+      <h2 class="my-4 font_xxl" >Доска консультаций</h2>
     <div class="headline mb-4 align-items-center">
       <div class="search-bar">
         <div class="w-100">
@@ -309,6 +309,12 @@
   .font_s {font-size: $font_s;}
   .text-grey {
     color: $main_grey;
+  }
+
+  @media (max-width: 576px) {
+    .font_xxl {
+      font-size: $font_xl;
+    }
   }
 
   .stub{

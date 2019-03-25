@@ -1,9 +1,9 @@
 <template>
   <div class="menu">
     <nav class="navbar navbar-expand-lg navbar-light">
-      <a class="navbar-brand" href="#">
-        <img src="../../assets/img/logo.png" width="230" class="d-inline-block align-top" alt="">
-      </a>
+      <div class="logo__body">
+        <img src="../../assets/img/logo.png" class="logo-img" alt="">
+      </div>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -24,7 +24,7 @@
             </div>
             <router-link v-else class="nav-link nav-link-header" to="/cabinet">
               <div class="d-flex align-items-center ">
-                <img class="img_master2" src="../../assets/img/ava.jpg">
+                <img class="img_master2 mr-0" src="../../assets/img/ava.jpg">
               </div>
             </router-link>
           </li>
@@ -57,6 +57,21 @@
   }
 </script>
 <style lang="scss">
+
+  .logo__body {
+    display: flex;
+
+  }
+  @media (max-width: 576px) {
+    .logo__body {
+      width: 60%;
+    }
+    .logo-img {
+      margin: 0 auto;
+      width: 100%;
+      height: 100%;
+    }
+  }
   .img_master2 {
     width: 53px; //63
     height: 53px!important; //63

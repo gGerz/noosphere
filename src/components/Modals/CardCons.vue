@@ -2,10 +2,12 @@
   <div class="modal fade card_cons_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
       <div class="modal-content">
-        <div class="modal-body py-5 px-2 px-sm-5">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+        <div class="modal-body py-5 cons-body">
+          <div class="">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close justify-content-end d-flex">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
           <div class="pb-2">
             <p class="mb-0 font_xl wrap-break">{{selectedCard.sc_title}}</p>
             <p class="mr-auto mb-0 text-grey font_l" v-if="selectedCard.scCom !== undefined">{{selectedCard.scCom.competence}}</p>
@@ -34,16 +36,16 @@
               </div>
             </div>
           </div>
-          <div class="d-flex py-2">
-            <div>
-              <span title="Дата">
+          <div class="d-flex py-2 flex-wrap">
+            <div class="cons__date-line">
+              <span title="Дата" >
                 <i class="fas fa-calendar-week mr-1 text-grey"></i>
                 <span class="">
                     {{selectedCard.sc_date}}
                 </span>
               </span>
-            </div>
-            <div class="ml-4">
+            </div >
+            <div class="cons__date-line">
               <span title="Время">
                   <i class="far fa-clock mr-1 text-grey"></i>
                   <span class="" v-if="selectedCard.sc_begin_time !== undefined">
@@ -110,6 +112,9 @@
   }
 </script>
 <style lang="scss" scoped>
+  .fas, .far   {
+    min-width: 15px;
+  }
   .inputText {
   }
   .btn-shadow {
@@ -158,6 +163,10 @@
 
   body {
     color: $secondary_grey;
+  }
+
+  .cons__date-line {
+    min-width: 200px!important;
   }
 
   .card-pad {

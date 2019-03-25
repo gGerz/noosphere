@@ -221,6 +221,13 @@
   .text-grey {
     color: $main_grey;
   }
+
+  @media (max-width: 576px) {
+    .font_xxl {
+      font-size: $font_xl;
+    }
+  }
+
   .price {
     color: $main_color;
     font-weight: 600;
