@@ -38,7 +38,7 @@
                         <div class="d-lg-flex d-md-flex d-block align-items-center  flex-nowrap">
                             <div class="d-flex align-items-center w100 ">
                                 <img class="ava_cabinet" src="../assets/img/ava.jpg">
-                                <div class="text-dark h3 m-0 text-truncate main-item-name ">{{userInfo.p_name}}</div>
+                                <div class="text-dark h3 m-0 main-item-name ">{{userInfo.p_name}}</div>
                             </div>
                             <div class="ml-lg-5 ml-md-5 general-buttons">
                                 <button style="width: 100%" class="btn btn-outline-primary mb-2" @click="changeUserInfo">Изменить данные</button>
@@ -118,8 +118,18 @@
                                 <input placeholder="Название..." v-model="searchableConTitle" type="text" class="form-control search-field">
                             </div>
                         </div>
+                        <div v-if="filteredCons.length === 0" class="null-filter">
+                            <div>
+                                Ничего не найдено
+                            </div>
+                            <div>
+                                <span @click="resetFilters">
+                                    Сбросить фильтры
+                                </span>
+                            </div>
+                        </div>
                         <div class="schedule-item" v-for="(con, i) in filteredCons">
-                            <i class="fas fa-times mr-2"></i>
+                            <i class="fas fa-times mr-2" @click="delConItem(i)"></i>
                             <i class="fas fa fa-cog mr-2"></i>
                             |
                             <i class="fas fa-calendar-week mr-1 text-grey"></i>
@@ -139,7 +149,7 @@
                     <div class="card-body-main">
                         <div class="row mb-4">
                             <div class="col-12 col-xl-3 col-lg-3 col-md-12">
-                                <vue-select :value="selectedUserReq" :onChange="setSelectedUserReq" :options="globalComps"label="competence" placeholder="Компетенции">
+                                <vue-select :value="selectedUserReq" :onChange="setSelectedUserReq" :options="globalComps" label="competence" placeholder="Компетенция...">
                                     <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
                                         <div class="py-1">{{ option.competence }}</div>
                                     </template>
@@ -150,8 +160,18 @@
                                 <input placeholder="Название..." v-model="searchableReqTitle" type="text" class="form-control search-field">
                             </div>
                         </div>
+                        <div v-if="filteredReqs.length === 0" class="null-filter">
+                            <div>
+                                Ничего не найдено
+                            </div>
+                            <div>
+                                <span @click="resetFilters">
+                                    Сбросить фильтры
+                                </span>
+                            </div>
+                        </div>
                         <div class="schedule-item" v-for="(req, i) in filteredReqs">
-                            <i class="fas fa-times mr-2"></i>
+                            <i class="fas fa-times mr-2" @click="delReqItem(i)"></i>
                             <i class="fas fa fa-cog mr-2"></i>
                             |
                             <i class="fas fa-calendar-week mr-1 text-grey"></i>
@@ -195,9 +215,9 @@
             userComps: [],
             selectedUserComp: '',
             searchableConTitle: '',
+            selectedUserReq: '',
             searchableReqTitle: '',
             globalComps : [],
-            selectedUserReq: '',
             selectedComp: '',
             userInfo: [],
             options: [],
@@ -215,18 +235,28 @@
     computed: {
         filteredCons() {
             return this.cons.filter(con => {
-                if (this.selectedUserComp.competence === undefined){
+                if (this.selectedUserComp.competence === undefined && this.searchableConTitle === ''){
                     return con
+                } else if (this.selectedUserComp.competence !== undefined && this.searchableConTitle !== ''){
+                    return con.scCom.competence.indexOf(this.selectedUserComp.competence) > -1 && con.sc_title.toLowerCase().indexOf((this.searchableConTitle.toLowerCase())) > -1
+                } else if (this.selectedUserComp.competence === undefined && this.searchableConTitle !== '') {
+                    return con.sc_title.indexOf((this.searchableConTitle.toLowerCase())) > -1
+                } else if (this.selectedUserComp.competence !== undefined && this.searchableConTitle === '') {
+                    return con.scCom.competence.indexOf(this.selectedUserComp.competence) > -1
                 }
-                return con.scCom.competence.indexOf(this.selectedUserComp.competence) > -1 || con.sc_title.indexOf((this.searchableConTitle.toLowerCase())) > -1
             })
         },
         filteredReqs() {
             return this.reqs.filter(req => {
-                if (this.selectedUserReq.competence === undefined){
+                if (this.selectedUserReq.competence === undefined && this.searchableReqTitle === ''){
                     return req
+                } else if (this.selectedUserReq.competence !== undefined && this.searchableReqTitle !== ''){
+                    return req.pcCom.competence.indexOf(this.selectedUserReq.competence) > -1 && req.pc_title.toLowerCase().indexOf((this.searchableReqTitle.toLowerCase())) > -1
+                } else if (this.selectedUserReq.competence === undefined && this.searchableReqTitle !== '') {
+                    return req.pc_title.indexOf.toLowerCase()((this.searchableReqTitle.toLowerCase())) > -1
+                } else if (this.selectedUserReq.competence !== undefined && this.searchableReqTitle === '') {
+                    return req.pcCom.competence.indexOf(this.selectedUserReq.competence) > -1
                 }
-                return req.pcCom.competence.indexOf(this.selectedUserReq.competence) > -1
             })
         }
     },
@@ -320,10 +350,24 @@
                     console.error(error)
                 })
         },
+        //Удаление консультации из расписания
+        delConItem(i){
+            this.cons.splice(i,1)
+        },
+        //Удаление консультации из расписания
+        delReqItem(i){
+            this.reqs.splice(i,1)
+        },
         //Добавление компетенции пользователя
         //Вызов модального окна изменения данных
         changeUserInfo() {
             $('.update_user_info_modal').modal('show');
+        },
+        resetFilters() {
+          this.selectedUserComp = ''
+          this.selectedUserReq = ''
+          this.searchableConTitle = ''
+          this.searchableReqTitle = ''
         },
         //выход из системы
         logout () {
@@ -423,8 +467,31 @@
         flex-direction: column;
     }
 
+    .null-filter{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        span{
+            cursor: pointer;
+            color: #007bff;
+        }
+    }
+
     .search-field{
         height: 48px;
+    }
+
+    @media (max-width: 992px) {
+        .search-field{
+            margin-top: 10px;
+        }
+    }
+
+    @media (max-width: 420px){
+        .dashed2{
+            font-size: 14px!important;
+        }
     }
 
     .schedule-item{
