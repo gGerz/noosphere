@@ -70,9 +70,10 @@
               <span class="main_color font_xl">руб</span>
             </div>
             <!--<router-link class="btn btn-outline-primary m-2 my-sm-0" data-toggle="modal" data-target=".arbitration_modal" to="/videoroom">Video</router-link>-->
-            <router-link class="ml-auto" to="/videoroom">
-              <span class="btn btn-outline-primary btn-md px-4 btn-buy font_l" v-on:click="closeModal()">Купить</span>
-            </router-link>
+            <!--<router-link target="_blank" :to="{ path: 'offer', query: {id: data.item.id }}">-->
+            <!--<router-link class="ml-auto " target="_blank">-->
+              <span class="btn btn-outline-primary btn-md px-4 btn-buy font_l" v-on:click="buyCon()">Купить</span>
+            <!--</router-link>-->
           </div>
         </div>
       </div>
@@ -80,6 +81,7 @@
   </div>
 </template>
 <script>
+  import axios from 'axios'
   import VideoRoom from '../../pages/VideoRoom'
 
   export default {
@@ -89,7 +91,14 @@
     props: ['selectedIndex', 'selectedCard'],
     data(){
       return{
-        selectedProf: ''
+        selectedProf: '',
+        postTitle: '',
+        postDescription: '',
+        postUserId: '',
+        postPrice: '',
+        postComId: '',
+        putId: '',
+
       }
     },
     filters: {
@@ -101,13 +110,80 @@
       }
     },
     methods: {
-      closeModal() {
-        $('.card_cons_modal').modal('hide');
+      closeModal(){
+        $('.card_cons_modal').modal('hide')
+      },
+      // buyCon(){
+      //   const formData = new FormData()
+      //     formData.append('sc_id', this.sc_id)
+      //     formData.append('sc_type', 2)
+      //     axios({
+      //       method: 'put',
+      //       url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings/` + this.sc_id,
+      //       data: formData
+      //     })
+      //         .then((response) => {
+      //           console.log('put', response)
+      //           $('.card_cons_modal').modal('hide')
+      //         })
+      //         .catch((error) => {
+      //           console.error(error)
+      //         })
+      // }
+      buyCon() {
+        const formData = new FormData()
+        formData.append('pc_title', this.postTitle)
+        formData.append('pc_description', this.postDescription)
+        formData.append('pc_user_id', this.postUserId)
+        formData.append('pc_price', this.postPrice)
+        formData.append('pc_com_id', this.postComId)
+        axios({
+          method: 'post',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases`,
+          data: formData
+        })
+            .then((response) => {
+              console.log('post', response)
+              this.putId = response.data.pc_id
+              this.putBuy()
+            })
+            .catch((error) => {
+              console.error(error)
+            })
+      },
+      putBuy(){
+        const formData = new FormData()
+        formData.append('con_pc_id', this.putId)
+        axios({
+          method: 'put',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/consultations?ConsultationSearch[con_sc_id]=` + this.sc_id,
+          data: formData
+        })
+            .then((response) => {
+              console.log('put', response)
+              this.$router.push('/videoroom')
+              $('.card_cons_modal').modal('hide')
+            })
+            .catch((error) => {
+              console.error(error)
+            })
       },
       setUser(){
           $('.card_cons_modal').modal('hide');
           this.$store.state.anotherUserId = this.selectedCard.scUser.p_id
+      },
+      //создаем пропы, которые будем отправлять для создания покупки
+      setProps(){
+        this.postTitle = this.selectedCard.sc_title
+        this.postDescription = this.selectedCard.sc_description
+        this.postUserId = this.selectedCard.sc_user_id
+        this.postPrice = this.selectedCard.sc_price
+        this.postComId = this.selectedCard.sc_com_id
+        this.sc_id = this.selectedCard.sc_id
       }
+    },
+    mounted() {
+      $('.card_cons_modal').on("show.bs.modal", this.setProps)
     }
   }
 </script>

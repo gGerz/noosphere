@@ -9,7 +9,11 @@
           </button>
         </div>
         <div class="modal-body change">
-          <div class="py-5 px-5">
+          <div class="px-5">
+            <div class="form-group pb-0">
+              <small class="form-text text-muted">E-mail</small>
+              <input type="email" class="form-control inputText" required="required" aria-describedby="" placeholder="Имя" v-model="mail">
+            </div>
             <div class="form-group pb-0">
               <small class="form-text text-muted">Имя</small>
               <input type="text" class="form-control inputText" required="required" aria-describedby="" placeholder="Имя" v-model="name">
@@ -21,15 +25,15 @@
             <div class="form-group">
               <small class="form-text text-muted">О себе</small>
               <textarea class="form-control textarea-resize-n" required="required" placeholder="О себе" rows="4" v-model="about"></textarea>
-              <!-- <div class="text-danger font_s">Введите информацию о себе</div> -->
             </div>
             <div class="form-group">
               <small class="form-text text-muted">Пол</small>
-              <select id="inputState" class="form-control inputText" v-model="gender">
-                <option selected class="text-grey">Выберите пол...</option>
-                <option>Мужской</option>
-                <option>Женский</option>
-              </select>
+              <vue-select v-model="selectedGender" label="title" :options="gender" placeholder="Выберите пол"  style="display: block">
+                <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
+                  <div class="py-1">{{ option.title }}</div>
+                </template>
+                <span slot="no-options">Ничего не найдено</span>
+              </vue-select>
             </div>
             <div class="pt-5">
               <button type="submit" class="btn btn-primary btn-shadow">Сохранить</button>
@@ -42,8 +46,12 @@
 </template>
 <script>
   import axios from 'axios'
+  import VueSelect from 'vue-select'
   export default {
     props: ['userInfo'],
+    components: {
+      VueSelect
+    },
     data(){
       return{
         mail: '',
@@ -51,23 +59,28 @@
         name: '',
         date: '',
         about: '',
-        gender: 'Выберите пол...',
-        genderType: '0'
+        selectedGender: '',
+        gender: [
+          {value: true, title: 'Мужской'},
+          {value: false, title: 'Женский'},
+        ]
       }
     },
     methods: {
       setProps(){
-        console.log(this.userInfo)
+        this.mail = this.userInfo.pUser.email
         this.name = this.userInfo.p_name
         this.date = this.userInfo.p_date
         this.about = this.userInfo.p_description
+        if (this.userInfo.p_gender){
+          this.selectedGender = this.gender[0]
+        } else {
+          this.selectedGender = this.gender[1]
+        }
       }
     },
     mounted() {
       $('.update_user_info_modal').on("shown.bs.modal", this.setProps)
-      // $('.update_user_info_modal').on('shown.bs.modal', function (e) {
-      //   console.log('k', e)
-      // })
     }
   }
 </script>

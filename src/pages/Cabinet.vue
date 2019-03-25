@@ -12,13 +12,20 @@
                 <li class="nav-item">
                     <a class="nav-link nav-link-cabinet" id="messages-tab" data-toggle="tab" href="#tickets" role="tab" aria-controls="messages" aria-selected="false"><i class="far fa-list-alt"></i>Мои заявки</a>
                 </li>
-                <div class="ml-auto"
+                <!--<div class="ml-auto"-->
+                     <!--data-toggle="modal"-->
+                     <!--data-target=".create_cons_modal"-->
+                <!--&gt;-->
+                    <!--<i class="far fa-plus-square mr-2"></i>-->
+                    <!--<span class="dashed2">Создать карточку консультации</span>-->
+                <!--</div>-->
+                <li class="nav-item create-cons"
                      data-toggle="modal"
                      data-target=".create_cons_modal"
                 >
                     <i class="far fa-plus-square mr-2"></i>
                     <span class="dashed2">Создать карточку консультации</span>
-                </div>
+                </li>
                 <create-cons />
             </ul>
         </div>
@@ -33,7 +40,7 @@
                                 <img class="ava_cabinet" src="../assets/img/ava.jpg">
                                 <div class="text-dark h3 m-0 text-truncate main-item-name ">{{userInfo.p_name}}</div>
                             </div>
-                            <div class="ml-lg-5 ml-md-5" style="width: 180px">
+                            <div class="ml-lg-5 ml-md-5 general-buttons">
                                 <button style="width: 100%" class="btn btn-outline-primary mb-2" @click="changeUserInfo">Изменить данные</button>
                                 <update-user-info :userInfo="userInfo"/>
                                 <button style="width: 100%" class="btn btn-outline-danger" @click="logout">Выйти</button>
@@ -99,37 +106,29 @@
                 <div class="cab_card">
                     <div class="card-body-main">
                         <div class="row mb-4">
-                            <div class="col-3">
-                                <vue-select v-model="selectedUserComp" :options="userComps" label="competence" placeholder="Компетенции">
+                            <div class="col-12 col-xl-3 col-lg-3 col-md-12">
+                                <vue-select :value="selectedUserComp" :onChange="setSelectedUserComp" :options="userComps" label="competence" placeholder="Компетенция...">
                                     <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
                                         <div class="py-1">{{ option.competence }}</div>
                                     </template>
                                     <span slot="no-options">Ничего не найдено</span>
                                 </vue-select>
                             </div>
-                        </div>
-                        <div class="card card-req mb-3" v-for="(con, i) in cons" v-if="con !== undefined">
-                            <div class="row card-body font_m d-flex align-items-center justify-content-between">
-                                <div class="d-flex font_l">
-                                    <div>
-                                        <i class="fas fa-times mr-2"></i>
-                                    </div>
-                                    <div>
-                                        <i class="fas fa fa-cog mr-2"></i>
-                                    </div>
-                                    <div v-if="con != null">
-                                        {{con.sc_title}}
-                                    </div>
-                                </div>
-                                <div class="d-flex">
-                                    <div class="mr-xl-2" v-if="con.sc_date !== undefined">
-                                        <i class="fas fa-calendar-week mr-1 text-grey"></i>{{con.sc_date}}
-                                    </div>
-                                    <div v-if="con.sc_begin_time !== undefined">
-                                        <i class="far fa-clock mr-1 text-grey"></i>{{con.sc_begin_time}} - {{con.sc_end_time }}
-                                    </div>
-                                </div>
+                            <div class="col-12 col-xl-3 col-lg-3 col-md-12">
+                                <input placeholder="Название..." v-model="searchableConTitle" type="text" class="form-control search-field">
                             </div>
+                        </div>
+                        <div class="schedule-item" v-for="(con, i) in filteredCons">
+                            <i class="fas fa-times mr-2"></i>
+                            <i class="fas fa fa-cog mr-2"></i>
+                            |
+                            <i class="fas fa-calendar-week mr-1 text-grey"></i>
+                            {{con.sc_date}}
+                            |
+                            <span>
+                                {{con.sc_title}}
+                            </span>
+                            ({{con.scCom.competence}})
                         </div>
                     </div>
                 </div>
@@ -139,37 +138,29 @@
                 <div class="cab_card">
                     <div class="card-body-main">
                         <div class="row mb-4">
-                            <div class="col-3">
-                                <vue-select v-model="selectedComp"  :options="globalComps" label="competence" placeholder="Компетенции">
+                            <div class="col-12 col-xl-3 col-lg-3 col-md-12">
+                                <vue-select :value="selectedUserReq" :onChange="setSelectedUserReq" :options="globalComps"label="competence" placeholder="Компетенции">
                                     <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
                                         <div class="py-1">{{ option.competence }}</div>
                                     </template>
                                     <span slot="no-options">Ничего не найдено</span>
                                 </vue-select>
                             </div>
-                        </div>
-                        <div class="card card-req mb-3" v-for="(con, i) in reqs" v-if="con != undefined">
-                            <div class="row card-body font_m d-flex align-items-center justify-content-between">
-                                <div class="d-flex font_l">
-                                    <div>
-                                        <i class="fas fa-times mr-2"></i>
-                                    </div>
-                                    <div>
-                                        <i class="fas fa fa-cog mr-2"></i>
-                                    </div>
-                                    <div v-if="con != null">
-                                        {{con.pc_title}}
-                                    </div>
-                                </div>
-                                <div class="d-flex">
-                                    <div class="mr-xl-2" v-if="con.pc_date !== undefined">
-                                        <i class="fas fa-calendar-week mr-1 text-grey"></i>{{con.pc_date}}
-                                    </div>
-                                    <div v-if="con.pc_begin_time !== undefined">
-                                        <i class="far fa-clock mr-1 text-grey"></i>{{con.pc_begin_time}} - {{con.pc_end_time }}
-                                    </div>
-                                </div>
+                            <div class="col-12 col-xl-3 col-lg-3 col-md-12">
+                                <input placeholder="Название..." v-model="searchableReqTitle" type="text" class="form-control search-field">
                             </div>
+                        </div>
+                        <div class="schedule-item" v-for="(req, i) in filteredReqs">
+                            <i class="fas fa-times mr-2"></i>
+                            <i class="fas fa fa-cog mr-2"></i>
+                            |
+                            <i class="fas fa-calendar-week mr-1 text-grey"></i>
+                            {{req.pc_date}}
+                            |
+                            <span>
+                                {{req.pc_title}}
+                            </span>
+                            ({{req.pcCom.competence}})
                         </div>
                     </div>
                 </div>
@@ -203,7 +194,10 @@
             email: '',
             userComps: [],
             selectedUserComp: '',
+            searchableConTitle: '',
+            searchableReqTitle: '',
             globalComps : [],
+            selectedUserReq: '',
             selectedComp: '',
             userInfo: [],
             options: [],
@@ -218,8 +212,25 @@
             return ((new Date().getTime() - new Date(value)) / (24 * 3600 * 365.25 * 1000)) | 0;
         }
     },
+    computed: {
+        filteredCons() {
+            return this.cons.filter(con => {
+                if (this.selectedUserComp.competence === undefined){
+                    return con
+                }
+                return con.scCom.competence.indexOf(this.selectedUserComp.competence) > -1 || con.sc_title.indexOf((this.searchableConTitle.toLowerCase())) > -1
+            })
+        },
+        filteredReqs() {
+            return this.reqs.filter(req => {
+                if (this.selectedUserReq.competence === undefined){
+                    return req
+                }
+                return req.pcCom.competence.indexOf(this.selectedUserReq.competence) > -1
+            })
+        }
+    },
     methods: {
-
         //Получение информации юзера
         getUserInfo(){
             axios({
@@ -244,10 +255,27 @@
             })
                 .then((response) => {
                     this.cons = response.data.conSUser
+                    console.log(this.cons)
                 })
                 .catch((error) => {
                     console.error(error)
                 })
+        },
+        //Выбор компетенции для поиска в расписании
+        setSelectedUserComp(value){
+            if (value === '' || value === null){
+                this.selectedUserComp = ''
+            } else {
+                this.selectedUserComp = value
+            }
+        },
+        //Выбор компетенции для поиска в заявках
+        setSelectedUserReq(value){
+            if (value === '' || value === null){
+                this.selectedUserReq = ''
+            } else {
+                this.selectedUserReq = value
+            }
         },
         //Получение заявок юзера
         getTickets(){
@@ -388,6 +416,39 @@
         color: $main_color!important;
         background-color: #fff;
         border-color: #dee2e6 #dee2e6 #fff;
+    }
+
+    .general-buttons{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .search-field{
+        height: 48px;
+    }
+
+    .schedule-item{
+        box-shadow: 0px 1px 4px rgba(13, 132, 251, 0.2);
+        border: 1px solid grey;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 10px;
+    }
+
+    .create-cons{
+        margin-left: 23%;
+    }
+
+    @media (max-width: 1200px) {
+        .create-cons{
+            margin-left: 7%;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .create-cons{
+            margin-left: 0%;
+        }
     }
 
     .user_info {
@@ -535,5 +596,29 @@
     }
     .mw100 {
         max-width: 100%;
+    }
+
+    @media (max-width: 992px) {
+        #myTab{
+            display: flex;
+            flex-direction: column;
+
+            li{
+                border: 1px solid #dee2e6;
+                border-radius: 5px;
+            }
+            li .active{
+                border-bottom: 1px solid #dee2e6!important;
+            }
+            .create-cons{
+                padding: 10px;
+                padding-left: 25px;
+            }
+        }
+        .general-buttons{
+            button:first-child{
+                margin-top: 10px;
+            }
+        }
     }
 </style>

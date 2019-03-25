@@ -1,7 +1,7 @@
 <template>
     <!--<div id="mgVideoChat"></div>-->
     <div class="container ">
-        <p class="h2 py-4 text-center">Видео кабинет</p>
+        <p class="h2 py-4 text-center">Видео кабинет {{id}}</p>
         <div class="card shadow">
             <div class="card-body">
                 <div class="row">
@@ -27,7 +27,8 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center py-3">
-                    <div class="btn btn-primary">Завершить звонок</div>
+                    <div class="btn btn-success" @click="close">Завершить</div>
+                    <div class="btn btn-primary" @click="arbitrage">Арбитраж</div>
                 </div>
             </div>
         </div>
@@ -40,6 +41,28 @@
             wsURL: 'ws://www.myserverdomain.com:8080?room=1' //domain:port and room id info
         });
     });
+    export default {
+        data() {
+            return {
+                id: '',
+            }
+        },
+        methods: {
+            close() {
+                axios({
+                    method: 'put',
+                    url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings/`
+                })
+                    .then((response) => {
+                    })
+                    .catch((error) => {
+                    })
+            },
+            arbitrage(){
+
+            }
+        }
+    }
 </script>
 <style lang="scss" scoped>
 

@@ -85,8 +85,7 @@
                 </span>
                 <span class="main_color font_xl">руб</span>
               </div>
-                <span class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="changeStateCons(i)">Купить</span>
-
+                <span class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l">Купить</span>
             </div>
           </div>
         </div>
@@ -195,6 +194,7 @@
     },
     methods: {
       consFindComp() {
+        console.log(this.cons)
         if (this.selected === null){
           axios({
             method: 'get',
@@ -218,6 +218,7 @@
           })
             .then((response) => {
               this.cons = response.data
+              console.log('klkk', this.cons)
               if (response.length === 0){
                 this.page = Math.ceil((response.data[0].countSc-1) / 21)
               }
@@ -227,20 +228,6 @@
               console.error(error)
             })
         }
-      },
-      changeStateCons(i) {
-        const formData = new FormData()
-        formData.set('sc_id', this.cons[i].sc_id)
-        axios({
-          method: 'post',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/selling/drop`,
-          data: formData
-        })
-          .then((response) => {
-          })
-          .catch((error) => {
-            console.error(error)
-          })
       },
       getPage(i) {
         if (i <= this.page && i > 0) {
