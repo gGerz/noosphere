@@ -36,7 +36,7 @@
               </vue-select>
             </div>
             <div class="pt-5">
-              <button type="submit" class="btn btn-primary btn-shadow">Сохранить</button>
+              <button type="submit" class="btn btn-primary btn-shadow" @click="updateUserInfo">Сохранить</button>
             </div>
           </div>
         </div>
@@ -77,6 +77,21 @@
         } else {
           this.selectedGender = this.gender[1]
         }
+      },
+      //Обновление информации юзера
+      updateUserInfo(){
+        axios.put("https://jsonplaceholder.typicode.com/users/1",{
+          name: this.name
+        })
+            .then(res =>{
+              console.log(res)
+            })
+        axios.put(`http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo, {
+        name: this.name
+      })
+          .then(res =>{
+            console.log(res)
+          })
       }
     },
     mounted() {

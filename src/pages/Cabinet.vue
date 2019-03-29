@@ -58,7 +58,7 @@
                             </div>
                             <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
                                 <div>Дата рождения</div>
-                                <div>{{userInfo.p_date}}({{userInfo.p_date | getAges}} лет)</div>
+                                <div>{{userInfo.p_date}}  ({{userInfo.p_date | getAges}} лет)</div>
                             </div>
                             <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto mx-sm-0">
                                 <div>Пол</div>
@@ -128,9 +128,10 @@
                                 </span>
                             </div>
                         </div>
+                        <update-user-con :selectedCon="selectedCon" />
                         <div class="schedule-item" v-for="(con, i) in filteredCons">
                             <i class="fas fa-times mr-2" @click="delConItem(i)"></i>
-                            <i class="fas fa fa-cog mr-2"></i>
+                            <i class="fas fa fa-cog mr-2" @click="changeConItem(con)"></i>
                             |
                             <i class="fas fa-calendar-week mr-1 text-grey"></i>
                             {{con.sc_date}}
@@ -170,9 +171,10 @@
                                 </span>
                             </div>
                         </div>
+                        <update-user-ticket :selectedReq="selectedReq" />
                         <div class="schedule-item" v-for="(req, i) in filteredReqs">
                             <i class="fas fa-times mr-2" @click="delReqItem(i)"></i>
-                            <i class="fas fa fa-cog mr-2"></i>
+                            <i class="fas fa fa-cog mr-2" @click="changeReqItem(req)"></i>
                             |
                             <i class="fas fa-calendar-week mr-1 text-grey"></i>
                             {{req.pc_date}}
@@ -187,7 +189,7 @@
             </div>
             <!-- ВКЛАДКА АРХИВ -->
         </div>
-
+        <del-modal />
     </div>
 </template>
 <script>
@@ -198,16 +200,23 @@
   import RegNext from '../components/Modals/RegNext'
 
   import UpdateUserInfo from '../components/Modals/UpdateUserInfo.vue'
+  import UpdateUserCon from '../components/Modals/UpdateUserCon.vue'
+  import UpdateUserTicket from '../components/Modals/UpdateUserTicket.vue'
   import CreateCons from '../components/Modals/CreateCons.vue'
   import CreateComp from '../components/Modals/CreateComp.vue'
+  import DelModal from '../components/Modals/DelModal.vue'
+
 
     export default {
     components: {
         VueSelect,
         UpdateUserInfo,
+        UpdateUserCon,
+        UpdateUserTicket,
         CreateCons,
         CreateComp,
-        RegNext
+        RegNext,
+        DelModal
     },
     data() {
         return {
@@ -224,7 +233,9 @@
             selected: '',
             competencies: [],
             cons: [],
-            reqs: []
+            reqs: [],
+            selectedCon: [],
+            selectedReq: []
         }
     },
     filters: {
@@ -350,13 +361,25 @@
                     console.error(error)
                 })
         },
+        //изменение консультации из расписания
+        changeConItem(con){
+            this.selectedCon = con
+            $('.update_user_con_modal').modal('show');
+        },
+        //изменение заявки из расписания
+        changeReqItem(req){
+            this.selectedReq = req
+            $('.update_user_ticket_modal').modal('show');
+        },
         //Удаление консультации из расписания
         delConItem(i){
             this.cons.splice(i,1)
+            $('.del_modal').modal('show');
         },
-        //Удаление консультации из расписания
+        //Удаление консультации из заявок
         delReqItem(i){
             this.reqs.splice(i,1)
+            $('.del_modal').modal('show');
         },
         //Добавление компетенции пользователя
         //Вызов модального окна изменения данных

@@ -113,44 +113,44 @@
       closeModal(){
         $('.card_cons_modal').modal('hide')
       },
-      // buyCon(){
-      //   const formData = new FormData()
-      //     formData.append('sc_id', this.sc_id)
-      //     formData.append('sc_type', 2)
-      //     axios({
-      //       method: 'put',
-      //       url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings/` + this.sc_id,
-      //       data: formData
-      //     })
-      //         .then((response) => {
-      //           console.log('put', response)
-      //           $('.card_cons_modal').modal('hide')
-      //         })
-      //         .catch((error) => {
-      //           console.error(error)
-      //         })
-      // }
-      buyCon() {
+      buyCon(){
         const formData = new FormData()
-        formData.append('pc_title', this.postTitle)
-        formData.append('pc_description', this.postDescription)
-        formData.append('pc_user_id', this.postUserId)
-        formData.append('pc_price', this.postPrice)
-        formData.append('pc_com_id', this.postComId)
-        axios({
-          method: 'post',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases`,
-          data: formData
-        })
-            .then((response) => {
-              console.log('post', response)
-              this.putId = response.data.pc_id
-              this.putBuy()
-            })
-            .catch((error) => {
-              console.error(error)
-            })
+          formData.append('sc_id', this.sc_id)
+          formData.append('sc_type', 2)
+          axios({
+            method: 'put',
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings/` + this.sc_id,
+            data: formData
+          })
+              .then((response) => {
+                console.log('put', response)
+                $('.card_cons_modal').modal('hide')
+              })
+              .catch((error) => {
+                console.error(error)
+              })
       },
+      // buyCon() {
+      //   const formData = new FormData()
+      //   formData.append('pc_title', this.postTitle)
+      //   formData.append('pc_description', this.postDescription)
+      //   formData.append('pc_user_id', this.postUserId)
+      //   formData.append('pc_price', this.postPrice)
+      //   formData.append('pc_com_id', this.postComId)
+      //   axios({
+      //     method: 'post',
+      //     url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases`,
+      //     data: formData
+      //   })
+      //       .then((response) => {
+      //         console.log('post', response)
+      //         this.putId = response.data.pc_id
+      //         this.putBuy()
+      //       })
+      //       .catch((error) => {
+      //         console.error(error)
+      //       })
+      // },
       putBuy(){
         const formData = new FormData()
         formData.append('con_pc_id', this.putId)
