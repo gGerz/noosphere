@@ -85,7 +85,8 @@
                 </span>
                 <span class="main_color font_xl">руб</span>
               </div>
-                <span class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l">Купить</span>
+                <span class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Купить</span>
+
             </div>
           </div>
         </div>
@@ -134,20 +135,9 @@
         searchComp: '',
         selectedIndex: '',
         selectedCard: '',
-        options: [
-          { value: 1, text: 'One' },
-          { value: 2, text: 'two' },
-          { value: 3, text: 'three' },
-          { value: 4, text: 'four' },
-          { value: 4, text: 'four' },
-          { value: 4, text: 'four' },
-          { value: 4, text: 'four' },
-          { value: 4, text: 'four' },
-          { value: 4, text: 'four' },
-          { value: 4, text: 'four' },
-          { value: 4, text: 'four' },
-          { value: 4, text: 'four' },
-        ],
+        options: [],
+        sellId: '',
+        purId: '',
         selected: '',
         cons: [],
         photos: [],
@@ -194,7 +184,6 @@
     },
     methods: {
       consFindComp() {
-        console.log(this.cons)
         if (this.selected === null){
           axios({
             method: 'get',
@@ -218,7 +207,6 @@
           })
             .then((response) => {
               this.cons = response.data
-              console.log('klkk', this.cons)
               if (response.length === 0){
                 this.page = Math.ceil((response.data[0].countSc-1) / 21)
               }
@@ -228,6 +216,70 @@
               console.error(error)
             })
         }
+      },
+      createCons(i) {
+        console.log('эм чо',this.cons[i])
+        const formData = new FormData()
+        formData.append('pc_title', this.cons[i].sc_title)
+        formData.append('pc_user_id', this.cons[i].sc_user_id)
+        formData.append('pc_date', this.cons[i].sc_date)
+        formData.append('pc_begin_time', this.cons[i].sc_begin_time)
+        formData.append('pc_end_time', this.cons[i].sc_end_time)
+        formData.append('pc_price', this.cons[i].sc_price)
+        formData.append('pc_description', this.cons[i].sc_description)
+        formData.append('pc_com_id', this.cons[i].sc_com_id)
+        formData.append('pc_type', 2)
+        axios({
+          method: 'post',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases`,
+          data: formData
+        })
+          .then(response => {
+            if (response.status === 201) {
+              console.log(response)
+              this.sellId = this.cons[i].sc_id
+              this.purId = response.data.pc_id
+              //отправка пут запроса
+              const formData = new FormData()
+              formData.append('sc_id', this.sellId)
+              formData.append('sc_type', 2)
+              axios({
+                method: 'PUT',
+                url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings`,
+                data: formData
+              })
+                .then(response => {
+                    this.createConId()
+                })
+                .catch(response => {
+                })
+            }
+          })
+          .catch(response => {
+            console.log(response)
+            alert('Ошибка сервера, консультация не создана')
+          })
+      },
+      createConId() {
+        const formData1 = new FormData()
+        formData1.set('con_sc_id', this.sellId)
+        formData1.set('con_pc_id', this.purId)
+        axios({
+          method: 'post',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/consultations`,
+          data: formData1
+        })
+          .then(response => {
+            this.consId = response.data.con_id
+            if (response.status === 201) {
+              // this.sellId = response.data.sc_id
+              // this.purId = response.data.pc_id
+              // this.createConId()
+              // this.createTags()
+            }
+          })
+          .catch(response => {
+          })
       },
       getPage(i) {
         if (i <= this.page && i > 0) {

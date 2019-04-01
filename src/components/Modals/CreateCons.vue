@@ -208,9 +208,10 @@
           })
             .then(response => {
               if (response.status === 201) {
-                this.willCreateId = response.data.sc_id
-                this.createConId()
-
+                // this.sellId = response.data.sc_id
+                // this.purId = response.data.pc_id
+                //this.createConId()
+                this.createTags()
                 this.closeModal()
               }
             })
@@ -219,7 +220,6 @@
         }
       },
       createTags() {
-        console.log('2:')
         for (let i = 0; i < this.tagIds.length; i++) {
           const formData3 = new FormData()
           console.log(this.tags)
@@ -235,23 +235,21 @@
             })
         }
       },
-      createConId() {
-        const formData1 = new FormData()
-        formData1.set('con_sc_id', this.willCreateId)
-        axios({
-          method: 'post',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/consultations`,
-          data: formData1
-        })
-          .then(response => {
-            this.consId = response.data.con_id
-            console.log('1:')
-            console.log('con_id: ', this.consId)
-            this.createTags()
-          })
-          .catch(response => {
-          })
-      }
+      // createConId() { //old
+      //   const formData1 = new FormData()
+      //   formData1.set('con_sc_id', this.willCreateId)
+      //   axios({
+      //     method: 'post',
+      //     url: `http://192.168.1.150/noosfera/public_html/api/v1/consultations`,
+      //     data: formData1
+      //   })
+      //     .then(response => {
+      //       this.consId = response.data.con_id
+      //       console.log('con_id: ', this.consId)
+      //     })
+      //     .catch(response => {
+      //     })
+      // }
     },
     mounted() {
       if (this.$store.state.authorisedStatus === true) {
