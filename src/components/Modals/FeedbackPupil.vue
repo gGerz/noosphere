@@ -9,23 +9,27 @@
                     </button>
                 </div>
                 <div class="modal-body py-5 px-2 px-sm-5">
-                    <div class="feedback_radio">
+                    <div class="feedback_radio pb-3">
                         <div class="">
-                            <input type="radio" name="radio" id="radio1" checked="">
+                            <input type="radio" name="radio" id="radio1" value="good" v-model="radioFeedBack">
                             <label for="radio1" class="py-2 px-3">
                                 <i class="far fa-thumbs-up"></i>
                                 Мне понравилась
                             </label>
                         </div>
                         <div class="">
-                            <input type="radio" name="radio" id="radio2">
+                            <input type="radio" name="radio" id="radio2" value="bad" v-model="radioFeedBack">
                             <label for="radio2" class="py-2 px-3">
                                 <i class="far fa-thumbs-down"></i>
                                 Мне не понравилась консультация
                             </label>
                         </div>
                     </div>
-                    <div class="pt-3">
+                    <div v-if="radioFeedBack == 'bad'" class="form-group pb-3 transition">
+                        <label class="m-0">Почему вам не понравилась консультация?</label>
+                        <textarea v-model="about" class="form-control textarea-resize-n" rows="5"></textarea>
+                    </div>
+                    <div class="">
                         <button type="submit" class="btn btn-primary btn-shadow" @click="feedback()">Отправить</button>
                     </div>
                 </div>
@@ -35,8 +39,18 @@
     </div>
 </template>
 <script>
+    export default {
+      data() {
+        return {
+          radioFeedBack: '',
+        };
+      }
+    }
 </script>
 <style lang="scss" scoped>
+    .transition {
+        transition: all 1s;
+    }
     .inputText {
         height: 52px;
     }

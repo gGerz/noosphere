@@ -1,72 +1,73 @@
 <template>
     <!--<div id="mgVideoChat"></div>-->
     <div class="container ">
-        <p class="h2 py-4 text-center">Видео кабинет {{id}}</p>
+        <p class="h2 py-4 text-center">Кабинет консультации</p>
         <div class="card shadow">
             <div class="card-body">
-                <div class="row">
-                    <div class="col-12 col-lg-6">
-                        <div class="justify-content-center d-flex">
-                            <div>
-                                <p class="h4">Вы</p>
-                                <div class="video">
+                <div class="py-4">
 
-                                </div>
-                            </div>
-                        </div>
+                    <div class="d-flex justify-content-center pt-2">
+                        <div class="mx-1 btn btn-primary" @click="openLink"><i class="fas fa-arrow-right pr-2"></i>открыть видео-чат</div>
+                        <div class="mx-1 btn btn-success" @click="endVideo">Завершить консультацию</div>
+                        <!--<div class="btn btn-primary" @click="arbitrage">Арбитраж</div>-->
                     </div>
-                    <div class="col-12 col-lg-6">
-                        <div class="justify-content-center d-flex">
-                            <div>
-                                <p class="h4">Ваш собеседник</p>
-                                <div class="video">
-                                    [Видео]
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-center py-3">
-                    <div class="btn btn-success" @click="close">Завершить</div>
-                    <div class="btn btn-primary" @click="arbitrage">Арбитраж</div>
+                    <feedback-pupil/>
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script>
-    import $ from 'jquery'
-    $(document).ready(function(){
-        $('#mgVideoChat').mgVideoChat({
-            wsURL: 'ws://www.myserverdomain.com:8080?room=1' //domain:port and room id info
-        });
-    });
-    export default {
-        data() {
-            return {
-                id: '',
-            }
-        },
-        methods: {
-            close() {
-                axios({
-                    method: 'put',
-                    url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings/`
-                })
-                    .then((response) => {
-                    })
-                    .catch((error) => {
-                    })
-            },
-            arbitrage(){
+  // import $ from 'jquery'
+  import FeedbackPupil from '../components/Modals/FeedbackPupil.vue'
 
-            }
-        }
-    }
+  export default {
+    components: {
+      FeedbackPupil
+    },
+    data() {
+      return {
+        id: '',
+        linkToRoom: 'https://appear.in/noospherevideochat',
+        copyDone: false,
+        roomWindow: '',
+      }
+    },
+    methods: {
+      endVideo() { //при завершении звонка
+        if (this.roomWindow) this.roomWindow.close()
+        $('.feedback_pupil_modal').modal('show')
+      },
+      openLink() {
+        if (this.roomWindow) this.roomWindow.close() // если окно уже открыто то оно закрывается
+        this.roomWindow = window.open(this.linkToRoom); //открыть ссылку
+      }
+    },
+  }
 </script>
 <style lang="scss" scoped>
-
-    .video {
+    .copyDone {
+        height: 25px;
+        font-size: 14px;
+        color: #6c6c6c;
+    }
+    .link-to-room__body {
+        display: flex;
+        background: #e4e4e4;
+        border-radius: 4px;
+        padding: 3px 10px;
+        transition: .5s;
+    }
+    .link-to-room__self {
+        color: #555555;
+    }
+    .link-to-room__body:hover {
+        background: #c9c9c9;
+    }
+    .link-to-room__body:active {
+        background: #f5f5f5;
+    }
+        .video {
         background: aquamarine;
         border: darkblue 1px solid;
         width: 446px;
