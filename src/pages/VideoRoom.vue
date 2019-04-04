@@ -1,15 +1,12 @@
 <template>
-    <!--<div id="mgVideoChat"></div>-->
     <div class="container ">
         <p class="h2 py-4 text-center">Кабинет консультации</p>
         <div class="card shadow">
             <div class="card-body">
                 <div class="py-4">
-
                     <div class="d-flex justify-content-center pt-2">
                         <div class="mx-1 btn btn-primary" @click="openLink"><i class="fas fa-arrow-right pr-2"></i>открыть видео-чат</div>
                         <div class="mx-1 btn btn-success" @click="endVideo">Завершить консультацию</div>
-                        <!--<div class="btn btn-primary" @click="arbitrage">Арбитраж</div>-->
                     </div>
                     <feedback-pupil/>
                 </div>
@@ -18,9 +15,7 @@
     </div>
 </template>
 <script>
-  // import $ from 'jquery'
   import FeedbackPupil from '../components/Modals/FeedbackPupil.vue'
-
   export default {
     components: {
       FeedbackPupil
@@ -67,11 +62,10 @@
     .link-to-room__body:active {
         background: #f5f5f5;
     }
-        .video {
+    .video {
         background: aquamarine;
         border: darkblue 1px solid;
         width: 446px;
         height: 286px;
     }
-
 </style>
