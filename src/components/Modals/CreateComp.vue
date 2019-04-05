@@ -55,15 +55,13 @@
       }
     },
     methods: {
+
       closeModal() {
         $('.create_comp_modal').modal('hide');
       },
 
       createComp() {
         const formData1 = new FormData()
-        console.log('p_id', this.$store.state.userComp.p_user_id)
-        console.log('com_id ', this.selected.com_id)
-
         formData1.set('cp_p_id', this.$store.state.userComp.p_user_id)
         formData1.set('cp_com_id', this.selected.com_id)
         axios({
@@ -85,14 +83,6 @@
         url: `http://192.168.1.150/noosfera/public_html/api/v1/coms`,
       })
         .then((response) => {
-          // console.log("len1",response.data.length)
-          // console.log("len2",this.$store.state)
-          // this.globalComps = response.data
-          // for (var i = 0; i < response.data.length; i++) {
-          //   console.log('hi')
-          //   for(var j = 0; j < this.$store.state.userComp.cpCom.length; j++) {
-          //     if (1) {//response.data.indexOf($store.state.userComp.cpCom
-          //       console.log('hi1')
           this.globalComps = response.data
 
         })

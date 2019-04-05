@@ -42,7 +42,7 @@
                             </div>
                             <div class="ml-lg-5 ml-md-5 general-buttons">
                                 <button style="width: 100%" class="btn btn-outline-primary mb-2" @click="changeUserInfo">Изменить данные</button>
-                                <update-user-info :userInfo="userInfo"/>
+                                <update-user-info @updateUserInfo="getUserInfo" :userInfo="userInfo"/>
                                 <button style="width: 100%" class="btn btn-outline-danger" @click="logout">Выйти</button>
                             </div>
                         </div>
@@ -158,7 +158,7 @@
                                 </vue-select>
                             </div>
                             <div class="col-12 col-xl-3 col-lg-3 col-md-12">
-                                <input placeholder="Название..." v-model="searchableReqTitle" type="text" class="form-control search-field">
+                                <input placeholder="Название..." v-model="searchableReqTitle" type="text" class="form-control search-field" >
                             </div>
                         </div>
                         <div v-if="filteredReqs.length === 0" class="null-filter">

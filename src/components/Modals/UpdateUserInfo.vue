@@ -47,6 +47,7 @@
 <script>
   import axios from 'axios'
   import VueSelect from 'vue-select'
+
   export default {
     props: ['userInfo'],
     components: {
@@ -80,18 +81,27 @@
       },
       //Обновление информации юзера
       updateUserInfo(){
-        axios.put("https://jsonplaceholder.typicode.com/users/1",{
-          name: this.name
+        let payload = {
+
+          'p_name': this.name,
+          'p_description': this.about,
+          'p_date': this.date
+        };
+
+        axios({
+          method: 'PUT',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: payload
         })
-            .then(res =>{
-              console.log(res)
+            .then(response => {
+              this.$emit('updateUserInfo')
+              $('.update_user_info_modal').modal('hide'); //закрытие модального окна
             })
-        axios.put(`http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo, {
-        name: this.name
-      })
-          .then(res =>{
-            console.log(res)
-          })
+            .catch(response => {
+            })
       }
     },
     mounted() {

@@ -36,8 +36,6 @@
               <div class="d-flex align-items-center">
                 <div>
                   <img class="img_master2" src="../assets/img/ava.jpg" >
-                  <!-- Пока что будет выдавать ошибку в консоль, тк фотки подгружаются после построения карточек-->
-                  <!--<img class="img_master2" :src="photos[i].url" >-->
                 </div>
                 <div>
                   <div class="font_m text-truncate card-item-name" v-if="con.scUser !== undefined">{{con.scUser.p_name}}</div>
@@ -85,8 +83,8 @@
                 </span>
                 <span class="main_color font_xl">руб</span>
               </div>
-                <span class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Купить</span>
-
+                <span v-if="$store.state.userId == con.sc_user_id" class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l">Мое</span>
+                <span v-else class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Купить</span>
             </div>
           </div>
         </div>
@@ -131,32 +129,21 @@
       return {
         globalComps: [],
         page: '',
+        idOtherUser: '',
         currentPage: 1,
         searchComp: '',
         selectedIndex: '',
         selectedCard: '',
         options: [],
         sellId: '',
+        consId: '',
         purId: '',
         selected: '',
         cons: [],
-        photos: [],
-          testone: 'Химия'
+        photos: []
       }
     },
     mounted () {
-      // axios({
-      //   method: 'get',
-      //   url: `https://jsonplaceholder.typicode.com/photos`
-      // })
-      //   .then((response) => {
-      //     this.photos = response.data
-      //     this.$store.state.loader = false
-      //     console.log(this.photos)
-      //   })
-      //   .catch((error) => {
-      //     console.error(error)
-      //   })
       this.$store.state.loader = true
       axios({
         method: 'get',
@@ -218,7 +205,7 @@
         }
       },
       createCons(i) {
-        console.log('эм чо',this.cons[i])
+        this.idOtherUser = this.cons[i].sc_user_id
         const formData = new FormData()
         formData.append('pc_title', this.cons[i].sc_title)
         formData.append('pc_user_id', this.cons[i].sc_user_id)
@@ -236,27 +223,32 @@
         })
           .then(response => {
             if (response.status === 201) {
-              console.log(response)
               this.sellId = this.cons[i].sc_id
               this.purId = response.data.pc_id
+
               //отправка пут запроса
-              const formData = new FormData()
-              formData.append('sc_id', this.sellId)
-              formData.append('sc_type', 2)
+              let payload = {
+                'sc_type': 2
+              };
+
               axios({
                 method: 'PUT',
-                url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings`,
-                data: formData
+                url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings/` + this.sellId,
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                data: payload
               })
                 .then(response => {
                     this.createConId()
                 })
                 .catch(response => {
                 })
+
             }
           })
-          .catch(response => {
-            console.log(response)
+          .catch(error => {
+            console.log(error)
             alert('Ошибка сервера, консультация не создана')
           })
       },
@@ -272,14 +264,30 @@
           .then(response => {
             this.consId = response.data.con_id
             if (response.status === 201) {
-              // this.sellId = response.data.sc_id
-              // this.purId = response.data.pc_id
-              // this.createConId()
-              // this.createTags()
+              this.sendNotification()
+              myWin= open('https://appear.in/noospherevideochat');
+              this.$router.push('/videoroom')
             }
           })
           .catch(response => {
           })
+      },
+      sendNotification(){
+        const formData = new FormData()
+        formData.set('n_con_id', this.consId) //id созданной консультации
+        formData.set('n_selling_user_id', this.idOtherUser) //id другой
+        formData.set('n_purchase_user_id', this.$store.state.userId) //id мой
+        formData.set('n_type', 'selling') // тип
+        axios({
+          method: 'post',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/notifications`,
+          data: formData
+        })
+            .then(response => {
+              console.log(response)
+            })
+            .catch(response => {
+            })
       },
       getPage(i) {
         if (i <= this.page && i > 0) {

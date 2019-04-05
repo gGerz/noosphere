@@ -25,7 +25,7 @@
               <div v-show="passCharEr" class="text-danger font_s">Пароль не должен содержать спец. символы</div>
             </div>
             <div class="form-group pb-4">
-              <input type="password" class="f orm-control inputText" required="required" placeholder="Подтвердите пароль" v-model="resetPassword">
+              <input type="password" class="form-control inputText" required="required" placeholder="Подтвердите пароль" v-model="resetPassword">
               <div v-show="passProfEr" class="text-danger font_s">Пароли не совпадают</div>
             </div>
 

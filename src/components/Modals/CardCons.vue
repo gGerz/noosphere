@@ -72,7 +72,9 @@
             <!--<router-link class="btn btn-outline-primary m-2 my-sm-0" data-toggle="modal" data-target=".arbitration_modal" to="/videoroom">Video</router-link>-->
             <!--<router-link target="_blank" :to="{ path: 'offer', query: {id: data.item.id }}">-->
             <!--<router-link class="ml-auto " target="_blank">-->
-              <span class="btn btn-outline-primary btn-md px-4 btn-buy font_l" v-on:click="buyCon()">Купить</span>
+            <span v-if="$store.state.userId == selectedCard.sc_user_id" class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l">Мое</span>
+            <span v-else class="btn btn-outline-primary btn-md px-4 btn-buy font_l" v-on:click="createCons()">Купить</span>
+
             <!--</router-link>-->
           </div>
         </div>
@@ -95,10 +97,15 @@
         postTitle: '',
         postDescription: '',
         postUserId: '',
+        postDate: '',
+        postBeginTime: '',
+        postEndTime: '',
         postPrice: '',
         postComId: '',
         putId: '',
-
+        sellId: '',
+        purId: '',
+        consId: ''
       }
     },
     filters: {
@@ -113,73 +120,84 @@
       closeModal(){
         $('.card_cons_modal').modal('hide')
       },
-      buyCon(){
+      createCons() {
         const formData = new FormData()
-          formData.append('sc_id', this.sc_id)
-          formData.append('sc_type', 2)
-          axios({
-            method: 'put',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings/` + this.sc_id,
-            data: formData
-          })
-              .then((response) => {
-                console.log('put', response)
-                $('.card_cons_modal').modal('hide')
-              })
-              .catch((error) => {
-                console.error(error)
-              })
-      },
-      // buyCon() {
-      //   const formData = new FormData()
-      //   formData.append('pc_title', this.postTitle)
-      //   formData.append('pc_description', this.postDescription)
-      //   formData.append('pc_user_id', this.postUserId)
-      //   formData.append('pc_price', this.postPrice)
-      //   formData.append('pc_com_id', this.postComId)
-      //   axios({
-      //     method: 'post',
-      //     url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases`,
-      //     data: formData
-      //   })
-      //       .then((response) => {
-      //         console.log('post', response)
-      //         this.putId = response.data.pc_id
-      //         this.putBuy()
-      //       })
-      //       .catch((error) => {
-      //         console.error(error)
-      //       })
-      // },
-      putBuy(){
-        const formData = new FormData()
-        formData.append('con_pc_id', this.putId)
+        formData.append('pc_title', this.postTitle)
+        formData.append('pc_user_id', this.postUserId)
+        formData.append('pc_date', this.postDate)
+        formData.append('pc_begin_time', this.postBeginTime)
+        formData.append('pc_end_time', this.postEndTime)
+        formData.append('pc_price', this.postPrice)
+        formData.append('pc_description', this.postDescription)
+        formData.append('pc_com_id', this.postComId)
+        formData.append('pc_type', 2)
         axios({
-          method: 'put',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/consultations?ConsultationSearch[con_sc_id]=` + this.sc_id,
+          method: 'post',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases`,
           data: formData
         })
-            .then((response) => {
-              console.log('put', response)
-              this.$router.push('/videoroom')
-              $('.card_cons_modal').modal('hide')
+            .then(response => {
+              if (response.status === 201) {
+                this.purId = response.data.pc_id
+
+                //отправка пут запроса
+                let payload = {
+                  'sc_type': 2
+                };
+
+                axios({
+                  method: 'PUT',
+                  url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings/` + this.sellId,
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  data: payload
+                })
+                    .then(response => {
+                      this.createConId()
+                    })
+                    .catch(response => {
+                    })
+
+              }
             })
-            .catch((error) => {
-              console.error(error)
+            .catch(error => {
+              console.log(error)
+              alert('Ошибка сервера, консультация не создана')
             })
       },
-      setUser(){
-          $('.card_cons_modal').modal('hide');
-          this.$store.state.anotherUserId = this.selectedCard.scUser.p_id
+      createConId() {
+        const formData1 = new FormData()
+        formData1.set('con_sc_id', this.sellId)
+        formData1.set('con_pc_id', this.purId)
+        axios({
+          method: 'post',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/consultations`,
+          data: formData1
+        })
+            .then(response => {
+              this.consId = response.data.con_id
+              if (response.status === 201) {
+                myWin= open('https://appear.in/noospherevideochat');
+                $('.card_cons_modal').modal('hide')
+                this.$router.push('/videoroom')
+              }
+            })
+            .catch(response => {
+            })
       },
       //создаем пропы, которые будем отправлять для создания покупки
       setProps(){
+        console.log(this.selectedCard)
         this.postTitle = this.selectedCard.sc_title
         this.postDescription = this.selectedCard.sc_description
         this.postUserId = this.selectedCard.sc_user_id
         this.postPrice = this.selectedCard.sc_price
         this.postComId = this.selectedCard.sc_com_id
-        this.sc_id = this.selectedCard.sc_id
+        this.postDate = this.selectedCard.sc_date
+        this.postBeginTime = this.selectedCard.sc_begin_time
+        this.postEndTime = this.selectedCard.sc_end_time
+        this.sellId = this.selectedCard.sc_id
       }
     },
     mounted() {

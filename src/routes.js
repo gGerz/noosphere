@@ -6,6 +6,7 @@ import About from './pages/About'
 import Cabinet from './pages/Cabinet'
 import VideoRoom from './pages/VideoRoom.vue'
 import AnotherOne from './pages/AnotherOne.vue'
+import ArbitrageList from './pages/ArbitrageList.vue'
 
 export default new VueRouter({
   routes: [
@@ -24,6 +25,10 @@ export default new VueRouter({
     {
       path: '/cabinet',
       component: Cabinet
+    },
+    {
+      path: '/arbitrage',
+      component: ArbitrageList
     },
     {
       path: '/videoroom',
