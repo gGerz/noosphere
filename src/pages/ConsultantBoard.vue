@@ -11,7 +11,10 @@
             <span slot="no-options">Ничего не найдено</span>
           </vue-select>
         </div>
-        <div class="ml-3 px-3 search-btn btn text-grey" @click="consFindComp">Поиск</div>
+        <div class="d-flex mt-2 mt-md-0">
+          <div class="search-btn btn text-grey mr-1" @click="consFindComp">Поиск</div>
+          <div class="search-btn btn text-grey ml-1" @click="clearSearch">Сбросить</div>
+        </div>
       </div>
       <div class="align-items-center d-flex justify-content-center create-cons"
            @onclick="createCons()"
@@ -24,7 +27,7 @@
       <div class="stub" v-if="cons.length === 0">
         Извините, ничего не найдено
       </div>
-      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 card-pad" @click="selectIndex(i)" data-toggle="modal" data-target=".card_cons_modal" v-for="(con, i) in cons">
+      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 card-pad" @click="openConsCard(i)" v-for="(con, i) in cons">
         <div class="card">
           <div class="card-body cons-body">
             <div>
@@ -83,14 +86,14 @@
                 </span>
                 <span class="main_color font_xl">руб</span>
               </div>
-                <span v-if="$store.state.userId == con.sc_user_id" class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l">Мое</span>
+                <span v-if="$store.state.userId == con.sc_user_id" class="ml-auto btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>
                 <span v-else class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Купить</span>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <nav aria-label="Page navigation example" v-if="cons.length !== 0">
+    <nav aria-label="" v-if="cons.length !== 0">
       <ul class="pagination d-flex justify-content-center">
         <li class="page-item">
           <a class="page-link" href="#" aria-label="Previous" @click="getPage(currentPage - 1)">
@@ -173,6 +176,23 @@
     },
     //в methods находятся функции компонента
     methods: {
+      clearSearch() {
+        this.selected = ''
+        axios({
+          method: 'get',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings`
+        })
+          .then((response) => {
+            this.cons = response.data
+            if (response.length === 0){
+              this.page = Math.ceil((response.data[0].countSc-1) / 21)
+            }
+            this.$store.state.loader = false
+          })
+          .catch((error) => {
+            console.error(error)
+          })
+      },
       //поиск по компитенциям
       consFindComp() {
         if (this.selected === null){ //если не выбрана компитенция
@@ -210,6 +230,7 @@
         }
       },
       createCons(i) {
+        event.stopPropagation();
         this.idOtherUser = this.cons[i].sc_user_id
         const formData = new FormData()
         formData.append('pc_title', this.cons[i].sc_title)
@@ -315,6 +336,10 @@
       selectIndex(i){
         this.selectedCard = this.cons[i]
         this.$store.state.anotherUserId = this.selectedCard.scUser.p_id
+      },
+      openConsCard(i) {
+        this.selectIndex(i)
+        $('.card_cons_modal').modal('show')
       }
     },
     filters: {
@@ -389,20 +414,10 @@
 
   .search-bar {
     display: flex;
-    width: 350px;
+    width: 450px;
   }
 
-  @media (max-width: 767px) {
-    .headline {
-      display: block;
-    }
-    .search-bar {
-      width: 100%;
-    }
-    .create-cons {
-      padding-top: 20px;
-    }
-  }
+
 
 
   .card-pad {
@@ -486,6 +501,9 @@
   }
 
   .search-btn {
+    padding-left: 1rem!important;
+    padding-right: 1rem!important;
+    margin-left: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -496,7 +514,22 @@
       background: #d6d6d6;
     }
   }
-
+  @media (max-width: 767px) {
+    .headline {
+      display: block;
+    }
+    .search-bar {
+      width: 100%;
+      display: block;
+    }
+    .create-cons {
+      padding-top: 20px;
+    }
+    .search-btn {
+      width: 50%!important;
+      margin-left: 0rem;
+    }
+  }
   .card-item-name {
     width: 230px;
   }

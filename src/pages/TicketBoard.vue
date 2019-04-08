@@ -67,6 +67,7 @@
         </div>
       </div>
     </div>
+
     <card-req :selectedIndex="selectedIndex"
               :selectedCard="selectedCard" />
   </div>

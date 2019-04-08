@@ -71,7 +71,7 @@
             <!--<router-link class="btn btn-outline-primary m-2 my-sm-0" data-toggle="modal" data-target=".arbitration_modal" to="/videoroom">Video</router-link>-->
             <!--<router-link target="_blank" :to="{ path: 'offer', query: {id: data.item.id }}">-->
             <!--<router-link class="ml-auto " target="_blank">-->
-            <span v-if="$store.state.userId == selectedCard.sc_user_id" class="btn btn-outline-primary btn-md px-4 btn-buy font_l">Мое</span>
+            <span v-if="$store.state.userId == selectedCard.sc_user_id" class="btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>
             <span v-else class="btn btn-outline-primary btn-md px-4 btn-buy font_l" v-on:click="createCons()">Купить</span>
 
             <!--</router-link>-->
