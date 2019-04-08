@@ -53,10 +53,7 @@ export default {
             url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.anotherUserId + `?expand=cpCom`
         })
             .then((response) => {
-                console.log(response)
                 this.anotherUserInfo = response.data
-                console.log(this.anotherUserInfo)
-
             })
             .catch((error) => {
                 console.error(error)

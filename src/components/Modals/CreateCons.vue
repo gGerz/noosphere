@@ -121,7 +121,6 @@
       addTag () {
         if (this.currentTag != '') {
           this.tags.push(this.currentTag)
-          //console.log('Тег',this.currentTag,' n ', this.tags)
           const formData = new FormData()
           formData.append('tag_name', this.currentTag)
           axios({
@@ -130,7 +129,6 @@
             data: formData
           })
             .then(response => {
-              console.log(response)
               this.tagIds.push(response.data.tag_id)
             })
             .catch(response => {
@@ -222,7 +220,6 @@
       createTags() {
         for (let i = 0; i < this.tagIds.length; i++) {
           const formData3 = new FormData()
-          console.log(this.tags)
           formData3.append('tc_tag_id', this.tagIds[i])
           formData3.append('tc_con_id', this.consId)
           axios({
@@ -231,7 +228,6 @@
             data: formData3
           })
             .then(response => {
-              console.log('Теги: ',response)
             })
         }
       },
@@ -245,7 +241,6 @@
       //   })
       //     .then(response => {
       //       this.consId = response.data.con_id
-      //       console.log('con_id: ', this.consId)
       //     })
       //     .catch(response => {
       //     })

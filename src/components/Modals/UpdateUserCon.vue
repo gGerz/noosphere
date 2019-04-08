@@ -215,10 +215,8 @@
         }
       },
       createTags() {
-        console.log('2:')
         for (let i = 0; i < this.tagIds.length; i++) {
           const formData3 = new FormData()
-          console.log(this.tags)
           formData3.append('tc_tag_id', this.tagIds[i])
           formData3.append('tc_con_id', this.consId)
           axios({
@@ -226,9 +224,8 @@
             url: `http://192.168.1.150/noosfera/public_html/api/v1/tag_cons`,
             data: formData3
           })
-              .then(response => {
-                console.log('Теги: ',response)
-              })
+            .then(response => {
+            })
         }
       },
     },

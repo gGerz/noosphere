@@ -117,7 +117,6 @@
               .then((response) => {
                 this.photos = response.data
                 this.$store.state.loader = false
-                console.log(this.photos)
               })
               .catch((error) => {
                 console.error(error)
@@ -127,11 +126,9 @@
           url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases?expand=pcCom,pcUser,tagCon`
       })
               .then((response) => {
-                console.log("Заявка",response)
 
                 this.reqs = response.data
                 this.$store.state.loader = false
-                console.log("Компетенция",this.reqs)
               })
               .catch((error) => {
                 console.error(error)
@@ -141,7 +138,6 @@
         url: `http://192.168.1.150/noosfera/public_html/api/v1/coms`,
       })
               .then((response) => {
-                console.log("Компетенция",response)
                 this.globalComps = response.data
               })
               .catch((error) => {
@@ -157,7 +153,6 @@
           })
               .then((response) => {
                 this.reqs = response.data
-                console.log(this.reqs)
                 if (response.length === 0){
                   this.page = Math.ceil((response.data[0].countSc-1) / 21)
                 }

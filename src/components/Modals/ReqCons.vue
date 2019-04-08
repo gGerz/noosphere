@@ -171,7 +171,6 @@
           //   .catch(response => {
           //   })
           const formData = new FormData()
-          console.log('тайтл', this)
           formData.append('pc_title', this.title)
           formData.append('pc_user_id', this.$store.state.userId)
           formData.append('pc_date', this.date)
@@ -195,14 +194,12 @@
               }
             })
             .catch(response => {
-              console.log(response)
               alert('Ошибка сервера, консультация не создана')
             })
         }
       },
       createConId() {
         const formData1 = new FormData()
-        console.log('thisWillCreateId', this.willCreateId)
         formData1.set('con_pc_id', this.willCreateId)
         axios({
           method: 'post',
@@ -225,8 +222,6 @@
         })
           .then((response) => {
             this.globalComps = response
-            console.log('nisu',this.globalComps)
-
           })
           .catch((error) => {
             console.error(error)

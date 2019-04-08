@@ -3,21 +3,20 @@
     <div class="modal-dialog modal-md" role="document">
       <div class="modal-content">
         <div class="modal-body py-5 cons-body">
-          <div class="">
+          <div class="pb-2 d-flex justify-content-between">
+            <div>
+              <p class="mb-0 font_xl wrap-break">{{selectedCard.sc_title}}</p>
+              <p class="mr-auto mb-0 text-grey font_l" v-if="selectedCard.scCom !== undefined">{{selectedCard.scCom.competence}}</p>
+            </div>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close justify-content-end d-flex">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="pb-2">
-            <p class="mb-0 font_xl wrap-break">{{selectedCard.sc_title}}</p>
-            <p class="mr-auto mb-0 text-grey font_l" v-if="selectedCard.scCom !== undefined">{{selectedCard.scCom.competence}}</p>
-          </div>
+
           <div class="d-flex align-items-center py-3">
             <router-link to="/anotherone">
               <span @click="closeModal">
                 <img class="img_master2" src="../../assets/img/ava.jpg" >
-                  <!-- Пока что будет выдавать ошибку в консоль, тк фотки подгружаются после построения карточек-->
-                  <!--<img class="img_master2" :src="photos[i].url" > -->
               </span>
             </router-link>
             <div>
@@ -62,7 +61,7 @@
           <div class="py-2 wrap-break">
             {{selectedCard.sc_description}}
           </div>
-          <div class="d-flex pt-3">
+          <div class="d-flex justify-content-between pt-3">
             <div class="my-auto ">
                 <span class="price">
                   {{selectedCard.sc_price | rounded}}
@@ -72,7 +71,7 @@
             <!--<router-link class="btn btn-outline-primary m-2 my-sm-0" data-toggle="modal" data-target=".arbitration_modal" to="/videoroom">Video</router-link>-->
             <!--<router-link target="_blank" :to="{ path: 'offer', query: {id: data.item.id }}">-->
             <!--<router-link class="ml-auto " target="_blank">-->
-            <span v-if="$store.state.userId == selectedCard.sc_user_id" class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l">Мое</span>
+            <span v-if="$store.state.userId == selectedCard.sc_user_id" class="btn btn-outline-primary btn-md px-4 btn-buy font_l">Мое</span>
             <span v-else class="btn btn-outline-primary btn-md px-4 btn-buy font_l" v-on:click="createCons()">Купить</span>
 
             <!--</router-link>-->

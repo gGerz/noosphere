@@ -104,7 +104,6 @@
               }
             })
             .catch(response => {
-              console.log(response.message)
             })
         }
       }

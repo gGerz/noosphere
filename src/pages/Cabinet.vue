@@ -296,7 +296,6 @@
             })
                 .then((response) => {
                     this.cons = response.data.conSUser
-                    console.log(this.cons)
                 })
                 .catch((error) => {
                     console.error(error)

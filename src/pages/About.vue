@@ -55,7 +55,6 @@
             }
         },
         mounted() {
-        console.log(localStorage.token)
         // Информация юзера
         axios({
             method: 'get',
@@ -65,7 +64,6 @@
             headers: { 'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6OH0.NYB_TOEip8Ax75eRBtym47hZQwWrlKRlWM0DzVL1r0E`}
         })
             .then((response) => {
-                console.log(response)
             })
             .catch((error) => {
                 console.error(error)

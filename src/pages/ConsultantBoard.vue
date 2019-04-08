@@ -1,6 +1,6 @@
 <template>
   <div>
-      <h2 class="my-4 font_xxl" >Доска консультаций</h2>
+    <h2 class="my-4 font_xxl" >Доска консультаций</h2>
     <div class="headline mb-4 align-items-center">
       <div class="search-bar">
         <div class="w-100">
@@ -223,6 +223,7 @@
         })
           .then(response => {
             if (response.status === 201) {
+              console.log(response)
               this.sellId = this.cons[i].sc_id
               this.purId = response.data.pc_id
 

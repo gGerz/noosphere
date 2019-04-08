@@ -27,7 +27,7 @@
                     </div>
                     <div v-if="radioFeedBack == 'bad'" class="form-group pb-3 transition">
                         <label class="m-0">Почему вам не понравилась консультация?</label>
-                        <textarea v-model="about" class="form-control textarea-resize-n" rows="5"></textarea>
+                        <textarea class="form-control textarea-resize-n" rows="5"></textarea>
                     </div>
                     <div class="">
                         <button type="submit" class="btn btn-primary btn-shadow" @click="feedback()">Отправить</button>

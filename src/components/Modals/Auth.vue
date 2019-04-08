@@ -87,7 +87,6 @@
 
                   })
                   .catch(error => {
-                    console.log('Ошибка',error)
                   })
         }
       },

@@ -119,15 +119,12 @@
             data: formData
           })
             .then(response => {
-              console.log(response)
-              console.log('Id нового пользователя',response.data.id)
               if (response.statusText == "Created") {
                 this.mail = ''
                 this.password = ''
                 this.resetPassword = ''
                 this.$store.dispatch('saveUserId', response.data.id)
                 // this.$store.state.newId = response.data.id
-                // console.log('Регистрация',response.data.id)
                 $('.sign_up_modal').modal('hide');
                 $('.sign_up_next_modal').modal('show');
               }
@@ -136,56 +133,11 @@
               if (response.message == 'Request failed with status code 422') {
                 this.emailServEr = true
               }
-              console.log(this)
             })
         }
       },
-      // reg() {
-      //   if (this.password !== '' && this.resetPassword !== '' && this.mail !== '') {
-      //     if (this.password === this.resetPassword){
-      //       if(this.checkbox) {
-      //         const formData = new FormData()
-      //         formData.append('email', this.mail)
-      //         formData.append('password', this.password)
-      //         axios({
-      //           method: 'post',
-      //           url: `http://192.168.1.150/noosfera/public_html/api/v1/users`,
-      //           data: formData
-      //         })
-      //           .then(response => {
-      //             console.log(response)
-      //             console.log('Id нового пользователя',response.data.id)
-      //             if (response.statusText == "Created") {
-      //               this.mail = ''
-      //               this.password = ''
-      //               this.resetPassword = ''
-      //               this.$store.dispatch('saveUserId', response.data.id)
-      //               // this.$store.state.newId = response.data.id
-      //               // console.log('Регистрация',response.data.id)
-      //               $('.sign_up_modal').modal('hide');
-      //               $('.sign_up_next_modal').modal('show');
-      //             }
-      //
-      //           })
-      //           .catch(response => {
-      //             if (response.message == 'Request failed with status code 422') {
-      //               this.emailEr = true
-      //             }
-      //             console.log(this)
-      //           })
-      //       }
-      //       else {
-      //         alert('Вы должны принять пользовательское соглашение')
-      //       }
-      //     } else {
-      //       this.passProfEr = true
-      //     }
-      //   }
-      //   else alert('Заполните все поля')
-      // }
     },
     mounted() {
-      console.log('опа',this)
       $('.sign_up_modal').on('hide.bs.modal', function (e) {
         e.target.__vue__.mail = ''
         e.target.__vue__.password = ''

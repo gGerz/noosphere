@@ -3,18 +3,18 @@
     <div class="modal-dialog modal-md" role="document">
       <div class="modal-content">
         <div class="modal-body py-5 cons-body">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <div class="pb-2">
-            <p class="mb-0 font_xl wrap-break">{{selectedCard.pc_title}}</p>
-            <p class="mr-auto mb-0 text-grey font_l" v-if="selectedCard.pcCom !== undefined">{{selectedCard.pcCom.competence}}</p>
+          <div class="pb-2 d-flex justify-content-between">
+            <div>
+              <p class="mb-0 font_xl wrap-break">{{selectedCard.pc_title}}</p>
+              <p class="mr-auto mb-0 text-grey font_l" v-if="selectedCard.pcCom !== undefined">{{selectedCard.pcCom.competence}}</p>
+            </div>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close justify-content-end d-flex">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
           <div class="d-flex align-items-center py-3">
             <div>
               <img class="img_master2" src="../../assets/img/ava.jpg" >
-              <!-- Пока что будет выдавать ошибку в консоль, тк фотки подгружаются после построения карточек-->
-              <!--<img class="img_master2" :src="photos[i].url" > -->
             </div>
             <div>
               <div class="font_m card-item-name text-truncate" v-if="selectedCard.pcUser !== undefined">{{selectedCard.pcUser.p_name}}</div>
@@ -65,11 +65,6 @@
 <script>
     export default {
       props: ['selectedIndex', 'selectedCard'],
-      data(){
-          return{
-
-          }
-      },
       filters: {
         rounded(value){
           return parseInt(value * 100) / 100
