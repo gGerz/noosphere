@@ -156,7 +156,7 @@
         })
         .then((response) => { //если пришел ответ
           this.cons = response.data
-          this.page = Math.ceil((response.data[0].countSc-1) / 21) //кол-во страниц
+          this.page = Math.ceil((response.data[0].countSc) / 21) //кол-во страниц
           this.$store.state.loader = false //колесо загрузки выкл
         })
         .catch((error) => {
@@ -184,9 +184,7 @@
         })
           .then((response) => {
             this.cons = response.data
-            if (response.length === 0){
-              this.page = Math.ceil((response.data[0].countSc-1) / 21)
-            }
+            this.page = Math.ceil((response.data[0].countSc) / 21)
             this.$store.state.loader = false
           })
           .catch((error) => {
@@ -202,9 +200,7 @@
           })
               .then((response) => {
                 this.cons = response.data
-                if (response.length === 0){
-                  this.page = Math.ceil((response.data[0].countSc-1) / 21)
-                }
+                this.page = Math.ceil((response.data[0].countSc) / 21)
                 this.$store.state.loader = false
               })
               .catch((error) => {
@@ -219,9 +215,7 @@
           })
             .then((response) => {
               this.cons = response.data
-              if (response.length === 0){
-                this.page = Math.ceil((response.data[0].countSc-1) / 21)
-              }
+              this.page = Math.ceil((response.data.length) / 21)
               this.$store.state.loader = false
             })
             .catch((error) => {
@@ -271,7 +265,6 @@
                 })
                 .catch(response => {
                 })
-
             }
           })
           .catch(error => {
@@ -323,13 +316,13 @@
             method: 'get',
             url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?page=`+ i
           })
-                  .then((response) => {
-                    this.cons = response.data
-                    this.$store.state.loader = false
-                  })
-                  .catch((error) => {
-                    console.error(error)
-                  })
+            .then((response) => {
+              this.cons = response.data
+              this.$store.state.loader = false
+            })
+            .catch((error) => {
+              console.error(error)
+            })
           this.currentPage = i
         }
       },

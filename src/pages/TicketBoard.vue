@@ -11,7 +11,10 @@
             <span slot="no-options">Ничего не найдено</span>
           </vue-select>
         </div>
-        <div class="ml-3 px-3 search-btn btn text-grey" @click="consFindComp">Поиск</div>
+        <div class="d-flex mt-2 mt-md-0">
+          <div class="search-btn btn text-grey mr-1" @click="consFindComp">Поиск</div>
+          <div class="search-btn btn text-grey ml-1" @click="clearSearch">Сбросить</div>
+        </div>
       </div>
       <div class="ml-auto align-items-center d-flex justify-content-center   create-cons"
            @onclick="createCons()"
@@ -67,7 +70,23 @@
         </div>
       </div>
     </div>
-
+    <nav aria-label="" v-if="reqs.length !== 0">
+      <ul class="pagination d-flex justify-content-center">
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous" @click="getPage(currentPage - 1)">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+        <li class="page-item" v-for="n in page"><a class="page-link" href="#" @click="getPage(n)">{{n}}</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next" @click="getPage(currentPage + 1)">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
     <card-req :selectedIndex="selectedIndex"
               :selectedCard="selectedCard" />
   </div>
@@ -87,26 +106,14 @@
     data() {
       return {
         globalComps: [],
-        options: [
-          { value: 1, text: 'One' },
-          { value: 2, text: 'two' },
-          { value: 3, text: 'three' },
-          { value: 4, text: 'four' },
-          { value: 4, text: 'four' },
-          { value: 4, text: 'four' },
-          { value: 4, text: 'four' },
-          { value: 4, text: 'four' },
-          { value: 4, text: 'four' },
-          { value: 4, text: 'four' },
-          { value: 4, text: 'four' },
-          { value: 4, text: 'four' },
-        ],
+        options: [],
         selected: '',
         selectedIndex: '',
         selectedCard: '',
         reqs: [],
         tags: [],
-        photos: []
+        page: '',
+        currentPage: 1
       }
     },
     mounted () {
@@ -115,37 +122,68 @@
         method: 'get',
         url: `https://jsonplaceholder.typicode.com/photos`
       })
-              .then((response) => {
-                this.photos = response.data
-                this.$store.state.loader = false
-              })
-              .catch((error) => {
-                console.error(error)
-              })
+        .then((response) => {
+          this.$store.state.loader = false
+        })
+        .catch((error) => {
+          console.error(error)
+        })
       axios({
         method: 'get',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases?expand=pcCom,pcUser,tagCon`
+        url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases?expand=pcCom,pcUser,tagCon`
       })
-              .then((response) => {
-
-                this.reqs = response.data
-                this.$store.state.loader = false
-              })
-              .catch((error) => {
-                console.error(error)
-              })
+        .then((response) => {
+          this.reqs = response.data
+          this.page = Math.ceil((response.data[0].countPc) / 21) //кол-во страниц
+          this.$store.state.loader = false
+        })
+        .catch((error) => {
+          console.error(error)
+        })
       axios({
         method: 'get',
         url: `http://192.168.1.150/noosfera/public_html/api/v1/coms`,
       })
-              .then((response) => {
-                this.globalComps = response.data
-              })
-              .catch((error) => {
-                console.error(error)
-              })
+        .then((response) => {
+          this.globalComps = response.data
+        })
+        .catch((error) => {
+          console.error(error)
+        })
     },
     methods: {
+      clearSearch() {
+        this.selected = ''
+        axios({
+          method: 'get',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases`
+        })
+          .then((response) => {
+            this.reqs = response.data
+            this.page = Math.ceil((response.data[0].countPc) / 21)
+            this.$store.state.loader = false
+          })
+          .catch((error) => {
+            console.error(error)
+          })
+      },
+      getPage(i) {
+        if (i <= this.page && i > 0) {
+          this.$store.state.loader = true
+          axios({
+            method: 'get',
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases?page=`+ i
+          })
+            .then((response) => {
+              this.reqs = response.data
+              this.$store.state.loader = false
+            })
+            .catch((error) => {
+              console.error(error)
+            })
+          this.currentPage = i
+        }
+      },
       consFindComp() {
         if (this.selected === null){
           axios({
@@ -154,9 +192,7 @@
           })
               .then((response) => {
                 this.reqs = response.data
-                if (response.length === 0){
-                  this.page = Math.ceil((response.data[0].countSc-1) / 21)
-                }
+                this.page = Math.ceil((response.data[0].countSc) / 21)
                 this.$store.state.loader = false
               })
               .catch((error) => {
@@ -170,9 +206,7 @@
           })
               .then((response) => {
                 this.reqs = response.data
-                if (response.length === 0){
-                  this.page = Math.ceil((response.data[0].countSc-1) / 21)
-                }
+                this.page = Math.ceil((response.data.length) / 21)
                 this.$store.state.loader = false
               })
               .catch((error) => {
@@ -248,19 +282,7 @@
 
   .search-bar {
     display: flex;
-    width: 350px;
-  }
-
-  @media (max-width: 767px) {
-    .headline {
-      display: block;
-    }
-    .search-bar {
-      width: 100%;
-    }
-    .create-cons {
-      padding-top: 20px;
-    }
+    width: 450px;
   }
 
   .card-pad {
@@ -349,14 +371,35 @@
   }
 
   .search-btn {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    margin-left: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
     border: none;
     height: 48px;
     background: #E4E4E4;
+
     &:hover {
       background: #d6d6d6;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .headline {
+      display: block;
+    }
+    .search-bar {
+      width: 100%;
+      display: block;
+    }
+    .create-cons {
+      padding-top: 20px;
+    }
+    .search-btn {
+      width: 50%!important;
+      margin-left: 0rem;
     }
   }
 
