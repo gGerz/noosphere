@@ -1,81 +1,82 @@
 <template>
-    <div class="modal fade create_cons_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel1">Создать консультацию</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body signin py-5 px-2 px-sm-5">
-                    <div class="row">
-                        <div class="col-lg-6 col-12">
-                            <div class="form-group">
-                                <label class="m-0">Название консультации:</label>
-                                <input type="text" v-model="title" class="form-control inputText" required="required" aria-describedby="emailHelp" placeholder="">
-                                <div v-show="titleEr" class="text-danger font_s">Введите название</div>
-                                <div v-show="titleLenEr" class="text-danger font_s">Название не должно превышать 50 символов</div>
-                            </div>
-                            <div class="form-group">
-                                <label>Компетенция:</label>
-
-                                <vue-select v-model="selected" label="competence" :options="$store.state.userComp.cpCom" placeholder="Компетенции" style="display: block">
-                                    <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
-                                        <div class="py-1">{{ option.competence }}</div>
-                                    </template>
-                                    <span slot="no-options">Ничего не найдено</span>
-                                </vue-select>
-                                <div v-show="selectedEr" class="text-danger font_s">Выбириет компитенцию</div>
-                            </div>
-                            <div class="form-group ">
-                                <label class="m-0">Дата:</label>
-                                <input v-model="date" type="date" class="form-control inputText" required="required" placeholder="">
-                                <div v-show="dateEr" class="text-danger font_s">Введите дату</div>
-                            </div>
-                            <div class="py-3 ">
-                                <label>Время:</label>
-                                <div class="">
-                                    <div class="d-flex align-items-center">
-                                        <input v-model="begin" class="form-control mr-2" type="time" placeholder="От">
-                                        <span class="mr-2">—</span>
-                                        <input v-model="end" class="form-control mr-2" type="time" placeholder="До">
-                                    </div>
-                                    <div v-show="timeEr" class="text-danger font_s">Введите время</div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="m-0">Цена:</label>
-                                <input v-model="price" type="number" class="form-control inputText" required="required" placeholder="">
-                                <div v-show="priceEr" class="text-danger font_s">Введите цену</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-12">
-                            <div class="form-group">
-                                <label class="m-0">Теги:</label>
-                                <div class="d-flex pb-3">
-                                    <input type="text" class="form-control inputText" v-model="currentTag"/>
-                                    <button class="btn btn-primary ml-2" @click="addTag">+</button>
-                                </div>
-                                <div class="tag" v-for="(tag, i) in tags">{{tag}}<span class="ml-2" aria-hidden="true" @click="delTag(i)">&times;</span></div>
-                                <!--<textarea class="form-control" rows="5"></textarea>-->
-                                <!--<small id="" class="form-text text-muted">p.s.Через пробелы</small>-->
-                            </div>
-                            <div class="form-group">
-                                <label class="m-0">Описание консультации:</label>
-                                <textarea v-model="about" class="form-control textarea-resize-n" rows="5"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-center">
-                    <span class="btn btn-primary btn-shadow" v-on:click="createCon()">
-                        Создать
-                    </span>
-                </div>
-            </div>
+  <div class="modal fade create_cons_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel1">Создать консультацию</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
+        <div class="modal-body signin py-5 px-2 px-sm-5">
+          <div class="row">
+            <div class="col-lg-6 col-12">
+              <div class="form-group">
+                <label class="m-0">Название консультации:</label>
+                <input type="text" v-model="title" class="form-control inputText" required="required" aria-describedby="emailHelp" placeholder="">
+                <div v-show="titleEr" class="text-danger font_s">Введите название</div>
+                <div v-show="titleLenEr" class="text-danger font_s">Название не должно превышать 50 символов</div>
+              </div>
+              <div class="form-group">
+                <label>Компетенция:</label>
+
+                <vue-select v-model="selected" label="competence" :options="$store.state.userComp.cpCom" placeholder="Компетенции" style="display: block">
+                  <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
+                    <div class="py-1">{{ option.competence }}</div>
+                  </template>
+                  <span slot="no-options">Ничего не найдено</span>
+                </vue-select>
+                <div v-show="selectedEr" class="text-danger font_s">Выбириет компитенцию</div>
+              </div>
+              <div class="form-group ">
+                <label class="m-0">Дата:</label>
+                <input v-model="date" type="date" class="form-control inputText" required="required" placeholder="">
+                <div v-show="dateEr" class="text-danger font_s">Введите дату</div>
+              </div>
+              <div class="py-3 ">
+                <label>Время:</label>
+                <div class="">
+                  <div class="d-flex align-items-center">
+                    <input v-model="begin" class="form-control mr-2" type="time" placeholder="От">
+                    <span class="mr-2">—</span>
+                    <input v-model="end" class="form-control mr-2" type="time" placeholder="До">
+                  </div>
+                  <div v-show="timeEr" class="text-danger font_s">Введите время</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="m-0">Цена:</label>
+                <input v-model="price" type="number" class="form-control inputText" required="required" placeholder="">
+                <div v-show="priceEr" class="text-danger font_s">Введите цену</div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-12">
+              <div class="form-group">
+                <label class="m-0">Теги:</label>
+                <div class="d-flex pb-3">
+                  <input type="text" class="form-control inputText" v-model="currentTag"/>
+                  <button class="btn btn-primary ml-2" @click="addTag">+</button>
+                </div>
+                <div class="tag" v-for="(tag, i) in tags">{{tag}}<span class="ml-2" aria-hidden="true" @click="delTag(i)">&times;</span></div>
+                <!--<textarea class="form-control" rows="5"></textarea>-->
+                <!--<small id="" class="form-text text-muted">p.s.Через пробелы</small>-->
+              </div>
+              <div class="form-group">
+                <label class="m-0">Описание консультации:</label>
+                <textarea v-model="about" class="form-control textarea-resize-n" rows="5"></textarea>
+                <div v-show="aboutLenEr" class="text-danger font_s">Описание не должно превышать 250 символа</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <span class="btn btn-primary btn-shadow" v-on:click="createCon()">
+              Создать
+          </span>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 <script>
   import VueSelect from 'vue-select'
@@ -115,6 +116,7 @@
         titleLenEr: '',
         test: '',
         consId: '',
+        aboutLenEr: '',
       }
     },
     methods: {
@@ -149,8 +151,8 @@
         this.dateEr = false
         this.timeEr = false
         this.endEr = false
-        this.aboutEr = false
         this.priceEr = false
+        this.aboutLenEr = false
         this.titleLenEr = false
         if (this.title === '') this.titleEr = true
         else if (this.title.length > 50) this.titleLenEr = true
@@ -159,16 +161,16 @@
         if (this.begin === '' || this.end === '') this.timeEr = true
         //if (this.about === '') this.aboutEr = true
         if (this.price === '') this.priceEr = true
-
+        if (this.about.length > 250) this.aboutLenEr = true
         if (
-          this.titleEr == false &&
-          this.selectedEr == false &&
-          this.dateEr == false &&
-          this.timeEr == false &&
-          this.endEr == false &&
-          this.aboutEr == false &&
-          this.priceEr == false &&
-          this.titleLenEr == false
+          this.titleEr === false &&
+          this.selectedEr === false &&
+          this.dateEr === false &&
+          this.timeEr === false &&
+          this.endEr === false &&
+          this.priceEr === false &&
+          this.titleLenEr === false &&
+          this.aboutLenEr == false
         ) {
           // const formData1 = new FormData()
           // // for (let i = 0; i < this.tags.length; i++) {
@@ -198,7 +200,6 @@
           // for (let i = 0; i < this.tags.length; i++) {
           //   formData.append('payment_location[]', this.tags[i]) // Отправка названий налички
           // }
-
           axios({
             method: 'post',
             url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings`,
@@ -275,54 +276,54 @@
   }
 </script>
 <style lang="scss" scoped>
-    $main_grey: #A6A6A6;
-    .inputText {
-    }
-    .btn-shadow {
-        border: 0;
-        font-weight: 600;
-        color: #fff;
-        display: inline-block;
-        box-shadow: rgba(23,43,99,.24) 0 7px 28px;
-        padding: 12px 23px;
-        text-shadow: 1px 1px rgba(0,0,0,.09);
-        border-radius: 4px;
-        cursor: pointer;
-        text-align: center;
-        -webkit-transition: all .2s;
-        -moz-transition: all .2s;
-        -ms-transition: all .2s;
-        -o-transition: all .2s;
-        transition: all .2s;
-    }
-    .modal {
-        color: #555;
-    }
-    .tag {
-        /*cursor: pointer;*/
-        background-color: #ECECEC;
-        color: $main_grey;
-        position: relative;
-        margin-left: 11px;
-        margin-right: 11px;
-        height: 24px!important;
-        display: inline-flex;
-        align-items: center;
-        padding-left: .2rem!important;
-        padding-right: .5rem!important;
-        margin-bottom: 7px;
-        transition: .1s;
+  $main_grey: #A6A6A6;
+  .inputText {
+  }
+  .btn-shadow {
+    border: 0;
+    font-weight: 600;
+    color: #fff;
+    display: inline-block;
+    box-shadow: rgba(23,43,99,.24) 0 7px 28px;
+    padding: 12px 23px;
+    text-shadow: 1px 1px rgba(0,0,0,.09);
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    -webkit-transition: all .2s;
+    -moz-transition: all .2s;
+    -ms-transition: all .2s;
+    -o-transition: all .2s;
+    transition: all .2s;
+  }
+  .modal {
+    color: #555;
+  }
+  .tag {
+    /*cursor: pointer;*/
+    background-color: #ECECEC;
+    color: $main_grey;
+    position: relative;
+    margin-left: 11px;
+    margin-right: 11px;
+    height: 24px!important;
+    display: inline-flex;
+    align-items: center;
+    padding-left: .2rem!important;
+    padding-right: .5rem!important;
+    margin-bottom: 7px;
+    transition: .1s;
 
-        &:before{
-            transition: .1s;
-            content: '';
-            position: absolute;
-            margin-left: -27px;
-            border: 12px solid transparent;
-            border-right: 12px solid #ECECEC;
-        }
+    &:before{
+      transition: .1s;
+      content: '';
+      position: absolute;
+      margin-left: -27px;
+      border: 12px solid transparent;
+      border-right: 12px solid #ECECEC;
     }
-    .textarea-resize-n {
-        resize: none;
-    }
+  }
+  .textarea-resize-n {
+    resize: none;
+  }
 </style>

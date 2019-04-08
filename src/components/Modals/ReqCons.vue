@@ -126,7 +126,7 @@
         this.tags.splice(i, 1);
       },
       closeModal() {
-        $('.create_cons_modal').modal('hide');
+        $('.req_cons_modal').modal('hide');
       },
       createCon () {
         this.titleEr = false
@@ -144,7 +144,6 @@
         if (this.begin === '' || this.end === '') this.timeEr = true
         //if (this.about === '') this.aboutEr = true
         if (this.price === '') this.priceEr = true
-
         if (
           this.titleEr == false &&
           this.selectedEr == false &&
@@ -185,11 +184,9 @@
             url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases`,
             data: formData
           })
-
             .then(response => {
               if (response.status === 201) {
-                this.willCreateId = response.data.pc_id
-                this.createConId()
+                // this.createConId()
                 this.closeModal()
               }
             })

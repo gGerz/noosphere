@@ -112,19 +112,20 @@
   </div>
 </template>
 <script>
-
+  //подключение библиотек
   import axios from 'axios'
   import VueSelect from 'vue-select'
   import CardCons from "../components/Modals/CardCons"
   import CreateCons from '../components/Modals/CreateCons.vue'
 
-
   export default {
+    //подключение компонентов
     components: {
       CardCons,
       CreateCons,
       VueSelect
     },
+    //объявление переменных
     data() {
       return {
         globalComps: [],
@@ -143,16 +144,17 @@
         photos: []
       }
     },
+    // mounted вызывается после компиляции html элементов
     mounted () {
-      this.$store.state.loader = true
+      this.$store.state.loader = true //колесо загрузки включается и происходит axios запрос на список консультаций из бд
       axios({
-        method: 'get',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings`
+          method: 'get', //название метода обращения к бд, get - получить, post - отправить
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings` //ссылка на api списка консултаций
         })
-        .then((response) => {
+        .then((response) => { //если пришел ответ
           this.cons = response.data
-          this.page = Math.ceil((response.data[0].countSc-1) / 21)
-          this.$store.state.loader = false
+          this.page = Math.ceil((response.data[0].countSc-1) / 21) //кол-во страниц
+          this.$store.state.loader = false //колесо загрузки выкл
         })
         .catch((error) => {
           console.error(error)
@@ -160,7 +162,7 @@
 
         axios({
           method: 'get',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/coms`,
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/coms`, //api компетенций
         })
           .then((response) => {
             this.globalComps = response.data
@@ -169,9 +171,11 @@
             console.error(error)
           })
     },
+    //в methods находятся функции компонента
     methods: {
+      //поиск по компитенциям
       consFindComp() {
-        if (this.selected === null){
+        if (this.selected === null){ //если не выбрана компитенция
           axios({
             method: 'get',
             url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings`
@@ -190,6 +194,7 @@
         if (this.selected.com_id !== 0) {
           axios({
             method: 'get',
+            //api дающая список консультаций по выбранной компитенции
             url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?SellingConsultationSearch[sc_com_id]=` + this.selected.com_id
           })
             .then((response) => {
@@ -266,14 +271,14 @@
             this.consId = response.data.con_id
             if (response.status === 201) {
               this.sendNotification()
-              myWin= open('https://appear.in/noospherevideochat');
+              //myWin= open('https://appear.in/noospherevideochat');
               this.$router.push('/videoroom')
             }
           })
           .catch(response => {
           })
       },
-      sendNotification(){
+      sendNotification() {
         const formData = new FormData()
         formData.set('n_con_id', this.consId) //id созданной консультации
         formData.set('n_selling_user_id', this.idOtherUser) //id другой

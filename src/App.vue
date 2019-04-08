@@ -5,16 +5,16 @@
       <Content />
       <loader v-if="this.$store.state.loader" />
     </div>
-    <div class="notifications">
-      <div v-for="(note, i) in notifications">
-        <span @click="cancelCall(i)">X</span>
-        <div class="px-3">{{note.nPurchaseUser.p_name}} купил вашу консультацию "{{note.nCon.con_title}}"</div>
-        <div class="d-flex justify-content-around">
-          <button class="btn btn-outline-success" @click="acceptCall(i)">Ответить</button>
-          <button class="btn btn-outline-danger" @click="cancelCall(i)">Отменить</button>
-        </div>
-      </div>
-      </div>
+    <!--<div class="notifications">-->
+      <!--<div v-for="(note, i) in notifications">-->
+        <!--<span @click="cancelCall(i)">X</span>-->
+        <!--<div class="px-3">{{note.nPurchaseUser.p_name}} купил вашу консультацию "{{note.nCon.con_title}}"</div>-->
+        <!--<div class="d-flex justify-content-around">-->
+          <!--<button class="btn btn-outline-success" @click="acceptCall(i)">Ответить</button>-->
+          <!--<button class="btn btn-outline-danger" @click="cancelCall(i)">Отменить</button>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
   </div>
 </template>
 

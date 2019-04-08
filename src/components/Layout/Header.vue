@@ -86,8 +86,14 @@
     padding-top: 25px;
   }
   .nav-link-header {
-    padding-right: .9rem!important;
-    padding-left: .9rem!important;
+    padding-right: .8rem!important;
+    padding-left: .8rem!important;
+  }
+  @media (max-width: 1200px) {
+    .nav-link-header {
+      padding-right: .4rem!important;
+      padding-left: .4rem!important;
+    }
   }
   .navbar-nav{
     display: flex;

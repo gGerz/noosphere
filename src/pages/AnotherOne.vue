@@ -1,39 +1,56 @@
 <template>
-    <div class="card">
-        <div class="card-body">
-            <div class="d-lg-flex d-md-flex d-block align-items-center">
-                <div class="d-flex align-items-center ">
-                    <img class="ava_cabinet" src="../assets/img/ava.jpg">
-                    <div class="text-dark h3 m-0">{{anotherUserInfo.p_name}}</div>
+    <div>
+        <h2 class="my-4">Просмотр данных пользователя</h2>
+        <div class="card">
+            <div class="card-body-main">
+                <div class="d-lg-flex d-md-flex d-block align-items-center">
+                    <div class="d-flex align-items-center ">
+                        <img class="ava_cabinet" src="../assets/img/ava.jpg">
+                        <div class="text-dark h3 m-0">{{anotherUserInfo.p_name}}</div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="row user_info">
-                <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
-                    <div>Описание</div>
-                    <div>{{anotherUserInfo.p_description}}</div>
+                <div class="row user_info">
+                    <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
+                        <div>Дата рождения</div>
+                        <div>{{anotherUserInfo.p_date}} ({{anotherUserInfo.p_date | getAges}} лет)</div>
+                    </div>
+                    <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
+                        <div>Пол</div>
+                        <div v-if="anotherUserInfo.p_gender">Мужской</div>
+                        <div v-else>Женский</div>
+                    </div>
+                    <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
+                    </div>
+                    <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto mx-sm-0">
+                    </div>
+                    <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto mx-sm-0">
+                    </div>
                 </div>
-                <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
-                    <div>Пол</div>
-                    <div v-if="anotherUserInfo.p_gender">Мужской</div>
-                    <div v-else>Женский</div>
-                </div>
-                <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
-                    <div>Дата рождения</div>
-                    <div>{{anotherUserInfo.p_date}}</div>
-                </div>
-                <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
 
-                </div>
-                <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto mx-sm-0">
 
+                <div class="row">
+                    <div class="spec col-10 col-xs-12 col-sm-10 col-md-10 col-lg-4 px-3">
+                        <div class="text-grey font_s d-flex ">
+                            Компетенции
+                        </div>
+                        <div class="d-flex justify-content-between mt-1 mr-4" v-for="competence in anotherUserInfo.cpCom">
+                            <div>{{competence.competence}}</div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
+                        <div class="">
+                            <div class="text-grey font_s">О себе</div>
+                            <div class="card about_user">
+                                <div class="card-body">
+                                    <span>{{anotherUserInfo.p_description}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="spec col-10 col-xs-12 col-sm-10 col-md-10 col-lg-4 px-0 py-4">
-                <div class="text-grey font_s">Компетенции</div>
-                <div class="d-flex justify-content-between mt-1 mr-4" v-for="competence in anotherUserInfo.cpCom">
-                    <div>{{competence.competence}}</div>
-                </div>
+
+
             </div>
         </div>
     </div>
@@ -44,6 +61,11 @@ export default {
     data() {
         return {
             anotherUserInfo: [],
+        }
+    },
+    filters: {
+        getAges(value){
+            return ((new Date().getTime() - new Date(value)) / (24 * 3600 * 365.25 * 1000)) | 0;
         }
     },
     mounted () {
@@ -88,7 +110,10 @@ export default {
     body {
         color: $secondary_grey;
     }
-
+    .card-body-main {
+        flex: 1 1 auto;
+        padding: 1.25rem;
+    }
     .text-danger {
         color: $danger!important;
     }
