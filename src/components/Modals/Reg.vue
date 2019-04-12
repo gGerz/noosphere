@@ -102,13 +102,13 @@
           }
         }
 
-        if (this.checkbox === false) this.checkEr = true
+        if ( this.checkbox === false ) this.checkEr = true
         if ( this.emailEr === false &&
-                this.passEr === false &&
-                this.passLongEr === false &&
-                this.passProfEr === false &&
-                this.checkEr === false &&
-                this.emailValEr === false
+          this.passEr === false &&
+          this.passLongEr === false &&
+          this.passProfEr === false &&
+          this.checkEr === false &&
+          this.emailValEr === false
         ) {
           const formData = new FormData()
           formData.append('email', this.mail)

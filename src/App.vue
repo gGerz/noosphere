@@ -5,16 +5,7 @@
       <Content />
       <loader v-if="this.$store.state.loader" />
     </div>
-    <!--<div class="notifications">-->
-      <!--<div v-for="(note, i) in notifications">-->
-        <!--<span @click="cancelCall(i)">X</span>-->
-        <!--<div class="px-3">{{note.nPurchaseUser.p_name}} купил вашу консультацию "{{note.nCon.con_title}}"</div>-->
-        <!--<div class="d-flex justify-content-around">-->
-          <!--<button class="btn btn-outline-success" @click="acceptCall(i)">Ответить</button>-->
-          <!--<button class="btn btn-outline-danger" @click="cancelCall(i)">Отменить</button>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
+    <Notification />
   </div>
 </template>
 
@@ -24,42 +15,15 @@ import axios from 'axios'
 import Header from './components/Layout/Header.vue'
 import Content from './components/Layout/Content.vue'
 import Loader from './components/Layout/Loader.vue'
+import Notification from './components/Layout/Notification'
 
 export default {
   name: 'app',
   components: {
     Header,
     Content,
-    Loader
-  },
-  data () {
-    return {
-      notifications: []
-    }
-  },
-  methods: {
-    getNotifications(){
-      axios({
-        method: 'get',
-        url: `http://192.168.1.150/noosfera/public_html/api/v1/notifications?NotificationSearch[n_selling_user_id]=`+this.$store.state.userId,
-      })
-          .then((response) => {
-            console.log(response)
-            this.notifications = response.data
-          })
-          .catch((error) => {
-          })
-    },
-    acceptCall(){
-      myWin= open('https://appear.in/noospherevideochat');
-    },
-    cancelCall(i){
-
-    }
-  },
-  mounted(){
-    this.getNotifications()
-    setInterval(this.getNotifications, 5000)
+    Loader,
+    Notification
   }
 }
 </script>
@@ -96,31 +60,5 @@ export default {
   }
   i{
     cursor: pointer;
-  }
-  .notifications{
-    margin-top: 10px;
-    margin-right: 10px;
-    position: fixed;
-    top: 0;
-    right: 0;
-
-    >div{
-      width: 250px;
-      height: 150px;
-      margin-bottom: 10px;
-      background-color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-
-      span{
-        cursor: pointer;
-        position: absolute;
-        margin-top: -23%;
-        margin-left: 94%;
-        margin-right: 5px;
-      }
-    }
   }
 </style>

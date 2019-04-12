@@ -29,8 +29,9 @@
                                 <option>Мужской</option>
                                 <option>Женский</option>
                             </select>
+                            <div v-show="genderEr" class="text-danger font_s">Выбирите гендер</div>
                         </div>
-                        <div v-show="aboutEr" class="text-danger font_s">Введите описание</div>
+
 
 
                         <div class="pt-5">
@@ -70,12 +71,12 @@
         this.nameEr = false
         this.aboutEr = false
         this.dateEr = false
-        this.nameEr = false
+        this.genderEr = false
 
         if (this.name === '') this.nameEr = true
         if (this.about === '') this.aboutEr = true
         if (this.date === '') this.dateEr = true
-        if (this.name === '') this.nameEr = true
+        if (this.gender === 'Выберите пол...') this.genderEr = true
 
 
 

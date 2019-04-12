@@ -60,6 +60,9 @@
                 <div class="tag" v-for="(tag, i) in tags">{{tag}}<span class="ml-2" aria-hidden="true" @click="delTag(i)">&times;</span></div>
                 <!--<textarea class="form-control" rows="5"></textarea>-->
                 <!--<small id="" class="form-text text-muted">p.s.Через пробелы</small>-->
+
+                <div v-show="tagLenEr" class="text-danger font_s">Длина тега не должна превышать 25 символов</div>
+
               </div>
               <div class="form-group">
                 <label class="m-0">Описание консультации:</label>
@@ -117,26 +120,30 @@
         test: '',
         consId: '',
         aboutLenEr: '',
+        tagLenEr: '',
       }
     },
     methods: {
       addTag () {
+        this.tagLenEr = false
         if (this.currentTag != '') {
-          this.tags.push(this.currentTag)
-          const formData = new FormData()
-          formData.append('tag_name', this.currentTag)
-          axios({
-            method: 'post',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/tags`,
-            data: formData
-          })
-            .then(response => {
-              this.tagIds.push(response.data.tag_id)
+          if (this.currentTag.length < 26) {
+            this.tags.push(this.currentTag)
+            const formData = new FormData()
+            formData.append('tag_name', this.currentTag)
+            axios({
+              method: 'post',
+              url: `http://192.168.1.150/noosfera/public_html/api/v1/tags`,
+              data: formData
             })
-            .catch(response => {
-            })
+              .then(response => {
+                this.tagIds.push(response.data.tag_id)
+              })
+              .catch(response => {
+              })
+            this.currentTag = ''
+          } else this.tagLenEr = true
 
-          this.currentTag = ''
         }
       },
       delTag (i) {
@@ -146,6 +153,9 @@
         $('.create_cons_modal').modal('hide');
       },
       createCon () {
+        console.log('Начало',this.begin[0] + this.begin[1],this.end[0] + this.end[1])
+        this.title = $.trim(this.title) //удаление пробелов по сторонам
+        console.log(this.title)
         this.titleEr = false
         this.selectedEr = false
         this.dateEr = false
@@ -159,9 +169,9 @@
         if (this.selected === '') this.selectedEr = true
         if (this.date === '') this.dateEr = true
         if (this.begin === '' || this.end === '') this.timeEr = true
-        //if (this.about === '') this.aboutEr = true
         if (this.price === '') this.priceEr = true
         if (this.about.length > 250) this.aboutLenEr = true
+
         if (
           this.titleEr === false &&
           this.selectedEr === false &&
