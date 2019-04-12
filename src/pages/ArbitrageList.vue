@@ -49,9 +49,13 @@
             <div>{{item.reason}}</div>
           </div>
         </div>
-        <div class="align-items-end d-flex flex-column mt-auto">
-          <button type="button" class="btn btn-primary w-100 mb-1">Прав ученик</button>
-          <button type="button" class="btn btn-success w-100">Прав консультант</button>
+        <div class="d-flex align-items-end flex-column">
+          <button type="button" class="btn btn-danger w-100 mb-1">Запись консультации</button>
+          <div class=" d-flex flex-column mt-auto">
+            <div class="text-center">Вердикт:</div>
+            <button type="button" class="btn btn-primary w-100 mb-1">Прав ученик</button>
+            <button type="button" class="btn btn-success w-100">Прав консультант</button>
+          </div>
         </div>
 
       </div>
