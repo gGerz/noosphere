@@ -217,7 +217,9 @@
             this.consId = response.data.con_id
             if (response.status === 201) {
               this.sendNotification()
+              localStorage.setItem('currentConsultation', this.consId)
               this.$router.push('/videoroom')
+              var myWin= open('https://appear.in/noospherevideochat');
             }
           })
           .catch(response => {

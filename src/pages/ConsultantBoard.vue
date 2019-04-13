@@ -286,7 +286,7 @@
               this.sendNotification()
               localStorage.setItem('currentConsultation', this.consId)
               this.$router.push('/videoroom')
-              myWin= open('https://appear.in/noospherevideochat');
+              var myWin= open('https://appear.in/noospherevideochat');
             }
           })
           .catch(response => {
