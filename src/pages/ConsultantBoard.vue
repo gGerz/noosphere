@@ -191,7 +191,7 @@
             console.error(error)
           })
       },
-      //поиск по компитенциям
+      //поиск по компетенциям
       consFindComp() {
         if (this.selected === null){ //если не выбрана компитенция
           axios({

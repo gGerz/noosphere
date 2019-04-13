@@ -1,11 +1,11 @@
 <template>
   <div class="notifications">
     <div v-for="(note, i) in notifications">
-      <span @click="cancelCall(i)">X</span>
+      <span @click="cancelCall(note.n_id, i)">X</span>
       <div class="px-3">{{note.nPurchaseUser.p_name}} купил вашу консультацию "{{note.nCon.con_title}}"</div>
       <div class="d-flex justify-content-around">
-        <button class="btn btn-outline-success" @click="acceptCall(i)">Ответить</button>
-        <button class="btn btn-outline-danger" @click="cancelCall(i)">Отменить</button>
+        <button class="btn btn-outline-success" @click="acceptCall(note.n_id, i)">Ответить</button>
+        <button class="btn btn-outline-danger" @click="cancelCall(note.n_id,i)">Отменить</button>
       </div>
     </div>
   </div>
@@ -32,11 +32,32 @@
           .catch((error) => {
           })
       },
-      acceptCall(){
-        myWin= open('https://appear.in/noospherevideochat');
+      acceptCall(id, index){
+        var myWin;
+        myWin= open('https://appear.in/noospherevideochat')
+        this.readNotification(id, index)
       },
-      cancelCall(i){
-
+      cancelCall(id, index){
+        this.readNotification(id, index)
+      },
+      readNotification(id, index){
+        //отправка пут запроса
+        let payload = {
+          'n_status': 2
+        };
+        axios({
+          method: 'PUT',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/notifications/` + id,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: payload
+        })
+            .then(response => {
+              this.notifications.splice(index, 1)
+            })
+            .catch(response => {
+            })
       }
     },
     mounted(){

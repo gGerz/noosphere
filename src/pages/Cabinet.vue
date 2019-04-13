@@ -12,13 +12,6 @@
                 <li class="nav-item">
                     <a class="nav-link nav-link-cabinet" id="messages-tab" data-toggle="tab" href="#tickets" role="tab" aria-controls="messages" aria-selected="false"><i class="far fa-list-alt"></i>Мои заявки</a>
                 </li>
-                <!--<div class="ml-auto"-->
-                     <!--data-toggle="modal"-->
-                     <!--data-target=".create_cons_modal"-->
-                <!--&gt;-->
-                    <!--<i class="far fa-plus-square mr-2"></i>-->
-                    <!--<span class="dashed2">Создать карточку консультации</span>-->
-                <!--</div>-->
                 <li class="nav-item create-cons"
                      data-toggle="modal"
                      data-target=".create_cons_modal"
@@ -29,7 +22,7 @@
                 <create-cons />
             </ul>
         </div>
-        <!-- ТАБЫ ДЕСКТОП -->
+        <!-- ТАБЫ -->
         <div class="tab-content">
             <!-- ВКЛАДКА ОБЩЕЕ -->
             <div class="tab-pane active" id="general">
@@ -194,11 +187,10 @@
 </template>
 <script>
 
-  //import $ from 'jquery'
   import VueSelect from 'vue-select'
   import axios from 'axios'
-  import RegNext from '../components/Modals/RegNext'
 
+  import RegNext from '../components/Modals/RegNext'
   import UpdateUserInfo from '../components/Modals/UpdateUserInfo.vue'
   import UpdateUserCon from '../components/Modals/UpdateUserCon.vue'
   import UpdateUserTicket from '../components/Modals/UpdateUserTicket.vue'
@@ -264,7 +256,7 @@
                 } else if (this.selectedUserReq.competence !== undefined && this.searchableReqTitle !== ''){
                     return req.pcCom.competence.indexOf(this.selectedUserReq.competence) > -1 && req.pc_title.toLowerCase().indexOf((this.searchableReqTitle.toLowerCase())) > -1
                 } else if (this.selectedUserReq.competence === undefined && this.searchableReqTitle !== '') {
-                    return req.pc_title.indexOf.toLowerCase()((this.searchableReqTitle.toLowerCase())) > -1
+                    return req.pc_title.indexOf((this.searchableReqTitle.toLowerCase())) > -1
                 } else if (this.selectedUserReq.competence !== undefined && this.searchableReqTitle === '') {
                     return req.pcCom.competence.indexOf(this.selectedUserReq.competence) > -1
                 }
@@ -292,10 +284,10 @@
         getCons(){
             axios({
                 method: 'get',
-                url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + `?expand=conSUser`
+                url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?SellingConsultationSearch[sc_user_id]=` + this.$store.state.userId
             })
                 .then((response) => {
-                    this.cons = response.data.conSUser
+                    this.cons = response.data
                 })
                 .catch((error) => {
                     console.error(error)
@@ -321,10 +313,11 @@
         getTickets(){
             axios({
                 method: 'get',
-                url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + `?expand=conPUser`
+                url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases?PurchaseConsultationSearch[pc_user_id]=` + this.$store.state.userId
             })
                 .then((response) => {
-                    this.reqs = response.data.conPUser
+                    this.reqs = response.data
+                    console.log('reqs', this.reqs)
                 })
                 .catch((error) => {
                     console.error(error)
@@ -380,11 +373,11 @@
             this.reqs.splice(i,1)
             $('.del_modal').modal('show');
         },
-        //Добавление компетенции пользователя
         //Вызов модального окна изменения данных
         changeUserInfo() {
             $('.update_user_info_modal').modal('show');
         },
+        //Сброс фильтров
         resetFilters() {
           this.selectedUserComp = ''
           this.selectedUserReq = ''
@@ -399,7 +392,7 @@
         }
     },
     mounted() {
-      // Переключение вкладок
+      // Переключение вкладок личного кабинета
       $('#lk-tabs a').on('click', function (e) {
         e.preventDefault()
         $(this).tab('show')
@@ -410,7 +403,7 @@
         this.getCons()
         this.getTickets()
     } else {
-      // ОТКРЫТЬ МОДАЛКУ ПРОДОЛЖЕНИЯ РЕГИСТРАЦИИ
+      // Открытие модалки продолжения регистрации
       $('.sign_up_next_modal').modal('show');
     }
   }
@@ -612,7 +605,7 @@
             padding: 2.5rem;
         }
     }
-    .cab_card { //тело вкладки
+    .cab_card {
         display: -ms-flexbox;
         display: flex;
         min-height: 500px;
@@ -622,8 +615,8 @@
         border: 1px solid rgba(0,0,0,.125);
         border-top: 0;
         border-radius: .25rem;
-        border-top-left-radius: 0rem!important;
-        border-top-right-radius: 0rem!important;
+        border-top-left-radius: 0r!important;
+        border-top-right-radius: 0r!important;
     }
 
     .ava_cabinet {
