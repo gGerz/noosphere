@@ -223,6 +223,23 @@
           .catch(response => {
           })
       },
+      sendNotification() {
+        const formData = new FormData()
+        formData.set('n_con_id', this.consId) //id созданной консультации
+        formData.set('n_selling_user_id', this.idOtherUser) //id другой
+        formData.set('n_purchase_user_id', this.$store.state.userId) //id мой
+        formData.set('n_type', 'selling') // тип
+        axios({
+          method: 'post',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/notifications`,
+          data: formData
+        })
+          .then(response => {
+            console.log(response)
+          })
+          .catch(response => {
+          })
+      },
       clearSearch() {
         this.selected = ''
         axios({
