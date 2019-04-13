@@ -64,7 +64,7 @@
               </div>
 
               <span v-if="$store.state.userId == req.pc_user_id" class="ml-auto btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>
-              <span v-else class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l">Купить</span>
+              <span v-else class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Ответить</span>
             </div>
           </div>
         </div>
@@ -113,7 +113,10 @@
         reqs: [],
         tags: [],
         page: '',
-        currentPage: 1
+        currentPage: 1,
+        idOtherUser: '',
+        sellId: '',
+        purId: '',
       }
     },
     mounted () {
@@ -152,6 +155,74 @@
         })
     },
     methods: {
+      createCons(i) {
+        event.stopPropagation();
+        this.idOtherUser = this.reqs[i].pc_user_id
+        const formData = new FormData()
+        formData.append('sc_title', this.reqs[i].pc_title)
+        formData.append('sc_user_id', this.reqs[i].pc_user_id)
+        formData.append('sc_date', this.reqs[i].pc_date)
+        formData.append('sc_begin_time', this.reqs[i].pc_begin_time)
+        formData.append('sc_end_time', this.reqs[i].pc_end_time)
+        formData.append('sc_price', this.reqs[i].pc_price)
+        formData.append('sc_description', this.reqs[i].pc_description)
+        formData.append('sc_com_id', this.reqs[i].pc_com_id)
+        formData.append('sc_type', 2)
+        axios({
+          method: 'post',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings`,
+          data: formData
+        })
+          .then(response => {
+            if (response.status === 201) {
+              console.log(response)
+              this.sellId = response.data.sc_id
+              this.purId = this.reqs[i].pc_id
+
+              //отправка пут запроса
+              let payload = {
+                'pc_type': 2
+              };
+
+              axios({
+                method: 'PUT',
+                url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases/` + this.purId,
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                data: payload
+              })
+                .then(response => {
+                  this.createConId()
+                })
+                .catch(response => {
+                })
+            }
+          })
+          .catch(error => {
+            console.log(error)
+            alert('Ошибка сервера, консультация не создана')
+          })
+      },
+      createConId() {
+        const formData1 = new FormData()
+        formData1.set('con_sc_id', this.sellId)
+        formData1.set('con_pc_id', this.purId)
+        axios({
+          method: 'post',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/consultations`,
+          data: formData1
+        })
+          .then(response => {
+            this.consId = response.data.con_id
+            if (response.status === 201) {
+              this.sendNotification()
+              this.$router.push('/videoroom')
+            }
+          })
+          .catch(response => {
+          })
+      },
       clearSearch() {
         this.selected = ''
         axios({
