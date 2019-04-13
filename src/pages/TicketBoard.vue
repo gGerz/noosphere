@@ -62,9 +62,9 @@
                 </span>
                 <span class="main_color font_xl">руб</span>
               </div>
-              <router-link class="ml-auto" to="/videoroom">
-                <span class="btn btn-outline-primary btn-md px-4 btn-buy font_l">Ответить</span>
-              </router-link>
+
+              <span v-if="$store.state.userId == req.pc_user_id" class="ml-auto btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>
+              <span v-else class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l">Купить</span>
             </div>
           </div>
         </div>

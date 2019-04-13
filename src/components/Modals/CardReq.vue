@@ -32,7 +32,7 @@
             <div class="cons__date-line">
               <span title="Время">
                   <i class="far fa-clock mr-1 text-grey"></i>
-                  <span class="" v-if="selectedCard.sc_begin_time !== undefined">
+                  <span class="" v-if="selectedCard.pc_begin_time !== undefined">
                       {{selectedCard.pc_begin_time | deleteSeconds}}
                       -
                       {{selectedCard.pc_end_time | deleteSeconds}}
@@ -53,9 +53,8 @@
               </span>
               <span class="main_color font_xl">руб</span>
             </div>
-            <router-link class="ml-auto" to="/videoroom">
-              <span class="btn btn-outline-primary btn-md px-4 btn-buy font_l" v-on:click="closeModal()">Ответить</span>
-            </router-link>
+            <span v-if="$store.state.userId == selectedCard.pc_user_id" class="ml-auto btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>
+            <span v-else class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l">Купить</span>
           </div>
         </div>
       </div>

@@ -86,8 +86,8 @@
                 </span>
                 <span class="main_color font_xl">руб</span>
               </div>
-                <span v-if="$store.state.userId == con.sc_user_id" class="ml-auto btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>
-                <span v-else class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Купить</span>
+              <span v-if="$store.state.userId == con.sc_user_id" class="ml-auto btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>
+              <span v-else class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Купить</span>
             </div>
           </div>
         </div>
