@@ -2,26 +2,26 @@
   <div>
     <h2 class="my-4 font_xxl" >Арбитраж</h2>
     <div class="card mb-3" v-for="item in arbitrageList">
-      <div class="card-body d-flex">
-        <div class="w-100">
+      <div class="card-body d-flex row">
+        <div class="col-12 col-lg-9">
           <div class="pb-2">
             <p class="mb-0 font_xl">{{item.title}}</p>
             <p class="mr-auto mb-0 text-grey font_l" >{{item.comp}}</p>
           </div>
           <div class="py-3">
-            <div class="row font_m pb-2">
-              <div class="col-2">
-                <span class="text-grey">Консультант</span>
+            <div class="font_m item-body">
+              <div>
+                <span class="text-grey">Учитель</span>
               </div>
-              <div class="col-4">
+              <div>
                 {{item.teacher}}
               </div>
             </div>
-            <div class="row font_m">
-              <div class="col-2">
+            <div class="font_m item-body">
+              <div>
                 <span class="text-grey">Ученик</span>
               </div>
-              <div class="col-4">
+              <div>
                 {{item.student}}
               </div>
             </div>
@@ -46,18 +46,23 @@
           </div>
           <div class="pt-2">
             <div class="text-grey">Описание ученика:</div>
-            <div>{{item.reason}}</div>
+            <div class="card about_user mb-4 mb-lg-0">
+              <div class="card-body">
+                <span>{{item.reason}}</span>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="d-flex align-items-end flex-column">
-          <button type="button" class="btn btn-danger w-100 mb-1">Запись консультации</button>
-          <div class=" d-flex flex-column mt-auto">
-            <div class="text-center">Вердикт:</div>
-            <button type="button" class="btn btn-primary w-100 mb-1">Прав ученик</button>
-            <button type="button" class="btn btn-success w-100">Прав консультант</button>
+        <div class="col-12 col-lg-3">
+          <div class="flex-column flex-sm-row d-flex align-items-center align-items-sm-end  flex-lg-column justify-content-between h-100">
+            <button type="button" class="btn btn-danger">Запись консультации</button>
+            <div class=" d-flex flex-column mt-auto">
+              <div class="text-center">Вердикт:</div>
+              <button type="button" class="btn btn-outline-primary w-100 mb-1">Прав ученик</button>
+              <button type="button" class="btn btn-outline-success w-100">Прав консультант</button>
+            </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -105,6 +110,29 @@
     border-radius: 5px;
     padding: 15px;
     margin-bottom: 10px;
+  }
+
+  .item-body {
+    display: flex;
+    div:first-child {
+      width: 150px;
+    }
+    div:nth-child(2) {
+      width: 280px;
+    }
+  }
+
+  .about_user {
+    max-width: 650px;
+    font-size: 16px;
+    border-radius: 15px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+  }
+
+  @media (max-width: 575px) {
+    .item-body {
+      display: block;
+    }
   }
 
 </style>
