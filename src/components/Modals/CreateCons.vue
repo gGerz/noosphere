@@ -207,9 +207,6 @@
           this.compCons = this.selected.com_id
           formData.append('sc_com_id', this.compCons)
           formData.append('sc_type', 1)
-          // for (let i = 0; i < this.tags.length; i++) {
-          //   formData.append('payment_location[]', this.tags[i]) // Отправка названий налички
-          // }
           axios({
             method: 'post',
             url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings`,
@@ -217,7 +214,8 @@
           })
             .then(response => {
               if (response.status === 201) {
-                // this.sellId = response.data.sc_id
+                console.log('ffffffffffffff',response)
+                this.sellId = response.data.sc_id
                 // this.purId = response.data.pc_id
                 //this.createConId()
                 this.createTags()
@@ -232,7 +230,7 @@
         for (let i = 0; i < this.tagIds.length; i++) {
           const formData3 = new FormData()
           formData3.append('tc_tag_id', this.tagIds[i])
-          formData3.append('tc_con_id', this.consId)
+          formData3.append('tc_sc_id', this.sellId)
           axios({
             method: 'post',
             url: `http://192.168.1.150/noosfera/public_html/api/v1/tag_cons`,

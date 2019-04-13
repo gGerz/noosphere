@@ -77,7 +77,7 @@
               </div>
             </div>
             <div>
-              <div class="tag px-2 font_s" v-for="tag in con.tagCon">{{tag.tag_name}}</div>
+              <div class="tag px-2 font_s" v-for="tag in con.tagConsultation">{{tag.tag_name}}</div>
             </div>
             <div class="d-flex">
               <div class="my-auto ">
