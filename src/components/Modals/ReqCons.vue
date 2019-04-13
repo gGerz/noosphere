@@ -205,7 +205,6 @@
                 })
                     .then(response => {
                         if (response.status === 201) {
-                            console.log('q',response)
                             this.purId = response.data.pc_id
                             // this.purId = response.data.pc_id
                             //this.createConId()

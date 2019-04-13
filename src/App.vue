@@ -26,7 +26,6 @@ export default {
     Notification
   },
   mounted() {
-    console.log('хы)',localStorage)
     if (localStorage.currentConsultation !== undefined) this.$router.push('/videoroom')
   }
 }

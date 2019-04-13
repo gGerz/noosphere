@@ -1,11 +1,11 @@
 <template>
-  <div class="notifications">
+  <div class="notifications" v-if="$store.state.authorisedStatus">
     <div v-for="(note, i) in notifications">
       <span @click="cancelCall(note.n_id, i)">X</span>
-      <div class="px-3">{{note.nPurchaseUser.p_name}} купил вашу консультацию "{{note.nCon.con_title}}"</div>
+      <div class="px-3" v-if="note.n_type === 'selling'">{{note.nPurchaseUser.p_name}} хочет провести с вами консультацию "{{note.nCon.con_title}}"</div>
       <div class="d-flex justify-content-around">
         <button class="btn btn-outline-success" @click="acceptCall(note.n_id, i)">Ответить</button>
-        <button class="btn btn-outline-danger" @click="cancelCall(note.n_id,i)">Отменить</button>
+        <button class="btn btn-outline-danger" @click="cancelCall(note.n_id,i)">Отклонить</button>
       </div>
     </div>
   </div>

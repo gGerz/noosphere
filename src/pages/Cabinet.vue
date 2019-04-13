@@ -326,7 +326,6 @@
             })
                 .then((response) => {
                     this.reqs = response.data
-                    console.log('reqs', this.reqs)
                 })
                 .catch((error) => {
                     console.error(error)

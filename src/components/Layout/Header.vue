@@ -18,10 +18,10 @@
           <li class="nav-item">
             <router-link class="nav-link nav-link-header" to="/about">О сервисе</router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="$store.state.authorisedStatus && $store.state.userId === '287'">
             <router-link class="nav-link nav-link-header" to="/arbitrage">Арбитраж</router-link>
           </li>
-          <li class="nav-item" v-if="this.$store.state.authorisedStatus">
+          <li class="nav-item" v-if="$store.state.authorisedStatus">
             <div v-if="this.$store.state.userInfo === null" class="d-flex align-items-center" data-toggle="modal" data-target=".sign_up_next_modal">
               <img class="img_master2" src="../../assets/img/ava.jpg">s
             </div>
