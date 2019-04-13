@@ -33,7 +33,7 @@
             <div>
               <p class="mb-0 font_xl">{{con.sc_title}}
               </p>
-              <p class="mr-auto mb-0 text-grey font_l" v-if="con.scCom != undefined">{{con.scCom.competence}}</p>
+              <p class="mr-auto mb-0 text-grey font_l" v-if="con.scCom !== undefined">{{con.scCom.competence}}</p>
             </div>
             <div>
               <div class="d-flex align-items-center">
@@ -228,7 +228,7 @@
         this.idOtherUser = this.cons[i].sc_user_id
         const formData = new FormData()
         formData.append('pc_title', this.cons[i].sc_title)
-        formData.append('pc_user_id', this.cons[i].sc_user_id)
+        formData.append('pc_user_id', this.$store.state.userId)
         formData.append('pc_date', this.cons[i].sc_date)
         formData.append('pc_begin_time', this.cons[i].sc_begin_time)
         formData.append('pc_end_time', this.cons[i].sc_end_time)
@@ -243,7 +243,6 @@
         })
           .then(response => {
             if (response.status === 201) {
-              console.log(response)
               this.sellId = this.cons[i].sc_id
               this.purId = response.data.pc_id
 
@@ -285,7 +284,9 @@
             this.consId = response.data.con_id
             if (response.status === 201) {
               this.sendNotification()
+              localStorage.setItem('currentConsultation', this.consId)
               this.$router.push('/videoroom')
+              myWin= open('https://appear.in/noospherevideochat');
             }
           })
           .catch(response => {

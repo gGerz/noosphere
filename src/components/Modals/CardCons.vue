@@ -41,7 +41,6 @@
                 <i class="fas fa-calendar-week mr-1 text-grey"></i>
                 <span class="">
                     {{selectedCard.sc_date}}
-                    {{selectedCard}}
                 </span>
               </span>
             </div >
@@ -124,7 +123,7 @@
         this.idOtherUser = this.selectedCard.sc_user_id
         const formData = new FormData()
         formData.append('pc_title', this.selectedCard.sc_title)
-        formData.append('pc_user_id', this.selectedCard.sc_user_id)
+        formData.append('pc_user_id', this.$store.state.userId)
         formData.append('pc_date', this.selectedCard.sc_date)
         formData.append('pc_begin_time', this.selectedCard.sc_begin_time)
         formData.append('pc_end_time', this.selectedCard.sc_end_time)

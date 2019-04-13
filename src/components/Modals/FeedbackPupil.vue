@@ -14,7 +14,7 @@
                             <input type="radio" name="radio" id="radio1" value="good" v-model="radioFeedBack">
                             <label for="radio1" class="py-2 px-3">
                                 <i class="far fa-thumbs-up"></i>
-                                Мне понравилась
+                                Мне понравилась консультация
                             </label>
                         </div>
                         <div class="">
@@ -25,12 +25,12 @@
                             </label>
                         </div>
                     </div>
-                    <div v-if="radioFeedBack == 'bad'" class="form-group pb-3 transition">
+                    <div v-if="radioFeedBack === 'bad'" class="form-group pb-3 transition">
                         <label class="m-0">Почему вам не понравилась консультация?</label>
-                        <textarea class="form-control textarea-resize-n" rows="5"></textarea>
+                        <textarea v-model="reason" class="form-control textarea-resize-n" rows="5"></textarea>
                     </div>
                     <div class="">
-                        <button type="submit" class="btn btn-primary btn-shadow" @click="feedback()">Отправить</button>
+                        <button class="btn btn-primary btn-shadow" @click="feedback">Отправить</button>
                     </div>
                 </div>
 
@@ -39,12 +39,86 @@
     </div>
 </template>
 <script>
+    import axios from 'axios'
     export default {
       data() {
         return {
           radioFeedBack: '',
+          reason: '',
         };
-      }
+      },
+      methods: {
+          feedback(){
+
+              if (this.radioFeedBack === 'good'){
+                  this.goodMark()
+              } else {
+                  this.badMark()
+              }
+            },
+          goodMark(){
+
+
+              $('.feedback_pupil_modal').modal('hide')
+              this.$router.push('/')
+              localStorage.removeItem('currentConsultation')
+
+              // var hash = '';
+              // var possible = "abcdefghijklmnopqrstuvwxyz";
+              //
+              // for( var i=0; i <= 50; i++ ){
+              //     hash += possible.charAt(Math.floor(Math.random() * possible.length));
+              // }
+              // const formData = new FormData()
+              // formData.append('a_con_id', localStorage.getItem('currentConsultation'))
+              // formData.append('a_date', new Date().getTime())
+              // formData.append('a_status', 2)
+              // formData.append('a_hash_video', hash)
+              // axios({
+              //     method: 'post',
+              //     url: `http://192.168.1.150/noosfera/public_html/api/v1/archives`,
+              //     data: formData
+              // })
+              //     .then(response => {
+              //         $('.feedback_pupil_modal').modal('hide')
+              //         this.$router.push('/')
+              //         localStorage.removeItem('currentConsultation')
+              //
+              //     })
+              //     .catch(response => {
+              //     })
+          },
+          badMark(){
+
+              var hash = '';
+              var possible = "abcdefghijklmnopqrstuvwxyz";
+
+              for( var i=0; i <= 50; i++ ){
+                  hash += possible.charAt(Math.floor(Math.random() * possible.length));
+              }
+
+              const formData = new FormData()
+              formData.append('a_con_id', localStorage.getItem('currentConsultation'))
+              formData.append('a_date', new Date().getTime())
+              formData.append('a_status', 3)
+              formData.append('a_hash_video', hash)
+              formData.append('a_reason', this.reason)
+              axios({
+                  method: 'post',
+                  url: `http://192.168.1.150/noosfera/public_html/api/v1/archives`,
+                  data: formData
+              })
+                  .then(response => {
+                      $('.feedback_pupil_modal').modal('hide')
+                      this.$router.push('/')
+                      localStorage.removeItem('currentConsultation')
+
+                  })
+                  .catch(response => {
+                  })
+          }
+
+    }
     }
 </script>
 <style lang="scss" scoped>

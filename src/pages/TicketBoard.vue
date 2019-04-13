@@ -160,7 +160,7 @@
         this.idOtherUser = this.reqs[i].pc_user_id
         const formData = new FormData()
         formData.append('sc_title', this.reqs[i].pc_title)
-        formData.append('sc_user_id', this.reqs[i].pc_user_id)
+        formData.append('sc_user_id', this.$store.state.userId)
         formData.append('sc_date', this.reqs[i].pc_date)
         formData.append('sc_begin_time', this.reqs[i].pc_begin_time)
         formData.append('sc_end_time', this.reqs[i].pc_end_time)
@@ -242,6 +242,7 @@
       },
       clearSearch() {
         this.selected = ''
+
         axios({
           method: 'get',
           url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases`

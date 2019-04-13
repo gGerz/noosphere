@@ -1,12 +1,12 @@
 <template>
   <div>
     <h2 class="my-4 font_xxl" >Арбитраж</h2>
-    <div class="card mb-3" v-for="item in arbitrageList">
+    <div class="card mb-3" v-for="(item, i) in arbitrageList">
       <div class="card-body d-flex row">
         <div class="col-12 col-lg-9">
           <div class="pb-2">
-            <p class="mb-0 font_xl">{{item.title}}</p>
-            <p class="mr-auto mb-0 text-grey font_l" >{{item.comp}}</p>
+            <p class="mb-0 font_xl">{{item.aCon.conSc.sc_title}}</p>
+            <p class="mr-auto mb-0 text-grey font_l" >{{item.aCon.conSc.scCom.competence}}</p>
           </div>
           <div class="py-3">
             <div class="font_m item-body">
@@ -14,7 +14,7 @@
                 <span class="text-grey">Учитель</span>
               </div>
               <div>
-                {{item.teacher}}
+                {{item.aCon.conSc.scUser.p_name}}
               </div>
             </div>
             <div class="font_m item-body">
@@ -22,7 +22,7 @@
                 <span class="text-grey">Ученик</span>
               </div>
               <div>
-                {{item.student}}
+                {{item.aCon.conPc.pcUser.p_name}}
               </div>
             </div>
           </div>
@@ -31,7 +31,7 @@
             <span title="Дата">
               <i class="fas fa-calendar-week mr-1 text-grey"></i>
               <span class="">
-                  {{item.date}}
+                  {{item.aCon.con_date}}
               </span>
             </span>
             </div>
@@ -39,7 +39,7 @@
             <span title="Время">
               <i class="far fa-clock mr-1 text-grey"></i>
               <span class="">
-                  {{item.time}}
+                  {{item.aCon.con_begin_time}}
               </span>
             </span>
             </div>
@@ -48,7 +48,7 @@
             <div class="text-grey">Описание ученика:</div>
             <div class="card about_user mb-4 mb-lg-0">
               <div class="card-body">
-                <span>{{item.reason}}</span>
+                <span>{{item.a_reason}}</span>
               </div>
             </div>
           </div>
@@ -58,8 +58,8 @@
             <button type="button" class="btn btn-danger">Запись консультации</button>
             <div class=" d-flex flex-column mt-auto">
               <div class="text-center">Вердикт:</div>
-              <button type="button" class="btn btn-outline-primary w-100 mb-1">Прав ученик</button>
-              <button type="button" class="btn btn-outline-success w-100">Прав консультант</button>
+              <button type="button" class="btn btn-outline-primary w-100 mb-1" @click="verdict(item.a_id)">Прав ученик</button>
+              <button type="button" class="btn btn-outline-success w-100" @click="verdict(item.a_id)">Прав консультант</button>
             </div>
           </div>
         </div>
@@ -68,14 +68,47 @@
   </div>
 </template>
 <script>
+  import axios from 'axios'
   export default {
     data(){
       return {
-        arbitrageList: [
-          {teacher: 'Max', student: 'German', title: 'Научу вертать', comp: 'Вертатель', reason: 'Преподаватель все время матерился и показывал всякое', date: '31.03.2019', time: '12:00'},
-          {teacher: 'Max', student: 'German', title: 'Научу вертать', comp: 'Вертатель', reason: 'Преподаватель все время матерился и показывал всякое', date: '31.03.2019', time: '12:00'}
-        ]
+        arbitrageList: []
       }
+    },
+    methods: {
+      getArbitrageList(){
+        axios({
+          method: 'get',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/archives`
+        })
+            .then((response) => {
+              this.arbitrageList = response.data
+            })
+            .catch((error) => {
+              console.error(error)
+            })
+      },
+      verdict(i){
+        //отправка пут запроса
+        let payload = {
+          'a_status': 2
+        };
+        axios({
+          method: 'PUT',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/archives/`+ i,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: payload
+        })
+            .then(response => {
+            })
+            .catch(response => {
+            })
+      }
+    },
+    mounted(){
+      this.getArbitrageList()
     }
   }
 </script>
