@@ -5,7 +5,7 @@
       <Content />
       <loader v-if="this.$store.state.loader" />
     </div>
-    <!--<Notification />-->
+    <Notification />
   </div>
 </template>
 
