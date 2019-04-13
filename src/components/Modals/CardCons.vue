@@ -41,6 +41,7 @@
                 <i class="fas fa-calendar-week mr-1 text-grey"></i>
                 <span class="">
                     {{selectedCard.sc_date}}
+                    {{selectedCard}}
                 </span>
               </span>
             </div >
@@ -120,15 +121,16 @@
         $('.card_cons_modal').modal('hide')
       },
       createCons() {
+        this.idOtherUser = this.selectedCard.sc_user_id
         const formData = new FormData()
-        formData.append('pc_title', this.postTitle)
-        formData.append('pc_user_id', this.postUserId)
-        formData.append('pc_date', this.postDate)
-        formData.append('pc_begin_time', this.postBeginTime)
-        formData.append('pc_end_time', this.postEndTime)
-        formData.append('pc_price', this.postPrice)
-        formData.append('pc_description', this.postDescription)
-        formData.append('pc_com_id', this.postComId)
+        formData.append('pc_title', this.selectedCard.sc_title)
+        formData.append('pc_user_id', this.selectedCard.sc_user_id)
+        formData.append('pc_date', this.selectedCard.sc_date)
+        formData.append('pc_begin_time', this.selectedCard.sc_begin_time)
+        formData.append('pc_end_time', this.selectedCard.sc_end_time)
+        formData.append('pc_price', this.selectedCard.sc_price)
+        formData.append('pc_description', this.selectedCard.sc_description)
+        formData.append('pc_com_id', this.selectedCard.sc_com_id)
         formData.append('pc_type', 2)
         axios({
           method: 'post',
@@ -137,6 +139,7 @@
         })
             .then(response => {
               if (response.status === 201) {
+                this.sellId = this.selectedCard.sc_id
                 this.purId = response.data.pc_id
 
                 //отправка пут запроса
@@ -154,6 +157,7 @@
                 })
                     .then(response => {
                       this.createConId()
+                      this.closeModal()
                     })
                     .catch(response => {
                     })
@@ -177,31 +181,46 @@
             .then(response => {
               this.consId = response.data.con_id
               if (response.status === 201) {
-                myWin= open('https://appear.in/noospherevideochat');
-                $('.card_cons_modal').modal('hide')
+                this.sendNotification()
                 this.$router.push('/videoroom')
               }
             })
             .catch(response => {
             })
       },
+      sendNotification() {
+        const formData = new FormData()
+        formData.set('n_con_id', this.consId) //id созданной консультации
+        formData.set('n_selling_user_id', this.idOtherUser) //id другой
+        formData.set('n_purchase_user_id', this.$store.state.userId) //id мой
+        formData.set('n_type', 'selling') // тип
+        axios({
+          method: 'post',
+          url: `http://192.168.1.150/noosfera/public_html/api/v1/notifications`,
+          data: formData
+        })
+          .then(response => {
+            console.log(response)
+          })
+          .catch(response => {
+          })
+      },
       //создаем пропы, которые будем отправлять для создания покупки
-      setProps(){
-        console.log(this.selectedCard)
-        this.postTitle = this.selectedCard.sc_title
-        this.postDescription = this.selectedCard.sc_description
-        this.postUserId = this.selectedCard.sc_user_id
-        this.postPrice = this.selectedCard.sc_price
-        this.postComId = this.selectedCard.sc_com_id
-        this.postDate = this.selectedCard.sc_date
-        this.postBeginTime = this.selectedCard.sc_begin_time
-        this.postEndTime = this.selectedCard.sc_end_time
-        this.sellId = this.selectedCard.sc_id
-      }
+      // setProps(){
+      //   this.postTitle = this.selectedCard.sc_title
+      //   this.postDescription = this.selectedCard.sc_description
+      //   this.postUserId = this.selectedCard.sc_user_id
+      //   this.postPrice = this.selectedCard.sc_price
+      //   this.postComId = this.selectedCard.sc_com_id
+      //   this.postDate = this.selectedCard.sc_date
+      //   this.postBeginTime = this.selectedCard.sc_begin_time
+      //   this.postEndTime = this.selectedCard.sc_end_time
+      //   this.sellId = this.selectedCard.sc_id
+      // }
     },
-    mounted() {
-      $('.card_cons_modal').on("show.bs.modal", this.setProps)
-    }
+    // mounted() {
+    //   $('.card_cons_modal').on("show.bs.modal", this.setProps())
+    // }
   }
 </script>
 <style lang="scss" scoped>

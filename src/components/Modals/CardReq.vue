@@ -54,7 +54,7 @@
               <span class="main_color font_xl">руб</span>
             </div>
             <span v-if="$store.state.userId == selectedCard.pc_user_id" class="ml-auto btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>
-            <span v-else class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l">Купить</span>
+            <span v-else class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons()">Купить</span>
           </div>
         </div>
       </div>
@@ -62,7 +62,18 @@
   </div>
 </template>
 <script>
+  import axios from 'axios'
     export default {
+      data() {
+        return {
+          putId: '',
+          sellId: '',
+          purId: '',
+          consId: '',
+          idOtherUser: '',
+          reqs: '',
+        }
+      },
       props: ['selectedIndex', 'selectedCard'],
       filters: {
         rounded(value){
@@ -75,7 +86,95 @@
       methods: {
         closeModal() {
           $('.card_req_modal').modal('hide');
-        }
+        },
+        createCons(i) {
+          this.idOtherUser = this .selectedCard.pc_user_id
+          const formData = new FormData()
+          formData.append('sc_title', this.selectedCard.pc_title)
+          formData.append('sc_user_id', this.selectedCard.pc_user_id)
+          formData.append('sc_date', this.selectedCard.pc_date)
+          formData.append('sc_begin_time', this.selectedCard.pc_begin_time)
+          formData.append('sc_end_time', this.selectedCard.pc_end_time)
+          formData.append('sc_price', this.selectedCard.pc_price)
+          formData.append('sc_description', this.selectedCard.pc_description)
+          formData.append('sc_com_id', this.selectedCard.pc_com_id)
+          formData.append('sc_type', 2)
+          axios({
+            method: 'post',
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings`,
+            data: formData
+          })
+            .then(response => {
+              if (response.status === 201) {
+                console.log(response)
+                this.sellId = response.data.sc_id
+                this.purId = this.selectedCard.pc_id
+
+                //отправка пут запроса
+                let payload = {
+                  'pc_type': 2
+                };
+
+                axios({
+                  method: 'PUT',
+                  url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases/` + this.purId,
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  data: payload
+                })
+                  .then(response => {
+                    this.createConId()
+                    this.closeModal()
+                  })
+                  .catch(response => {
+                  })
+              }
+            })
+            .catch(error => {
+              console.log(error)
+              alert('Ошибка сервера, консультация не создана')
+            })
+        },
+        createConId() {
+          const formData1 = new FormData()
+          formData1.set('con_sc_id', this.sellId)
+          formData1.set('con_pc_id', this.purId)
+          axios({
+            method: 'post',
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/consultations`,
+            data: formData1
+          })
+            .then(response => {
+              this.consId = response.data.con_id
+              if (response.status === 201) {
+                this.sendNotification()
+                this.$router.push('/videoroom')
+              }
+            })
+            .catch(response => {
+            })
+        },
+        sendNotification() {
+          const formData = new FormData()
+          formData.set('n_con_id', this.consId) //id созданной консультации
+          formData.set('n_selling_user_id', this.idOtherUser) //id другой
+          formData.set('n_purchase_user_id', this.$store.state.userId) //id мой
+          formData.set('n_type', 'selling') // тип
+          axios({
+            method: 'post',
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/notifications`,
+            data: formData
+          })
+            .then(response => {
+              console.log(response)
+            })
+            .catch(response => {
+            })
+        },
+      },
+      mounted() {
+        $('.card_cons_modal').on("show.bs.modal", this.setProps)
       }
     }
 </script>
