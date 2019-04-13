@@ -51,14 +51,6 @@
             </div>
             <div class="col-lg-6 col-12">
               <div class="form-group">
-                <label class="m-0">Теги:</label>
-                <div class="d-flex pb-3">
-                  <input type="text" class="form-control inputText" v-model="currentTag"/>
-                  <button class="btn btn-primary ml-2" @click="addTag">+</button>
-                </div>
-                <div class="tag" v-for="(tag, i) in tags">{{tag}}<span class="ml-2" aria-hidden="true" @click="delTag(i)">&times;</span></div>
-              </div>
-              <div class="form-group">
                 <label class="m-0">Описание консультации:</label>
                 <textarea v-model="about" class="form-control textarea-resize-n" rows="5"></textarea>
               </div>
@@ -114,6 +106,7 @@
         titleLenEr: '',
         test: '',
         consId: '',
+        tagLenEr: '',
       }
     },
     methods: {
@@ -127,7 +120,7 @@
               this.globalComps = response.data
               for (let i = 0; i< this.globalComps.length; i++){
                 if (this.selectedReq.pcCom.competence === this.globalComps[i].competence){
-                  this.selected = this.globalComps[i].competence
+                  this.selected = this.globalComps[i]
                 }
               }
             })
@@ -144,25 +137,6 @@
         this.price = this.selectedReq.pc_price
         this.about = this.selectedReq.pc_description
       },
-      addTag () {
-        if (this.currentTag !== '') {
-          this.tags.push(this.currentTag)
-          const formData = new FormData()
-          formData.append('tag_name', this.currentTag)
-          axios({
-            method: 'post',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/tags`,
-            data: formData
-          })
-              .then(response => {
-                this.tagIds.push(response.data.tag_id)
-              })
-              .catch(response => {
-              })
-
-          this.currentTag = ''
-        }
-      },
       delTag (i) {
         this.tags.splice(i, 1);
       },
@@ -170,20 +144,23 @@
         $('.update_user_ticket_modal').modal('hide');
       },
       createCon () {
+        this.title = $.trim(this.title) //удаление пробелов по сторонам
         this.titleEr = false
         this.selectedEr = false
         this.dateEr = false
         this.timeEr = false
         this.endEr = false
-        this.aboutEr = false
         this.priceEr = false
+        this.aboutLenEr = false
         this.titleLenEr = false
+
         if (this.title === '') this.titleEr = true
         else if (this.title.length > 50) this.titleLenEr = true
         if (this.selected === '') this.selectedEr = true
         if (this.date === '') this.dateEr = true
         if (this.begin === '' || this.end === '') this.timeEr = true
         if (this.price === '') this.priceEr = true
+        if (this.about.length > 250) this.aboutLenEr = true
 
         if (
             this.titleEr === false &&
@@ -191,56 +168,38 @@
             this.dateEr === false &&
             this.timeEr === false &&
             this.endEr === false &&
-            this.aboutEr === false &&
             this.priceEr === false &&
-            this.titleLenEr === false
+            this.titleLenEr === false &&
+            this.aboutLenEr === false
         ) {
-          const formData = new FormData()
-          formData.append('sc_title', this.title)
-          formData.append('sc_user_id', this.$store.state.userId)
-          formData.append('sc_date', this.date)
-          formData.append('sc_begin_time', this.begin)
-          formData.append('sc_end_time', this.end)
-          formData.append('sc_price', this.price)
-          formData.append('sc_description', this.about)
-          this.compCons = this.selected.com_id
-          formData.append('sc_com_id', this.compCons)
-          formData.append('sc_type', 1)
-          // for (let i = 0; i < this.tags.length; i++) {
-          //   formData.append('payment_location[]', this.tags[i]) // Отправка названий налички
-          // }
+
+          let payload = {
+            'pc_title': this.title,
+            'pc_com_id': this.selected.com_id,
+            'pc_user_id': this.$store.state.userId,
+            'pc_date': this.date,
+            'pc_begin_time': this.begin,
+            'pc_end_time': this.end,
+            'pc_price': this.price,
+            'pc_description': this.about,
+          };
 
           axios({
-            method: 'post',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings`,
-            data: formData
+            method: 'PUT',
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases/` + this.selectedReq.pc_id,
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            data: payload
           })
               .then(response => {
-                if (response.status === 201) {
-                  this.willCreateId = response.data.sc_id
-                  this.createConId()
-
-                  this.closeModal()
-                }
+                this.createTags()
+                this.closeModal()
               })
               .catch(response => {
               })
         }
-      },
-      createTags() {
-        for (let i = 0; i < this.tagIds.length; i++) {
-          const formData3 = new FormData()
-          formData3.append('tc_tag_id', this.tagIds[i])
-          formData3.append('tc_con_id', this.consId)
-          axios({
-            method: 'post',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/tag_cons`,
-            data: formData3
-          })
-            .then(response => {
-            })
-        }
-      },
+      }
     },
     mounted() {
       if (this.$store.state.authorisedStatus === true) {

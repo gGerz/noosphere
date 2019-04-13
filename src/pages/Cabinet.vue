@@ -123,7 +123,7 @@
                         </div>
                         <update-user-con :selectedCon="selectedCon" />
                         <div class="schedule-item" v-for="(con, i) in filteredCons">
-                            <i class="fas fa-times mr-2" @click="delConItem(i)"></i>
+                            <i class="fas fa-times mr-2" @click="openDelConItemModal(con.sc_id, i)"></i>
                             <i class="fas fa fa-cog mr-2" @click="changeConItem(con)"></i>
                             |
                             <i class="fas fa-calendar-week mr-1 text-grey"></i>
@@ -166,7 +166,7 @@
                         </div>
                         <update-user-ticket :selectedReq="selectedReq" />
                         <div class="schedule-item" v-for="(req, i) in filteredReqs">
-                            <i class="fas fa-times mr-2" @click="delReqItem(i)"></i>
+                            <i class="fas fa-times mr-2" @click="openDelTicketItemModal(req.pc_id, i)"></i>
                             <i class="fas fa fa-cog mr-2" @click="changeReqItem(req)"></i>
                             |
                             <i class="fas fa-calendar-week mr-1 text-grey"></i>
@@ -182,7 +182,8 @@
             </div>
             <!-- ВКЛАДКА АРХИВ -->
         </div>
-        <del-modal />
+        <del-con-modal @delConItem="delConItem"/>
+        <del-ticket-modal @delTicketItem="delReqItem"/>
     </div>
 </template>
 <script>
@@ -196,7 +197,8 @@
   import UpdateUserTicket from '../components/Modals/UpdateUserTicket.vue'
   import CreateCons from '../components/Modals/CreateCons.vue'
   import CreateComp from '../components/Modals/CreateComp.vue'
-  import DelModal from '../components/Modals/DelModal.vue'
+  import DelConModal from '../components/Modals/DelConModal.vue'
+  import DelTicketModal from '../components/Modals/DelTicketModal.vue'
 
 
     export default {
@@ -208,7 +210,8 @@
         CreateCons,
         CreateComp,
         RegNext,
-        DelModal
+        DelConModal,
+        DelTicketModal
     },
     data() {
         return {
@@ -227,7 +230,13 @@
             cons: [],
             reqs: [],
             selectedCon: [],
-            selectedReq: []
+            selectedReq: [],
+
+            selectedConIdForDelete: '',
+            selectedConIndexForDelete: '',
+
+            selectedTicketIdForDelete: '',
+            selectedTicketIndexForDelete: ''
         }
     },
     filters: {
@@ -264,7 +273,7 @@
         }
     },
     methods: {
-        //Получение информации юзера
+        // Получение информации юзера
         getUserInfo(){
             axios({
                 method: 'get',
@@ -280,7 +289,7 @@
                     console.error(error)
                 })
         },
-        //Получение консультаций юзера
+        // Получение консультаций юзера
         getCons(){
             axios({
                 method: 'get',
@@ -293,7 +302,7 @@
                     console.error(error)
                 })
         },
-        //Выбор компетенции для поиска в расписании
+        // Выбор компетенции для поиска в расписании
         setSelectedUserComp(value){
             if (value === '' || value === null){
                 this.selectedUserComp = ''
@@ -301,7 +310,7 @@
                 this.selectedUserComp = value
             }
         },
-        //Выбор компетенции для поиска в заявках
+        // Выбор компетенции для поиска в заявках
         setSelectedUserReq(value){
             if (value === '' || value === null){
                 this.selectedUserReq = ''
@@ -309,7 +318,7 @@
                 this.selectedUserReq = value
             }
         },
-        //Получение заявок юзера
+        // Получение заявок юзера
         getTickets(){
             axios({
                 method: 'get',
@@ -323,7 +332,7 @@
                     console.error(error)
                 })
         },
-        //Получение всех компетенций
+        // Получение всех компетенций
         getComps(){
             axios({
                 method: 'get',
@@ -336,7 +345,7 @@
                     console.error(error)
                 })
         },
-        //Удаление компетенции пользователя
+        // Удаление компетенции пользователя
         deleteComp(id) {
             const formData = new FormData()
             formData.set('cp_p_id', this.userInfo.p_user_id)
@@ -353,38 +362,82 @@
                     console.error(error)
                 })
         },
-        //изменение консультации из расписания
+        // Изменение консультации из расписания
         changeConItem(con){
             this.selectedCon = con
             $('.update_user_con_modal').modal('show');
         },
-        //изменение заявки из расписания
+        // Изменение заявки из расписания
         changeReqItem(req){
             this.selectedReq = req
             $('.update_user_ticket_modal').modal('show');
         },
-        //Удаление консультации из расписания
-        delConItem(i){
-            this.cons.splice(i,1)
-            $('.del_modal').modal('show');
+        // Открытие модального окна для удаления консультации из расписания
+        openDelConItemModal(id, i){
+            $('.del_con_modal').modal('show');
+            this.selectedConIdForDelete = id
+            this.selectedConIndexForDelete = i
         },
-        //Удаление консультации из заявок
-        delReqItem(i){
-            this.reqs.splice(i,1)
-            $('.del_modal').modal('show');
+        // Удаление консультации из расписания
+        delConItem(){
+            // отправка пут на запроса
+            let payload = {
+                'sc_type': 4
+            };
+
+            axios({
+                method: 'PUT',
+                url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings/` + this.selectedConIdForDelete,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: payload
+            })
+                .then(response => {
+                    this.cons.splice(this.selectedConIndexForDelete,1)
+                })
+                .catch(response => {
+                })
         },
-        //Вызов модального окна изменения данных
+        openDelTicketItemModal(id, i){
+            $('.del_ticket_modal').modal('show');
+            this.selectedTicketIdForDelete = id
+            this.selectedTicketIndexForDelete = i
+        },
+        // Удаление консультации из заявок
+        delReqItem(){
+            this.reqs.splice(this.selectedTicketIndexForDelete,1)
+            $('.del_ticket_modal').modal('show');
+
+            // отправка пут на запроса
+            let payload = {
+                'pc_type': 4
+            };
+            axios({
+                method: 'PUT',
+                url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases/` + this.selectedTicketIdForDelete,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: payload
+            })
+                .then(response => {
+                })
+                .catch(response => {
+                })
+        },
+        // Вызов модального окна изменения данных
         changeUserInfo() {
             $('.update_user_info_modal').modal('show');
         },
-        //Сброс фильтров
+        // Сброс фильтров
         resetFilters() {
           this.selectedUserComp = ''
           this.selectedUserReq = ''
           this.searchableConTitle = ''
           this.searchableReqTitle = ''
         },
-        //выход из системы
+        // Выход из системы
         logout () {
             this.$store.dispatch('logout', {}).then(() => {
                 this.$router.push('/')

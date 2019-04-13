@@ -1,16 +1,16 @@
 <template>
-  <div class="modal fade del_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+  <div class="modal fade del_ticket_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
     <div class="modal-dialog " role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel1">Подтвердите действие</h5>
+          <h5 class="modal-title" id="exampleModalLabel1">Подтвердите отмену заявки</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="d-flex justify-content-center py-3">
-          <div class="btn btn-outline-primary">Удалить</div>
-          <div class="btn btn-outline-danger ml-3">Закрыть окно</div>
+          <div class="btn btn-outline-primary" @click="delConItem">Удалить</div>
+          <div class="btn btn-outline-danger ml-3" @click="closeModal">Закрыть окно</div>
         </div>
       </div>
     </div>
@@ -26,8 +26,12 @@
     },
     methods: {
       closeModal() {
-        $('.del_modal').modal('hide');
+        $('.del_ticket_modal').modal('hide');
       },
+      delConItem(){
+        this.$emit('delTicketItem')
+        $('.del_ticket_modal').modal('hide');
+      }
     }
   }
 </script>

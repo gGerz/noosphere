@@ -123,7 +123,7 @@
     methods: {
       addTag () {
         this.tagLenEr = false
-        if (this.currentTag != '') {
+        if (this.currentTag !== '') {
           if (this.currentTag.length < 26) {
             this.tags.push(this.currentTag)
             const formData = new FormData()
@@ -141,6 +141,20 @@
             this.currentTag = ''
           } else this.tagLenEr = true
 
+        }
+      },
+      createTags() {
+        for (let i = 0; i < this.tagIds.length; i++) {
+          const formData3 = new FormData()
+          formData3.append('tc_tag_id', this.tagIds[i])
+          formData3.append('tc_sc_id', this.sellId)
+          axios({
+            method: 'post',
+            url: `http://192.168.1.150/noosfera/public_html/api/v1/tag_cons`,
+            data: formData3
+          })
+              .then(response => {
+              })
         }
       },
       delTag (i) {
@@ -175,7 +189,7 @@
           this.endEr === false &&
           this.priceEr === false &&
           this.titleLenEr === false &&
-          this.aboutLenEr == false
+          this.aboutLenEr === false
         ) {
           const formData = new FormData()
           formData.append('sc_title', this.title)
@@ -196,8 +210,6 @@
             .then(response => {
               if (response.status === 201) {
                 this.sellId = response.data.sc_id
-                // this.purId = response.data.pc_id
-                //this.createConId()
                 this.createTags()
                 this.closeModal()
               }
@@ -205,21 +217,7 @@
             .catch(response => {
             })
         }
-      },
-      createTags() {
-        for (let i = 0; i < this.tagIds.length; i++) {
-          const formData3 = new FormData()
-          formData3.append('tc_tag_id', this.tagIds[i])
-          formData3.append('tc_sc_id', this.sellId)
-          axios({
-            method: 'post',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/tag_cons`,
-            data: formData3
-          })
-            .then(response => {
-            })
-        }
-      },
+      }
     },
     mounted() {
       if (this.$store.state.authorisedStatus === true) {

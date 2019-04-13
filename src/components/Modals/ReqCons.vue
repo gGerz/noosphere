@@ -120,7 +120,7 @@
     methods: {
         addTag () {
             this.tagLenEr = false
-            if (this.currentTag != '') {
+            if (this.currentTag !== '') {
                 if (this.currentTag.length < 26) {
                     this.tags.push(this.currentTag)
                     const formData = new FormData()

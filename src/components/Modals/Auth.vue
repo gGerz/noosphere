@@ -78,6 +78,7 @@
                       $('.sign_in_modal').modal('hide'); //закрытие модального окна
                       this.$store.dispatch('login', response.data.data)
                       this.$store.dispatch('saveUserId', response.data.id)
+                      console.log('auth', response)
                       if (response.data.p_id.p_id !== null){
                         this.$store.dispatch('saveUserProfileId', response.data.p_id.p_id)
                       }

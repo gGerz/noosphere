@@ -285,7 +285,6 @@
             this.consId = response.data.con_id
             if (response.status === 201) {
               this.sendNotification()
-              //myWin= open('https://appear.in/noospherevideochat');
               this.$router.push('/videoroom')
             }
           })
@@ -342,19 +341,7 @@
       deleteSeconds(value){
         if (value) return value.slice(0, -3)
       }
-    },
-    // computed: {
-    //   computedList () {
-    //       return this.cons.filter(function (con) {
-    //           if (this.selected !== undefined){
-    //               console.log('1111111111122')
-    //               return this.con.scCom.competence === this.selected.competence
-    //           } else {
-    //               return this.con
-    //           }
-    //       })
-    //   }
-    //   }
+    }
   }
 </script>
 <style lang="scss">
