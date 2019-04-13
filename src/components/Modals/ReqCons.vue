@@ -57,8 +57,7 @@
                                     <button class="btn btn-primary ml-2" @click="addTag">+</button>
                                 </div>
                                 <div class="tag" v-for="(tag, i) in tags">{{tag}}<span class="ml-2" aria-hidden="true" @click="delTag(i)">&times;</span></div>
-                                <!--<textarea class="form-control" rows="5"></textarea>-->
-                                <!--<small id="" class="form-text text-muted">p.s.Через пробелы</small>-->
+                                <div v-show="tagLenEr" class="text-danger font_s">Длина тега не должна превышать 25 символов</div>
                             </div>
                             <div class="form-group">
                                 <label class="m-0">Описание заявки:</label>
@@ -87,7 +86,6 @@
     data() {
       return {
         currentTag: '',
-        tags: [],
         willCreateId: '',
         title: '',
         date: '',
@@ -112,89 +110,113 @@
         aboutEr: '',
         priceEr: '',
         titleLenEr: '',
-        test: ''
+        test: '',
+          tagLenEr: '',
+          purId: '',
+          tags: [],
+          tagIds: [],
       }
     },
     methods: {
-      addTag () {
-        if (this.currentTag != '') {
-          this.tags.push(this.currentTag)
-          this.currentTag = ''
-        }
-      },
+        addTag () {
+            this.tagLenEr = false
+            if (this.currentTag != '') {
+                if (this.currentTag.length < 26) {
+                    this.tags.push(this.currentTag)
+                    const formData = new FormData()
+                    formData.append('tag_name', this.currentTag)
+                    axios({
+                        method: 'post',
+                        url: `http://192.168.1.150/noosfera/public_html/api/v1/tags`,
+                        data: formData
+                    })
+                        .then(response => {
+                            this.tagIds.push(response.data.tag_id)
+                        })
+                        .catch(response => {
+                        })
+                    this.currentTag = ''
+                } else this.tagLenEr = true
+            }
+        },
+        createTags() {
+            for (let i = 0; i < this.tagIds.length; i++) {
+                const formData = new FormData()
+                formData.append('tc_tag_id', this.tagIds[i])
+                formData.append('tc_pc_id', this.purId)
+                axios({
+                    method: 'post',
+                    url: `http://192.168.1.150/noosfera/public_html/api/v1/tag_cons`,
+                    data: formData
+                })
+                    .then(response => {
+                    })
+            }
+        },
       delTag (i) {
         this.tags.splice(i, 1);
       },
       closeModal() {
         $('.req_cons_modal').modal('hide');
       },
-      createCon () {
-        this.titleEr = false
-        this.selectedEr = false
-        this.dateEr = false
-        this.timeEr = false
-        this.endEr = false
-        this.aboutEr = false
-        this.priceEr = false
-        this.titleLenEr = false
-        if (this.title === '') this.titleEr = true
-        else if (this.title.length > 50) this.titleLenEr = true
-        if (this.selected === '') this.selectedEr = true
-        if (this.date === '') this.dateEr = true
-        if (this.begin === '' || this.end === '') this.timeEr = true
-        //if (this.about === '') this.aboutEr = true
-        if (this.price === '') this.priceEr = true
-        if (
-          this.titleEr == false &&
-          this.selectedEr == false &&
-          this.dateEr == false &&
-          this.timeEr == false &&
-          this.endEr == false &&
-          this.aboutEr == false &&
-          this.priceEr == false &&
-          this.titleLenEr == false
-        ) {
-          // const formData1 = new FormData()
-          // // for (let i = 0; i < this.tags.length; i++) {
-          // //
-          // // }
-          // formData1.append('tag_name', this.test)
-          //
-          // axios({
-          //   method: 'post',
-          //   url: `http://192.168.1.150/noosfera/public_html/api/v1/tags`,
-          //   data: formData1
-          // })
-          //   .then(response => {
-          //   })
-          //   .catch(response => {
-          //   })
-          const formData = new FormData()
-          formData.append('pc_title', this.title)
-          formData.append('pc_user_id', this.$store.state.userId)
-          formData.append('pc_date', this.date)
-          formData.append('pc_begin_time', this.begin)
-          formData.append('pc_end_time', this.end)
-          formData.append('pc_price', this.price)
-          formData.append('pc_description', this.about)
-          this.compCons = this.selected.com_id
-          formData.append('pc_com_id', this.compCons)
-          axios({
-            method: 'post',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases`,
-            data: formData
-          })
-            .then(response => {
-              if (response.status === 201) {
-                // this.createConId()
-                this.closeModal()
-              }
-            })
-            .catch(response => {
-              alert('Ошибка сервера, консультация не создана')
-            })
-        }
-      },
+        createCon () {
+            this.title = $.trim(this.title) //удаление пробелов по сторонам
+            this.titleEr = false
+            this.selectedEr = false
+            this.dateEr = false
+            this.timeEr = false
+            this.endEr = false
+            this.priceEr = false
+            this.aboutLenEr = false
+            this.titleLenEr = false
+            if (this.title === '') this.titleEr = true
+            else if (this.title.length > 50) this.titleLenEr = true
+            if (this.selected === '') this.selectedEr = true
+            if (this.date === '') this.dateEr = true
+            if (this.begin === '' || this.end === '') this.timeEr = true
+            if (this.price === '') this.priceEr = true
+            if (this.about.length > 250) this.aboutLenEr = true
+
+            if (
+                this.titleEr === false &&
+                this.selectedEr === false &&
+                this.dateEr === false &&
+                this.timeEr === false &&
+                this.endEr === false &&
+                this.priceEr === false &&
+                this.titleLenEr === false &&
+                this.aboutLenEr == false
+            ) {
+                const formData = new FormData()
+                formData.append('pc_title', this.title)
+                formData.append('pc_user_id', this.$store.state.userId)
+                formData.append('pc_date', this.date)
+                formData.append('pc_begin_time', this.begin)
+                formData.append('pc_end_time', this.end)
+                formData.append('pc_price', this.price)
+                formData.append('pc_description', this.about)
+                this.compCons = this.selected.com_id
+                formData.append('pc_com_id', this.compCons)
+                formData.append('pc_type', 1)
+                axios({
+                    method: 'post',
+                    url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases`,
+                    data: formData
+                })
+                    .then(response => {
+                        if (response.status === 201) {
+                            console.log('q',response)
+                            this.purId = response.data.pc_id
+                            // this.purId = response.data.pc_id
+                            //this.createConId()
+                            this.createTags()
+                            this.closeModal()
+                        }
+                    })
+                    .catch(response => {
+                    })
+            }
+        },
       createConId() {
         const formData1 = new FormData()
         formData1.set('con_pc_id', this.willCreateId)

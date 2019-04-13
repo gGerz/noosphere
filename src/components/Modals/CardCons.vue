@@ -56,7 +56,7 @@
             </div>
           </div>
           <div class="py-2">
-            <div class="tag px-2 font_s" v-for="tag in selectedCard.tagCon">{{tag.tag_name}}</div>
+            <div class="tag px-2 font_s" v-for="tag in selectedCard.tagConsultation">{{tag.tag_name}}</div>
           </div>
           <div class="py-2 wrap-break">
             {{selectedCard.sc_description}}

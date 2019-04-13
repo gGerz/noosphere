@@ -58,9 +58,6 @@
                   <button class="btn btn-primary ml-2" @click="addTag">+</button>
                 </div>
                 <div class="tag" v-for="(tag, i) in tags">{{tag}}<span class="ml-2" aria-hidden="true" @click="delTag(i)">&times;</span></div>
-                <!--<textarea class="form-control" rows="5"></textarea>-->
-                <!--<small id="" class="form-text text-muted">p.s.Через пробелы</small>-->
-
                 <div v-show="tagLenEr" class="text-danger font_s">Длина тега не должна превышать 25 символов</div>
 
               </div>
@@ -153,9 +150,7 @@
         $('.create_cons_modal').modal('hide');
       },
       createCon () {
-        console.log('Начало',this.begin[0] + this.begin[1],this.end[0] + this.end[1])
         this.title = $.trim(this.title) //удаление пробелов по сторонам
-        console.log(this.title)
         this.titleEr = false
         this.selectedEr = false
         this.dateEr = false
@@ -182,20 +177,6 @@
           this.titleLenEr === false &&
           this.aboutLenEr == false
         ) {
-          // const formData1 = new FormData()
-          // // for (let i = 0; i < this.tags.length; i++) {
-          // //
-          // // }
-          // formData1.append('tag_name', this.test)
-          //
-          // axios({
-          //   method: 'post',
-          //   url: `http://192.168.1.150/noosfera/public_html/api/v1/tags`,
-          //   data: formData1
-          // })
-          //   .then(response => {
-          //   })
-          //   .catch(response => {
           const formData = new FormData()
           formData.append('sc_title', this.title)
           formData.append('sc_user_id', this.$store.state.userId)
@@ -214,7 +195,6 @@
           })
             .then(response => {
               if (response.status === 201) {
-                console.log('ffffffffffffff',response)
                 this.sellId = response.data.sc_id
                 // this.purId = response.data.pc_id
                 //this.createConId()
@@ -240,20 +220,6 @@
             })
         }
       },
-      // createConId() { //old
-      //   const formData1 = new FormData()
-      //   formData1.set('con_sc_id', this.willCreateId)
-      //   axios({
-      //     method: 'post',
-      //     url: `http://192.168.1.150/noosfera/public_html/api/v1/consultations`,
-      //     data: formData1
-      //   })
-      //     .then(response => {
-      //       this.consId = response.data.con_id
-      //     })
-      //     .catch(response => {
-      //     })
-      // }
     },
     mounted() {
       if (this.$store.state.authorisedStatus === true) {
