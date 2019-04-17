@@ -16,6 +16,13 @@ export default new Vuex.Store({
     newId: '',
     userComp: '',
     userName: '',
+    now: {
+      date: '',
+      time: {
+        h: '',
+        m: '',
+      }
+    },
     userId: localStorage.getItem('userId'),
     userInfo: localStorage.getItem('userInfo'),
     authorisedStatus: !!localStorage.getItem('token')

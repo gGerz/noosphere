@@ -53,8 +53,19 @@
               </span>
               <span class="main_color font_xl">руб</span>
             </div>
-            <span v-if="$store.state.userId == selectedCard.pc_user_id" class="ml-auto btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>
-            <span v-else class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons()">Купить</span>
+
+            <div class="ml-auto">
+              <span v-if="$store.state.userId == selectedCard.pc_user_id" class="btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>
+              <div v-else-if="inDate(selectedCard.pc_date) && inTime(selectedCard.pc_begin_time,selectedCard.pc_end_time) && selectedCard != undefined">
+                <span class=" btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Ответить</span>
+              </div>
+              <div v-else>
+                <span class=" btn btn-outline-secondary btn-md px-4 btn-buy font_l">Не время</span>
+              </div>
+            </div>
+
+            <!--<span v-if="$store.state.userId == selectedCard.pc_user_id" class="ml-auto btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>-->
+            <!--<span v-else class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons()">Купить</span>-->
           </div>
         </div>
       </div>
@@ -72,6 +83,7 @@
           consId: '',
           idOtherUser: '',
           reqs: '',
+          now: '  '
         }
       },
       props: ['selectedIndex', 'selectedCard'],
@@ -84,6 +96,21 @@
         }
       },
       methods: {
+        inTime(begin ='', end='') {
+          const beginH = +(begin[0] + begin[1])
+          const endH = +(end[0] + end[1])
+          const beginM = +(begin[3] + begin[4])
+          const endM = +(end[3] + end[4])
+          if (this.$store.state.now.time.h > beginH && this.$store.state.now.time.h < endH) return true
+          if (((this.$store.state.now.time.h == beginH) && (this.$store.state.now.time.m >= beginM)) || ((this.$store.state.now.time.h == endH) && (this.$store.state.now.time.m <= endM))) return true
+          return false
+        },
+        inDate(date) {
+          if (this.$store.state.now.date === date) {
+            return true
+          }
+          else return false
+        },
         closeModal() {
           $('.card_req_modal').modal('hide');
         },
@@ -176,7 +203,6 @@
         },
       },
       mounted() {
-        $('.card_cons_modal').on("show.bs.modal", this.setProps)
       }
     }
 </script>

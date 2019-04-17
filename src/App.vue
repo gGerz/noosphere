@@ -27,6 +27,36 @@ export default {
   },
   mounted() {
     if (localStorage.currentConsultation !== undefined) this.$router.push('/videoroom')
+    this.createNow()
+    setInterval(this.createNow, 1000)
+  },
+  methods: {
+    createNow() {
+      var date = new Date();
+      var dd = date.getDate() + '';
+      if (dd < 10) dd = '0' + dd;
+      var mm = date.getMonth() + 1 + '';
+      if (mm < 10) mm = '0' + mm;
+      var yy = date.getFullYear() + '';
+      if (yy < 10) yy = '0' + yy;
+      var timeh = date.getHours() + ''
+      if (timeh < 10) timeh = '0' + timeh;
+      var timem = date.getMinutes() + ''
+      if (timem < 10) timem = '0' + timem;
+      var times = date.getSeconds() + ''
+      if (times < 10) times = '0' + times;
+      this.$store.state.now = {
+        date: yy + '-' + mm +'-' + + dd,
+        d: dd,
+        m: mm,
+        y: yy,
+        time: {
+          h: timeh,
+          m: timem,
+          s: times
+        }
+      }
+    },
   }
 }
 </script>

@@ -24,9 +24,11 @@
       <create-cons />
     </div>
     <div class="row">
+
       <div class="stub" v-if="cons.length === 0">
         Извините, ничего не найдено
       </div>
+
       <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 card-pad" @click="openConsCard(i)" v-for="(con, i) in cons">
         <div class="card">
           <div class="card-body cons-body">
@@ -86,8 +88,17 @@
                 </span>
                 <span class="main_color font_xl">руб</span>
               </div>
-              <span v-if="$store.state.userId == con.sc_user_id" class="ml-auto btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>
-              <span v-else class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Купить</span>
+              <div class="ml-auto">
+                <span v-if="$store.state.userId == con.sc_user_id" class="btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>
+                <div v-else-if="inDate(con.sc_date) && inTime(con.sc_begin_time,con.sc_end_time)">
+                  <span class=" btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Купить</span>
+                </div>
+                <div v-else>
+                  <span class=" btn btn-outline-secondary btn-md px-4 btn-buy font_l">Не время</span>
+                </div>
+              </div>
+              <!--<span v-if="$store.state.userId == con.sc_user_id" class="ml-auto btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>-->
+              <!--<span v-else class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Купить</span>-->
             </div>
           </div>
         </div>
@@ -144,7 +155,8 @@
         purId: '',
         selected: '',
         cons: [],
-        photos: []
+        photos: [],
+        now: '',
       }
     },
     // mounted вызывается после компиляции html элементов
@@ -176,6 +188,21 @@
     },
     //в methods находятся функции компонента
     methods: {
+      inTime(begin, end) {
+        const beginH = +(begin[0] + begin[1])
+        const endH = +(end[0] + end[1])
+        const beginM = +(begin[3] + begin[4])
+        const endM = +(end[3] + end[4])
+        if (this.$store.state.now.time.h > beginH && this.$store.state.now.time.h < endH) return true
+        if (((this.$store.state.now.time.h == beginH) && (this.$store.state.now.time.m >= beginM)) || ((this.$store.state.now.time.h == endH) && (this.$store.state.now.time.m <= endM))) return true
+        return false
+      },
+      inDate(date) {
+        if (this.$store.state.now.date === date) {
+          return true
+        }
+        else return false
+      },
       clearSearch() {
         this.selected = ''
         axios({
@@ -286,7 +313,7 @@
               this.sendNotification()
               localStorage.setItem('currentConsultation', this.consId)
               this.$router.push('/videoroom')
-              var myWin= open('https://appear.in/noospherevideochat');
+              var myWin = open('https://appear.in/noospherevideochat');
             }
           })
           .catch(response => {
