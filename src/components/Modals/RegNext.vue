@@ -31,9 +31,6 @@
                             </select>
                             <div v-show="genderEr" class="text-danger font_s">Выбирите гендер</div>
                         </div>
-
-
-
                         <div class="pt-5">
                             <button type="submit" class="btn btn-primary btn-shadow" @click="regNext">Создать</button>
                         </div>
@@ -82,10 +79,10 @@
 
 
         const formData = new FormData()
-        if ( this.gender != 'Выберите пол...' &&
-          this.name !== '' &&
-          this.date !== '' &&
-          this.about !== ''
+        if ( this.gender !== 'Выберите пол...' &&
+             this.nameEr === false &&
+             this.dateEr === false &&
+             this.aboutEr === false
         ) {
           formData.set('p_name', this.name)
           formData.set('p_date', this.date)

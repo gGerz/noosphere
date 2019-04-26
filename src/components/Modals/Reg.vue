@@ -23,6 +23,8 @@
               <div v-show="passEr" class="text-danger font_s">Введите пароль</div>
               <div v-show="passLongEr" class="text-danger font_s">Пароль должен содержать от 7 до 30 символов</div>
               <div v-show="passCharEr" class="text-danger font_s">Пароль не должен содержать спец. символы</div>
+              <div v-show="validPassword && password.length > 1" class="text-danger font_s">Пароль должен содержать только латинские буквы</div>
+
             </div>
             <div class="form-group pb-4">
               <input type="password" class="form-control inputText" required="required" placeholder="Подтвердите пароль" v-model="resetPassword">
@@ -37,7 +39,7 @@
               <div v-show="checkEr" class="text-danger font_s">Вы должны принять пользовательское соглашение</div>
             </div>
             <div class="pt-3">
-              <button type="submit" class="btn btn-primary btn-shadow" :disabled="password.length < 7" @click="reg">Зарегистрировать</button>
+              <button type="submit" class="btn btn-primary btn-shadow" @click="reg">Зарегистрировать</button>
             </div>
             <div v-for="error in errors" class="">
               {{error}}
@@ -53,8 +55,6 @@
   </div>
 </template>
 <script>
-
-
 
   import axios from 'axios'
   export default {
@@ -73,6 +73,7 @@
         resetPassword: '',
         newId: '',
         checkbox: false,
+        passwordValid: null,
         errors: []
       }
     },
@@ -90,19 +91,20 @@
         this.checkEr = false
         this.emailValEr = false
         this.emailServEr = false
-        if (this.mail == '') this.emailEr = true
+        if (this.mail === '') this.emailEr = true
         else if (!this.validEmail(this.mail)) this.emailValEr = true
-        if (this.password == '') this.passEr = true
+        if (this.password === '') this.passEr = true
         else if (this.password.length > 30 && this.password.length < 7) this.passLongEr = true
         else {
           var iChars = "!@#$%^&*()+=-[]\\\';,./{}|\":<>?";
           for (var i = 0; i < this.password.length; i++) {
-            if (iChars.indexOf(this.password.charAt(i)) != -1) this.passCharEr = true
+            if (iChars.indexOf(this.password.charAt(i)) !== -1) this.passCharEr = true
             else if (this.password !== this.resetPassword) this.passProfEr = true
           }
         }
 
         if ( this.checkbox === false ) this.checkEr = true
+        console.log(this.emailEr,this.passEr,this.passLongEr,this.passProfEr,this.checkEr,this.emailValEr)
         if ( this.emailEr === false &&
           this.passEr === false &&
           this.passLongEr === false &&
@@ -145,6 +147,11 @@
         e.target.__vue__.checkbox = false
         e.target.__vue__.emailValidation = false
       })
+    },
+    computed: {
+      validPassword: function () {
+        return !(/^[a-zA-Z0-9]+$/i.test(this.password));
+      }
     }
   }
 </script>
