@@ -31,6 +31,7 @@
                                 <label class="m-0">Дата:</label>
                                 <input v-model="date" type="date" class="form-control inputText" required="required" placeholder="">
                                 <div v-show="dateEr" class="text-danger font_s">Введите дату</div>
+                                <div v-show="datePastEr && date.length > 1" class="text-danger font_s">Консультаци не может быть в прошлом!</div>
                             </div>
                             <div class="py-3 ">
                                 <label>Время:</label>
@@ -41,6 +42,9 @@
                                         <input v-model="end" class="form-control mr-2" type="time" placeholder="До">
                                     </div>
                                     <div v-show="timeEr" class="text-danger font_s">Введите время</div>
+                                    <div v-show="timePastEr && begin.length > 1 && end.length > 1" class="text-danger font_s">Консультация не может быть в прошлом!</div>
+                                    <div v-show="timeChronoEr && begin.length > 1 && end.length > 1" class="text-danger font_s">Вы точно не путаете от и до?</div>
+                                    <div v-show="timeDurEr && begin.length > 1 && end.length > 1" class="text-danger font_s">Время занятия должно превышать 30 минут</div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -111,13 +115,40 @@
         priceEr: '',
         titleLenEr: '',
         test: '',
-          tagLenEr: '',
-          purId: '',
-          tags: [],
-          tagIds: [],
+        tagLenEr: '',
+        purId: '',
+        tags: [],
+        tagIds: [],
+        timeDurEr: false,
+        timeChronoEr: false,
+        datePastEr: false,
+        timePastEr: false,
       }
     },
     methods: {
+        testTime(begin, end) {
+            const beginH = +(begin[0] + begin[1])
+            const endH = +(end[0] + end[1])
+            const beginM = +(begin[3] + begin[4])
+            const endM = +(end[3] + end[4])
+            this.timeChronoEr = false
+            this.timeDurEr = false
+            this.timePastEr = false
+            const h =  this.$store.state.now.time.h
+            const m =  this.$store.state.now.time.m
+            if (beginH < h || ( beginH === h && beginM < m )) this.timePastEr = true
+            else if (beginH > endH || (beginH === endH && beginM > endM)) this.timeChronoEr = true
+            else if (!(beginH + 1 === endH && ((60 - beginM) + endM) > 30)) {
+                if (!(beginH === endH && (endM - beginM) >= 30 )) this.timeDurEr = true
+            }
+        },
+        testDate(date) {
+            this.datePastEr = false
+            const arrDate = date.split('-')
+            const nowDate = this.$store.state.now.date.split('-')
+            console.log(nowDate, ', ', arrDate)
+            if (!(nowDate[0] <= arrDate[0] && nowDate[1] <= arrDate[1] && nowDate[2] <= arrDate[2])) this.datePastEr = true
+        },
         addTag () {
             this.tagLenEr = false
             if (this.currentTag !== '') {
@@ -160,7 +191,10 @@
         $('.req_cons_modal').modal('hide');
       },
         createCon () {
-            this.title = $.trim(this.title) //удаление пробелов по сторонам
+            this.testDate(this.date)
+            this.testTime(this.begin, this.end)
+            this.about = $.trim(this.about)
+            this.title = $.trim(this.title)
             this.titleEr = false
             this.selectedEr = false
             this.dateEr = false
@@ -185,7 +219,11 @@
                 this.endEr === false &&
                 this.priceEr === false &&
                 this.titleLenEr === false &&
-                this.aboutLenEr === false
+                this.aboutLenEr === false &&
+                this.timeChronoEr === false &&
+                this.timeDurEr === false &&
+                this.datePastEr === false &&
+                this.timePastEr === false
             ) {
                 const formData = new FormData()
                 formData.append('pc_title', this.title)

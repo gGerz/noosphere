@@ -46,7 +46,6 @@
                   <div v-show="timePastEr && begin.length > 1 && end.length > 1" class="text-danger font_s">Консультация не может быть в прошлом!</div>
                   <div v-show="timeChronoEr && begin.length > 1 && end.length > 1" class="text-danger font_s">Вы точно не путаете от и до?</div>
                   <div v-show="timeDurEr && begin.length > 1 && end.length > 1" class="text-danger font_s">Время занятия должно превышать 30 минут</div>
-
                 </div>
               </div>
               <div class="form-group">
@@ -198,8 +197,8 @@
       createCon () {
         this.testDate(this.date)
         this.testTime(this.begin, this.end)
-        this.about = $.trim(this.about) //удаление пробелов по сторонам
-        this.title = $.trim(this.title) //удаление пробелов по сторонам
+        this.about = $.trim(this.about)
+        this.title = $.trim(this.title)
         this.titleEr = false
         this.selectedEr = false
         this.dateEr = false
@@ -227,7 +226,8 @@
           this.aboutLenEr === false &&
           this.timeChronoEr === false &&
           this.timeDurEr === false &&
-          this.datePastEr === false
+          this.datePastEr === false &&
+          this.timePastEr === false
         ) {
           const formData = new FormData()
           formData.append('sc_title', this.title)

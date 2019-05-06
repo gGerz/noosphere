@@ -49,10 +49,9 @@
       },
       methods: {
           feedback(){
-
               if (this.radioFeedBack === 'good'){
                   this.goodMark()
-              } else {
+              } else if (this.radioFeedBack === 'bad') {
                   this.badMark()
               }
             },
@@ -89,14 +88,11 @@
               //     })
           },
           badMark(){
-
               var hash = '';
               var possible = "abcdefghijklmnopqrstuvwxyz";
-
               for( var i=0; i <= 50; i++ ){
                   hash += possible.charAt(Math.floor(Math.random() * possible.length));
               }
-
               const formData = new FormData()
               formData.append('a_con_id', localStorage.getItem('currentConsultation'))
               formData.append('a_date', new Date().getTime())
