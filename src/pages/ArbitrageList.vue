@@ -79,7 +79,7 @@
       getArbitrageList(){
         axios({
           method: 'get',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/archives`
+          url: this.$store.state.urlApi + `archives`
         })
             .then((response) => {
               this.arbitrageList = response.data
@@ -95,7 +95,7 @@
         };
         axios({
           method: 'PUT',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/archives/`+ i,
+          url: this.$store.state.urlApi + `archives/`+ i,
           headers: {
             'Content-Type': 'application/json'
           },

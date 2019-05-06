@@ -72,7 +72,7 @@ export default {
         this.anotherUserId = this.$store.state.anotherUserId
         axios({
             method: 'get',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.anotherUserId + `?expand=cpCom`
+            url: this.$store.state.urlApi + `profiles/` + this.$store.state.anotherUserId + `?expand=cpCom`
         })
             .then((response) => {
                 this.anotherUserInfo = response.data

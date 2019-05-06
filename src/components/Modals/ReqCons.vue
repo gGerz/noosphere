@@ -127,7 +127,7 @@
                     formData.append('tag_name', this.currentTag)
                     axios({
                         method: 'post',
-                        url: `http://192.168.1.150/noosfera/public_html/api/v1/tags`,
+                        url: this.$store.state.urlApi + `tags`,
                         data: formData
                     })
                         .then(response => {
@@ -146,7 +146,7 @@
                 formData.append('tc_pc_id', this.purId)
                 axios({
                     method: 'post',
-                    url: `http://192.168.1.150/noosfera/public_html/api/v1/tag_cons`,
+                    url: this.$store.state.urlApi + `tag_cons`,
                     data: formData
                 })
                     .then(response => {
@@ -185,7 +185,7 @@
                 this.endEr === false &&
                 this.priceEr === false &&
                 this.titleLenEr === false &&
-                this.aboutLenEr == false
+                this.aboutLenEr === false
             ) {
                 const formData = new FormData()
                 formData.append('pc_title', this.title)
@@ -200,7 +200,7 @@
                 formData.append('pc_type', 1)
                 axios({
                     method: 'post',
-                    url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases`,
+                    url: this.$store.state.urlApi + `purchases`,
                     data: formData
                 })
                     .then(response => {
@@ -221,7 +221,7 @@
         formData1.set('con_pc_id', this.willCreateId)
         axios({
           method: 'post',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/consultations`,
+          url: this.$store.state.urlApi + `consultations`,
           data: formData1
         })
           .then(response => {
@@ -236,7 +236,7 @@
       if (this.$store.state.authorisedStatus === true) {
         axios({
           method: 'get',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/coms`,
+          url: this.$store.state.urlApi + `coms`,
         })
           .then((response) => {
             this.globalComps = response

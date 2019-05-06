@@ -143,7 +143,7 @@
         })
       axios({
         method: 'get',
-        url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases?expand=pcCom,pcUser,tagCon`
+        url: this.$store.state.urlApi + `purchases?expand=pcCom,pcUser,tagCon`
       })
         .then((response) => {
           this.reqs = response.data
@@ -155,7 +155,7 @@
         })
       axios({
         method: 'get',
-        url: `http://192.168.1.150/noosfera/public_html/api/v1/coms`,
+        url: this.$store.state.urlApi + `coms`,
       })
         .then((response) => {
           this.globalComps = response.data
@@ -195,7 +195,7 @@
         formData.append('sc_type', 2)
         axios({
           method: 'post',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings`,
+          url: this.$store.state.urlApi + `sellings`,
           data: formData
         })
           .then(response => {
@@ -211,7 +211,7 @@
 
               axios({
                 method: 'PUT',
-                url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases/` + this.purId,
+                url: this.$store.state.urlApi + `purchases/` + this.purId,
                 headers: {
                   'Content-Type': 'application/json'
                 },
@@ -235,7 +235,7 @@
         formData1.set('con_pc_id', this.purId)
         axios({
           method: 'post',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/consultations`,
+          url: this.$store.state.urlApi + `consultations`,
           data: formData1
         })
           .then(response => {
@@ -258,7 +258,7 @@
         formData.set('n_type', 'selling') // тип
         axios({
           method: 'post',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/notifications`,
+          url: this.$store.state.urlApi + `notifications`,
           data: formData
         })
           .then(response => {
@@ -272,7 +272,7 @@
 
         axios({
           method: 'get',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases`
+          url: this.$store.state.urlApi + `purchases`
         })
           .then((response) => {
             this.reqs = response.data
@@ -288,7 +288,7 @@
           this.$store.state.loader = true
           axios({
             method: 'get',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases?page=`+ i
+            url: this.$store.state.urlApi + `purchases?page=`+ i
           })
             .then((response) => {
               this.reqs = response.data
@@ -304,7 +304,7 @@
         if (this.selected === null){
           axios({
             method: 'get',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases`
+            url: this.$store.state.urlApi + `purchases`
           })
               .then((response) => {
                 this.reqs = response.data
@@ -318,7 +318,7 @@
         if (this.selected.com_id !== 0) {
           axios({
             method: 'get',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases?PurchaseConsultationSearch[pc_com_id]=` + this.selected.com_id
+            url: this.$store.state.urlApi + `purchases?PurchaseConsultationSearch[pc_com_id]=` + this.selected.com_id
           })
               .then((response) => {
                 this.reqs = response.data

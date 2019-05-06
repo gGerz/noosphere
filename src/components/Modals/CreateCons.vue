@@ -32,6 +32,7 @@
                 <label class="m-0">Дата:</label>
                 <input v-model="date" type="date" class="form-control inputText" required="required" placeholder="">
                 <div v-show="dateEr" class="text-danger font_s">Введите дату</div>
+                <div v-show="datePastEr && date.length > 1" class="text-danger font_s">Консультаци не может быть в прошлом!</div>
               </div>
               <div class="py-3 ">
                 <label>Время:</label>
@@ -42,6 +43,10 @@
                     <input v-model="end" class="form-control mr-2" type="time" placeholder="До">
                   </div>
                   <div v-show="timeEr" class="text-danger font_s">Введите время</div>
+                  <div v-show="timePastEr && begin.length > 1 && end.length > 1" class="text-danger font_s">Консультация не может быть в прошлом!</div>
+                  <div v-show="timeChronoEr && begin.length > 1 && end.length > 1" class="text-danger font_s">Вы точно не путаете от и до?</div>
+                  <div v-show="timeDurEr && begin.length > 1 && end.length > 1" class="text-danger font_s">Время занятия должно превышать 30 минут</div>
+
                 </div>
               </div>
               <div class="form-group">
@@ -118,6 +123,10 @@
         consId: '',
         aboutLenEr: '',
         tagLenEr: '',
+        timeDurEr: false,
+        timeChronoEr: false,
+        datePastEr: false,
+        timePastEr: false,
       }
     },
     methods: {
@@ -130,7 +139,7 @@
             formData.append('tag_name', this.currentTag)
             axios({
               method: 'post',
-              url: `http://192.168.1.150/noosfera/public_html/api/v1/tags`,
+              url: this.$store.state.urlApi + `tags`,
               data: formData
             })
               .then(response => {
@@ -150,11 +159,11 @@
           formData3.append('tc_sc_id', this.sellId)
           axios({
             method: 'post',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/tag_cons`,
+            url: this.$store.state.urlApi + `tag_cons`,
             data: formData3
           })
-              .then(response => {
-              })
+            .then(response => {
+            })
         }
       },
       delTag (i) {
@@ -163,7 +172,33 @@
       closeModal() {
         $('.create_cons_modal').modal('hide');
       },
+      testTime(begin, end) {
+        const beginH = +(begin[0] + begin[1])
+        const endH = +(end[0] + end[1])
+        const beginM = +(begin[3] + begin[4])
+        const endM = +(end[3] + end[4])
+        this.timeChronoEr = false
+        this.timeDurEr = false
+        this.timePastEr = false
+        const h =  this.$store.state.now.time.h
+        const m =  this.$store.state.now.time.m
+        if (beginH < h || ( beginH === h && beginM < m )) this.timePastEr = true
+        else if (beginH > endH || (beginH === endH && beginM > endM)) this.timeChronoEr = true
+        else if (!(beginH + 1 === endH && ((60 - beginM) + endM) > 30)) {
+          if (!(beginH === endH && (endM - beginM) >= 30 )) this.timeDurEr = true
+        }
+      },
+      testDate(date) {
+        this.datePastEr = false
+        const arrDate = date.split('-')
+        const nowDate = this.$store.state.now.date.split('-')
+        console.log(nowDate, ', ', arrDate)
+        if (!(nowDate[0] <= arrDate[0] && nowDate[1] <= arrDate[1] && nowDate[2] <= arrDate[2])) this.datePastEr = true
+      },
       createCon () {
+        this.testDate(this.date)
+        this.testTime(this.begin, this.end)
+        this.about = $.trim(this.about) //удаление пробелов по сторонам
         this.title = $.trim(this.title) //удаление пробелов по сторонам
         this.titleEr = false
         this.selectedEr = false
@@ -189,7 +224,10 @@
           this.endEr === false &&
           this.priceEr === false &&
           this.titleLenEr === false &&
-          this.aboutLenEr === false
+          this.aboutLenEr === false &&
+          this.timeChronoEr === false &&
+          this.timeDurEr === false &&
+          this.datePastEr === false
         ) {
           const formData = new FormData()
           formData.append('sc_title', this.title)
@@ -204,7 +242,7 @@
           formData.append('sc_type', 1)
           axios({
             method: 'post',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings`,
+            url: this.$store.state.urlApi + `sellings`,
             data: formData
           })
             .then(response => {
@@ -223,7 +261,7 @@
       if (this.$store.state.authorisedStatus === true) {
         axios({
           method: 'get',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + '?expand=cpCom',
+          url: this.$store.state.urlApi + `profiles/` + this.$store.state.userInfo + '?expand=cpCom',
           headers: {'Authorization': `Bearer ${localStorage.token}`}
         })
           .then((response) => {

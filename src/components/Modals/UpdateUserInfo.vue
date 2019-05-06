@@ -90,7 +90,7 @@
 
         axios({
           method: 'PUT',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo,
+          url: this.$store.state.urlApi + `profiles/` + this.$store.state.userInfo,
           headers: {
             'Content-Type': 'application/json'
           },

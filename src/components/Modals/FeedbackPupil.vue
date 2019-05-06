@@ -76,7 +76,7 @@
               // formData.append('a_hash_video', hash)
               // axios({
               //     method: 'post',
-              //     url: `http://192.168.1.150/noosfera/public_html/api/v1/archives`,
+              //     url: this.$store.state.urlApi + `archives`,
               //     data: formData
               // })
               //     .then(response => {
@@ -105,7 +105,7 @@
               formData.append('a_reason', this.reason)
               axios({
                   method: 'post',
-                  url: `http://192.168.1.150/noosfera/public_html/api/v1/archives`,
+                  url: this.$store.state.urlApi + `archives`,
                   data: formData
               })
                   .then(response => {

@@ -45,7 +45,7 @@
   import axios from 'axios'
   export default {
     data(){
-      return{
+      return {
         nameEr: false,
         dateEr: false,
         aboutEr: false,
@@ -63,8 +63,6 @@
     },
     methods: {
       regNext() {
-
-
         this.nameEr = false
         this.aboutEr = false
         this.dateEr = false
@@ -74,9 +72,6 @@
         if (this.about === '') this.aboutEr = true
         if (this.date === '') this.dateEr = true
         if (this.gender === 'Выберите пол...') this.genderEr = true
-
-
-
 
         const formData = new FormData()
         if ( this.gender !== 'Выберите пол...' &&
@@ -88,11 +83,11 @@
           formData.set('p_date', this.date)
           formData.set('p_description', this.about)
           formData.set('p_user_id', parseInt(this.$store.state.userId))
-          if (this.gender == 'Мужской') this.genderType = 1;
+          if (this.gender === 'Мужской') this.genderType = 1;
           formData.set('p_gender', this.genderType)
           axios({
             method: 'post',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles`,
+            url: this.$store.state.urlApi + `profiles`,
             data: formData
           })
             .then(response => {

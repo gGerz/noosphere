@@ -277,7 +277,7 @@
         getUserInfo(){
             axios({
                 method: 'get',
-                url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + '?expand=cpCom,pUser',
+                url: this.$store.state.urlApi + `profiles/` + this.$store.state.userInfo + '?expand=cpCom,pUser',
                 headers: {'Authorization': `Bearer ${localStorage.token}`}
             })
                 .then((response) => {
@@ -293,7 +293,7 @@
         getCons(){
             axios({
                 method: 'get',
-                url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?SellingConsultationSearch[sc_user_id]=` + this.$store.state.userId
+                url: this.$store.state.urlApi + `sellings?SellingConsultationSearch[sc_user_id]=` + this.$store.state.userId
             })
                 .then((response) => {
                     this.cons = response.data
@@ -322,7 +322,7 @@
         getTickets(){
             axios({
                 method: 'get',
-                url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases?PurchaseConsultationSearch[pc_user_id]=` + this.$store.state.userId
+                url: this.$store.state.urlApi + `purchases?PurchaseConsultationSearch[pc_user_id]=` + this.$store.state.userId
             })
                 .then((response) => {
                     this.reqs = response.data
@@ -335,7 +335,7 @@
         getComps(){
             axios({
                 method: 'get',
-                url: `http://192.168.1.150/noosfera/public_html/api/v1/coms`,
+                url: this.$store.state.urlApi + `coms`,
             })
                 .then((response) => {
                     this.globalComps = response.data
@@ -351,7 +351,7 @@
             formData.set('cp_com_id', id)
             axios({
                 method: 'post',
-                url: `http://192.168.1.150/noosfera/public_html/api/v1/competence/kill`,
+                url: this.$store.state.urlApi + `competence/kill`,
                 data: formData
             })
                 .then((response) => {
@@ -386,7 +386,7 @@
 
             axios({
                 method: 'PUT',
-                url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings/` + this.selectedConIdForDelete,
+                url: this.$store.state.urlApi + `sellings/` + this.selectedConIdForDelete,
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -414,7 +414,7 @@
             };
             axios({
                 method: 'PUT',
-                url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases/` + this.selectedTicketIdForDelete,
+                url: this.$store.state.urlApi + `purchases/` + this.selectedTicketIdForDelete,
                 headers: {
                     'Content-Type': 'application/json'
                 },

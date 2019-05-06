@@ -66,7 +66,7 @@
         formData1.set('cp_com_id', this.selected.com_id)
         axios({
           method: 'post',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/competences`,
+          url: this.$store.state.urlApi + `competences`,
           data: formData1
         })
           .then(response => {
@@ -80,7 +80,7 @@
     mounted() {
       axios({
         method: 'get',
-        url: `http://192.168.1.150/noosfera/public_html/api/v1/coms`,
+        url: this.$store.state.urlApi + `coms`,
       })
         .then((response) => {
           this.globalComps = response.data

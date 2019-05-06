@@ -28,7 +28,7 @@ export default {
   mounted() {
     if (localStorage.currentConsultation !== undefined) this.$router.push('/videoroom')
     this.createNow()
-    setInterval(this.createNow, 10000)
+    setInterval(this.createNow, 30000)
   },
   methods: {
     createNow() {
@@ -45,8 +45,8 @@ export default {
       if (timem < 10) timem = '0' + timem;
       var times = date.getSeconds() + ''
       if (times < 10) times = '0' + times;
-      this.$store.state.now = {
-        date: yy + '-' + mm +'-' + + dd,
+        this.$store.state.now = {
+        date: yy + '-' + mm + '-' + dd,
         time: {
           h: timeh,
           m: timem,

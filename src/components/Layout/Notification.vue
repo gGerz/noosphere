@@ -23,7 +23,7 @@
       getNotifications(){
         axios({
           method: 'get',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/notifications?NotificationSearch[n_selling_user_id]=`+this.$store.state.userId,
+          url: this.$store.state.urlApi + `notifications?NotificationSearch[n_selling_user_id]=`+this.$store.state.userId,
         })
           .then((response) => {
             console.log(response)
@@ -47,7 +47,7 @@
         };
         axios({
           method: 'PUT',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/notifications/` + id,
+          url: this.$store.state.urlApi + `notifications/` + id,
           headers: {
             'Content-Type': 'application/json'
           },

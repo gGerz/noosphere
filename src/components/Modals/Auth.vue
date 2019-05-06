@@ -70,7 +70,7 @@
           formData.append('password', this.password)
           axios({
             method: 'post',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/user/login`,
+            url: this.$store.state.urlApi + `user/login`,
             data: formData
           })
                   .then(response => {
@@ -94,7 +94,7 @@
       //   // Информация юзера
       //   axios({
       //     method: 'get',
-      //     url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + '?expand=cpCom',
+      //     url: this.$store.state.urlApi + `profiles/` + this.$store.state.userInfo + '?expand=cpCom',
       //     headers: {'Authorization': `Bearer ${localStorage.token}`}
       //   })
       //       .then((response) => {

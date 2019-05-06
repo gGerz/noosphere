@@ -114,7 +114,7 @@
       getComps(){
         axios({
           method: 'get',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/coms`,
+          url: this.$store.state.urlApi + `coms`,
         })
             .then((response) => {
               this.globalComps = response.data
@@ -186,7 +186,7 @@
 
           axios({
             method: 'PUT',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases/` + this.selectedReq.pc_id,
+            url: this.$store.state.urlApi + `purchases/` + this.selectedReq.pc_id,
             headers: {
               'Content-Type': 'application/json'
             },
@@ -205,7 +205,7 @@
       if (this.$store.state.authorisedStatus === true) {
         axios({
           method: 'get',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/profiles/` + this.$store.state.userInfo + '?expand=cpCom',
+          url: this.$store.state.urlApi + `profiles/` + this.$store.state.userInfo + '?expand=cpCom',
           headers: {'Authorization': `Bearer ${localStorage.token}`}
         })
             .then((response) => {

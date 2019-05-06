@@ -128,12 +128,11 @@
           formData.append('sc_type', 2)
           axios({
             method: 'post',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings`,
+            url: this.$store.state.urlApi + `sellings`,
             data: formData
           })
             .then(response => {
               if (response.status === 201) {
-                console.log(response)
                 this.sellId = response.data.sc_id
                 this.purId = this.selectedCard.pc_id
 
@@ -144,7 +143,7 @@
 
                 axios({
                   method: 'PUT',
-                  url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases/` + this.purId,
+                  url: this.$store.state.urlApi + `purchases/` + this.purId,
                   headers: {
                     'Content-Type': 'application/json'
                   },
@@ -169,7 +168,7 @@
           formData1.set('con_pc_id', this.purId)
           axios({
             method: 'post',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/consultations`,
+            url: this.$store.state.urlApi + `consultations`,
             data: formData1
           })
             .then(response => {
@@ -192,11 +191,10 @@
           formData.set('n_type', 'selling') // тип
           axios({
             method: 'post',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/notifications`,
+            url: this.$store.state.urlApi + `notifications`,
             data: formData
           })
             .then(response => {
-              console.log(response)
             })
             .catch(response => {
             })

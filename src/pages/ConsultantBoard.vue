@@ -164,7 +164,7 @@
       this.$store.state.loader = true //колесо загрузки включается и происходит axios запрос на список консультаций из бд
       axios({
           method: 'get', //название метода обращения к бд, get - получить, post - отправить
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings` //ссылка на api списка консултаций
+          url: this.$store.state.urlApi + `sellings` //ссылка на api списка консултаций
         })
         .then((response) => { //если пришел ответ
           this.cons = response.data
@@ -177,7 +177,7 @@
 
         axios({
           method: 'get',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/coms`, //api компетенций
+          url: this.$store.state.urlApi + `coms`, //api компетенций
         })
           .then((response) => {
             this.globalComps = response.data
@@ -207,7 +207,7 @@
         this.selected = ''
         axios({
           method: 'get',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings`
+          url: this.$store.state.urlApi + `sellings`
         })
           .then((response) => {
             this.cons = response.data
@@ -223,7 +223,7 @@
         if (this.selected === null){ //если не выбрана компитенция
           axios({
             method: 'get',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings`
+            url: this.$store.state.urlApi + `sellings`
           })
               .then((response) => {
                 this.cons = response.data
@@ -238,7 +238,7 @@
           axios({
             method: 'get',
             //api дающая список консультаций по выбранной компитенции
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?SellingConsultationSearch[sc_com_id]=` + this.selected.com_id
+            url: this.$store.state.urlApi + `sellings?SellingConsultationSearch[sc_com_id]=` + this.selected.com_id
           })
             .then((response) => {
               this.cons = response.data
@@ -265,7 +265,7 @@
         formData.append('pc_type', 2)
         axios({
           method: 'post',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/purchases`,
+          url: this.$store.state.urlApi + `purchases`,
           data: formData
         })
           .then(response => {
@@ -280,7 +280,7 @@
 
               axios({
                 method: 'PUT',
-                url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings/` + this.sellId,
+                url: this.$store.state.urlApi + `sellings/` + this.sellId,
                 headers: {
                   'Content-Type': 'application/json'
                 },
@@ -304,7 +304,7 @@
         formData1.set('con_pc_id', this.purId)
         axios({
           method: 'post',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/consultations`,
+          url: this.$store.state.urlApi + `consultations`,
           data: formData1
         })
           .then(response => {
@@ -327,11 +327,10 @@
         formData.set('n_type', 'selling') // тип
         axios({
           method: 'post',
-          url: `http://192.168.1.150/noosfera/public_html/api/v1/notifications`,
+          url: this.$store.state.urlApi + `notifications`,
           data: formData
         })
             .then(response => {
-              console.log(response)
             })
             .catch(response => {
             })
@@ -341,7 +340,7 @@
           this.$store.state.loader = true
           axios({
             method: 'get',
-            url: `http://192.168.1.150/noosfera/public_html/api/v1/sellings?page=`+ i
+            url: this.$store.state.urlApi + `sellings?page=`+ i
           })
             .then((response) => {
               this.cons = response.data
