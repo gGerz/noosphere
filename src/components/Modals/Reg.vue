@@ -161,10 +161,10 @@
           this.nameEr === false &&
           this.dateEr === false &&
           this.aboutEr === false &&
-            this.validPassword === false &&
-            this.aboutLenEr === false &&
-            this.nameLenEr === false
-
+          this.validPassword === false &&
+          this.aboutLenEr === false &&
+          this.nameLenEr === false &&
+          this.validUsername === false
         ) {
           const formData = new FormData()
           formData.append('email', this.mail)
@@ -176,9 +176,6 @@
           })
             .then(response => {
               if (response.statusText === "Created") {
-                // this.mail = ''
-                // this.password = ''
-                // this.resetPassword = ''
                 this.$store.dispatch('saveUserId', response.data.id)
                 this.regNext()
                 $('.sign_up_modal').modal('hide');
