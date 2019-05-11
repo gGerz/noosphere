@@ -23,14 +23,10 @@
       ><i class="far fa-plus-square mr-2"></i><span class="dashed2">Создать консультацию</span></div>
       <create-cons />
     </div>
-    {{$store.state.authorisedStatus}}
-    {{$store.state.userId}}
     <div class="row">
-
       <div class="stub" v-if="cons.length === 0">
         Извините, ничего не найдено
       </div>
-
       <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 card-pad" @click="openConsCard(i)" v-for="(con, i) in cons">
         <div class="card">
           <div class="card-body cons-body">
@@ -90,8 +86,8 @@
                 </span>
                 <span class="main_color font_xl">руб</span>
               </div>
-              <div class="ml-auto">
-                <span v-if="$store.state.userId === con.sc_user_id" class="btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>
+              <div class="ml-auto" v-if="$store.state.authorisedStatus">
+                <span v-if="$store.state.userId == con.sc_user_id" class="btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>
                 <div v-else-if="inDate(con.sc_date) && inTime(con.sc_begin_time,con.sc_end_time)">
                   <span class=" btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Купить</span>
                 </div>

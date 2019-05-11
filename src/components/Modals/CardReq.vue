@@ -54,7 +54,7 @@
               <span class="main_color font_xl">руб</span>
             </div>
 
-            <div class="ml-auto">
+            <div class="ml-auto" v-if="$store.state.authorisedStatus">
               <span v-if="$store.state.userId == selectedCard.pc_user_id" class="btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>
               <div v-else-if="inDate(selectedCard.pc_date) && inTime(selectedCard.pc_begin_time,selectedCard.pc_end_time) && selectedCard != undefined">
                 <span class=" btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Ответить</span>
