@@ -183,8 +183,8 @@
         const m =  this.$store.state.now.time.m
         if (beginH < h || ( beginH === h && beginM < m )) this.timePastEr = true
         else if (beginH > endH || (beginH === endH && beginM > endM)) this.timeChronoEr = true
-        else if (!(beginH + 1 === endH && ((60 - beginM) + endM) > 30)) {
-          if (!(beginH === endH && (endM - beginM) >= 30 )) this.timeDurEr = true
+        else if ((beginH + 1 === endH && ((60 - beginM) + endM) < 30) || (beginH === endH && (endM - beginM) < 30 )) {
+          this.timeDurEr = true
         }
       },
       testDate(date) {

@@ -23,6 +23,8 @@
       ><i class="far fa-plus-square mr-2"></i><span class="dashed2">Создать консультацию</span></div>
       <create-cons />
     </div>
+    {{$store.state.authorisedStatus}}
+    {{$store.state.userId}}
     <div class="row">
 
       <div class="stub" v-if="cons.length === 0">
@@ -89,7 +91,7 @@
                 <span class="main_color font_xl">руб</span>
               </div>
               <div class="ml-auto">
-                <span v-if="$store.state.userId == con.sc_user_id" class="btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>
+                <span v-if="$store.state.userId === con.sc_user_id" class="btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>
                 <div v-else-if="inDate(con.sc_date) && inTime(con.sc_begin_time,con.sc_end_time)">
                   <span class=" btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Купить</span>
                 </div>
@@ -252,6 +254,11 @@
       },
       createCons(i) {
         event.stopPropagation();
+
+        if (this.$store.state.authorisedStatus === false) {
+          $('.sign_up_modal').modal('open');
+        }
+
         this.idOtherUser = this.cons[i].sc_user_id
         const formData = new FormData()
         formData.append('pc_title', this.cons[i].sc_title)
