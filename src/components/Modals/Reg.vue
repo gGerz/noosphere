@@ -149,6 +149,7 @@
         else if (!this.validEmail(this.mail)) this.emailValEr = true
         if (this.password === '') this.passEr = true
         else if (this.password.length > 30 || this.password.length < 7) this.passLongEr = true
+        else if (this.password !== this.resetPassword) this.passProfEr = true
 
         if ( this.checkbox === false ) this.checkEr = true
         if ( this.emailEr === false &&
