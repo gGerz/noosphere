@@ -21,12 +21,14 @@
     },
     methods: {
       getNotifications(){
+        if(this.$store.state.userId === null){
+          return
+        }
         axios({
           method: 'get',
           url: this.$store.state.urlApi + `notifications?NotificationSearch[n_selling_user_id]=`+this.$store.state.userId,
         })
           .then((response) => {
-            console.log(response)
             this.notifications = response.data
           })
           .catch((error) => {

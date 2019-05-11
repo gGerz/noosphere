@@ -58,9 +58,9 @@
           </div>
         </div>
         <div class="modal-footer justify-content-center">
-            <span class="btn btn-primary btn-shadow" v-on:click="createCon()">
-                Создать
-            </span>
+                <span class="btn btn-primary btn-shadow" v-on:click="createCon()">
+                    Изменить
+                </span>
         </div>
       </div>
     </div>
@@ -179,7 +179,6 @@
             data: payload
           })
               .then(response => {
-                this.createTags()
                 this.closeModal()
               })
               .catch(response => {

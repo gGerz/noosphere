@@ -31,6 +31,7 @@
                         <div class="d-lg-flex d-md-flex d-block align-items-center  flex-nowrap">
                             <div class="d-flex align-items-center w100 ">
                                 <img class="ava_cabinet" src="../assets/img/ava.jpg">
+                                <input type="file" @change="getImg">
                                 <div class="text-dark h3 m-0 main-item-name ">{{userInfo.p_name}}</div>
                             </div>
                             <div class="ml-lg-5 ml-md-5 general-buttons">
@@ -182,7 +183,7 @@
             </div>
             <!-- ВКЛАДКА АРХИВ -->
         </div>
-        <del-con-modal @delConItem="delConItem"/>
+        <del-con-modal @delConItem="delConItem" />
         <del-ticket-modal @delTicketItem="delReqItem"/>
     </div>
 </template>
@@ -215,6 +216,7 @@
     },
     data() {
         return {
+            ava: '',
             email: '',
             userComps: [],
             selectedUserComp: '',
@@ -273,6 +275,30 @@
         }
     },
     methods: {
+        getImg(event){
+            this.ava = event.target.files[0]
+            console.log(this.ava)
+            this.uploadImg()
+        },
+        uploadImg () {
+            const formData = new FormData()
+            let data = [
+
+            ]
+            formData.append('file', this.ava)
+            formData.append('type', 'multipart/form-data')
+            axios({
+                method: 'put',
+                url: this.$store.state.urlApi + `profiles/` + this.$store.state.userInfo,
+                data: formData
+            })
+                .then(response => {
+                    console.log(response)
+                })
+                .catch(response => {
+
+                })
+        },
         // Получение информации юзера
         getUserInfo(){
             axios({

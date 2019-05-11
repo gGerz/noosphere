@@ -36,7 +36,7 @@
               </vue-select>
             </div>
             <div class="pt-5">
-              <button type="submit" class="btn btn-primary btn-shadow" @click="updateUserInfo">Сохранить</button>
+              <button type="submit" class="btn btn-primary btn-shadow" :disabled="date.length <= 0" @click="updateUserInfo">Сохранить</button>
             </div>
           </div>
         </div>
@@ -97,8 +97,29 @@
           data: payload
         })
             .then(response => {
-              this.$emit('updateUserInfo')
-              $('.update_user_info_modal').modal('hide'); //закрытие модального окна
+              if (this.mail === this.userInfo.pUser.email) {
+                this.$emit('updateUserInfo')
+                $('.update_user_info_modal').modal('hide'); //закрытие модального окна
+              } else {
+                let payload1 = {
+
+                  'email': this.mail,
+                };
+                axios({
+                  method: 'PUT',
+                  url: this.$store.state.urlApi + `users/` + this.$store.state.userId,
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  data: payload1
+                })
+                    .then(response => {
+                      this.$emit('updateUserInfo')
+                      $('.update_user_info_modal').modal('hide'); //закрытие модального окна
+                    })
+                    .catch(response => {
+                    })
+              }
             })
             .catch(response => {
             })
