@@ -58,8 +58,8 @@
             <button type="button" class="btn btn-danger">Запись консультации</button>
             <div class=" d-flex flex-column mt-auto">
               <div class="text-center">Вердикт:</div>
-              <button type="button" class="btn btn-outline-primary w-100 mb-1" @click="verdict(item.a_id)">Прав ученик</button>
-              <button type="button" class="btn btn-outline-success w-100" @click="verdict(item.a_id)">Прав консультант</button>
+              <button type="button" class="btn btn-outline-primary w-100 mb-1" @click="verdict(i, item.a_id)">Прав ученик</button>
+              <button type="button" class="btn btn-outline-success w-100" @click="verdict(i, item.a_id)">Прав консультант</button>
             </div>
           </div>
         </div>
@@ -88,20 +88,21 @@
               console.error(error)
             })
       },
-      verdict(i){
+      verdict(i, id){
         //отправка пут запроса
         let payload = {
           'a_status': 2
         };
         axios({
           method: 'PUT',
-          url: this.$store.state.urlApi + `archives/`+ i,
+          url: this.$store.state.urlApi + `archives/`+ id,
           headers: {
             'Content-Type': 'application/json'
           },
           data: payload
         })
             .then(response => {
+              this.arbitrageList.splice(i, 1)
             })
             .catch(response => {
             })
