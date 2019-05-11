@@ -26,7 +26,9 @@ export default new Vuex.Store({
     userId: localStorage.getItem('userId'),
     userInfo: localStorage.getItem('userInfo'),
     authorisedStatus: !!localStorage.getItem('token'),
-    urlApi: `http://192.168.1.150/noosfera/public_html/api/v1/`
+    urlApi: `http://192.168.1.150/noosfera/public_html/api/v1/`,
+    imageApi: `http://192.168.1.150/noosfera/public_html/uploads/avatar/`,
+    myAvaSrc: ''
   },
   mutations: {
     [LOGIN] (state) {

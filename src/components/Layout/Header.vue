@@ -25,11 +25,12 @@
           </li>
           <li class="nav-item" v-if="$store.state.authorisedStatus">
             <div v-if="this.$store.state.userInfo === null" class="d-flex align-items-center" data-toggle="modal" data-target=".sign_up_next_modal">
-              <img class="img_master2" src="../../assets/img/ava.jpg">s
+              <img class="img_master2" src="../../assets/img/ava.jpg">
             </div>
             <router-link v-else class="nav-link nav-link-header" to="/cabinet">
               <div class="d-flex align-items-center ">
-                <img class="img_master2 mr-0" src="../../assets/img/ava.jpg">
+                <img v-if="$store.state.myAvaSrc" class="img_master2 mr-0" :src="$store.state.imageApi+$store.state.myAvaSrc">
+                <img v-else class="img_master2 mr-0" src="../../assets/img/ava.jpg">
               </div>
             </router-link>
           </li>

@@ -205,7 +205,7 @@
       if (this.$store.state.authorisedStatus === true) {
         axios({
           method: 'get',
-          url: this.$store.state.urlApi + `profiles/` + this.$store.state.userInfo + '?expand=cpCom',
+          url: this.$store.state.urlApi + `profiles/` + this.$store.state.userInfo + '?expand=cpCom,pUser,image',
           headers: {'Authorization': `Bearer ${localStorage.token}`}
         })
             .then((response) => {

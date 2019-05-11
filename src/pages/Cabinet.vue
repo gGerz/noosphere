@@ -30,8 +30,12 @@
                     <div class="card-body-main mw100">
                         <div class="d-lg-flex d-md-flex d-block align-items-center  flex-nowrap">
                             <div class="d-flex align-items-center w100 ">
-                                <img class="ava_cabinet" src="../assets/img/ava.jpg">
-                                <input type="file" @change="getImg">
+                                <label for="photo">
+                                  <img v-if="avatarSrc" class="ava_cabinet" :src="$store.state.imageApi+avatarSrc">
+                                  <img v-else class="ava_cabinet" src="../assets/img/ava.jpg">
+                                  <img class="ava_cabinet change_photo" src="../assets/img/camera.png">
+                                </label>
+                                <input class="photo_input" id="photo" type="file" @change="getImg">
                                 <div class="text-dark h3 m-0 main-item-name ">{{userInfo.p_name}}</div>
                             </div>
                             <div class="ml-lg-5 ml-md-5 general-buttons">
@@ -217,6 +221,7 @@
     data() {
         return {
             ava: '',
+            avatarSrc: '',
             email: '',
             userComps: [],
             selectedUserComp: '',
@@ -282,14 +287,12 @@
         },
         uploadImg () {
             const formData = new FormData()
-            let data = [
-
-            ]
-            formData.append('file', this.ava)
-            formData.append('type', 'multipart/form-data')
+            formData.append('i_image', this.ava)
+            formData.append('i_user_id', this.$store.state.userId)
+            formData.append('type', 'modal-window/VIP_MODAL_FILES')
             axios({
-                method: 'put',
-                url: this.$store.state.urlApi + `profiles/` + this.$store.state.userInfo,
+                method: 'post',
+                url: this.$store.state.urlApi + `image/upload`,
                 data: formData
             })
                 .then(response => {
@@ -303,13 +306,17 @@
         getUserInfo(){
             axios({
                 method: 'get',
-                url: this.$store.state.urlApi + `profiles/` + this.$store.state.userInfo + '?expand=cpCom,pUser',
+                url: this.$store.state.urlApi + `profiles/` + this.$store.state.userInfo + '?expand=cpCom,pUser,image',
                 headers: {'Authorization': `Bearer ${localStorage.token}`}
             })
                 .then((response) => {
                     this.userInfo = response.data //общая информация
                     this.email = this.userInfo.pUser.email //почта
                     this.userComps = this.userInfo.cpCom //компетенции пользователя
+                  if (response.data.image.length !== 0){
+                    this.avatarSrc = response.data.image[0].i_image
+                    this.$store.state.myAvaSrc = response.data.image[0].i_image
+                  }
                 })
                 .catch((error) => {
                     console.error(error)
@@ -695,6 +702,23 @@
         border-radius: .25rem;
         border-top-left-radius: 0r!important;
         border-top-right-radius: 0r!important;
+    }
+
+    .photo_input{
+      position: absolute;
+      left: -100000000px;
+    }
+
+    .change_photo{
+      position: absolute;
+      top: 281px;
+      opacity: 0;
+      transition: 0.2s;
+    }
+
+    .change_photo:hover{
+      opacity: 1;
+      cursor: pointer;
     }
 
     .ava_cabinet {

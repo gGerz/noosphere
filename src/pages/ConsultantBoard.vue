@@ -24,7 +24,7 @@
       <create-cons />
     </div>
     <div class="row">
-      <div class="stub" v-if="cons.length === 0">
+      <div class="stub" v-if="cons.length === 0 && !$store.state.loader">
         Извините, ничего не найдено
       </div>
       <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 card-pad" @click="openConsCard(i)" v-for="(con, i) in cons">
@@ -38,7 +38,8 @@
             <div>
               <div class="d-flex align-items-center">
                 <div>
-                  <img class="img_master2" src="../assets/img/ava.jpg" >
+                  <img v-if="con.image.length !== 0" class="img_master2" :src="$store.state.imageApi+con.image[0].i_image">
+                  <img v-else class="img_master2" src="../assets/img/ava.jpg">
                 </div>
                 <div>
                   <div class="font_m text-truncate card-item-name" v-if="con.scUser !== undefined">{{con.scUser.p_name}}</div>

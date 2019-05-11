@@ -14,7 +14,8 @@
           </div>
           <div class="d-flex align-items-center py-3">
             <div>
-              <img class="img_master2" src="../../assets/img/ava.jpg" >
+              <img v-if="selectedCard.image !== undefined" class="img_master2" :src="$store.state.imageApi+selectedCard.image[0].i_image">
+              <img v-else class="img_master2" src="../../assets/img/ava.jpg">
             </div>
             <div>
               <div class="font_m card-item-name text-truncate" v-if="selectedCard.pcUser !== undefined">{{selectedCard.pcUser.p_name}}</div>

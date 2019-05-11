@@ -3,7 +3,7 @@
     <div class="container">
       <Header />
       <Content />
-      <loader v-if="this.$store.state.loader" />
+      <loader v-if="$store.state.loader" />
     </div>
     <Notification />
   </div>

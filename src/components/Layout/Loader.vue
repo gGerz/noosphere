@@ -12,6 +12,9 @@
     justify-content: center;
     align-items: center;
     margin-top: 20%;
+    position: absolute;
+    left: 49%;
+    top: 6%;
   }
   img.rot {
     animation: 1s linear 0s normal none infinite running rot;

@@ -24,7 +24,7 @@
       <req-cons />
     </div>
     <div class="row">
-      <div class="stub" v-if="reqs.length === 0">
+      <div class="stub" v-if="reqs.length === 0 && !$store.state.loader">
         Извините, ничего не найдено
       </div>
       <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 card-pad" @click="selectIndex(i)" data-toggle="modal" data-target=".card_req_modal" v-for="(req, i) in reqs">

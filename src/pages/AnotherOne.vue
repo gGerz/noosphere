@@ -4,7 +4,7 @@
         <div class="card">
             <div class="card-body-main">
                 <div class="d-lg-flex d-md-flex d-block align-items-center">
-                    <div class="d-flex align-items-center ">
+                    <div class="d-flex align-items-center">
                         <img class="ava_cabinet" src="../assets/img/ava.jpg">
                         <div class="text-dark h3 m-0">{{anotherUserInfo.p_name}}</div>
                     </div>
@@ -72,7 +72,7 @@ export default {
         this.anotherUserId = this.$store.state.anotherUserId
         axios({
             method: 'get',
-            url: this.$store.state.urlApi + `profiles/` + this.$store.state.anotherUserId + `?expand=cpCom`
+            url: this.$store.state.urlApi + `profiles/` + this.$store.state.anotherUserId + `?expand=cpCom,image`
         })
             .then((response) => {
                 this.anotherUserInfo = response.data
