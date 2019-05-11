@@ -180,6 +180,7 @@
           })
               .then(response => {
                 this.closeModal()
+                this.$emit('getCons')
               })
               .catch(response => {
               })

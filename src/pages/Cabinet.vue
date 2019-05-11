@@ -122,7 +122,7 @@
                                 </span>
                             </div>
                         </div>
-                        <update-user-con :selectedCon="selectedCon" />
+                        <update-user-con :selectedCon="selectedCon" @getCons="getCons" />
                         <div class="schedule-item" v-for="(con, i) in filteredCons">
                             <i class="fas fa-times mr-2" @click="openDelConItemModal(con.sc_id, i)"></i>
                             <i class="fas fa fa-cog mr-2" @click="changeConItem(con)"></i>
@@ -165,7 +165,7 @@
                                 </span>
                             </div>
                         </div>
-                        <update-user-ticket :selectedReq="selectedReq" />
+                        <update-user-ticket :selectedReq="selectedReq" @getTickets="getTickets" />
                         <div class="schedule-item" v-for="(req, i) in filteredReqs">
                             <i class="fas fa-times mr-2" @click="openDelTicketItemModal(req.pc_id, i)"></i>
                             <i class="fas fa fa-cog mr-2" @click="changeReqItem(req)"></i>
