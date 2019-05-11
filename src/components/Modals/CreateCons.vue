@@ -191,8 +191,23 @@
         this.datePastEr = false
         const arrDate = date.split('-')
         const nowDate = this.$store.state.now.date.split('-')
-        console.log(nowDate, ', ', arrDate)
         if (!(nowDate[0] <= arrDate[0] && nowDate[1] <= arrDate[1] && nowDate[2] <= arrDate[2])) this.datePastEr = true
+      },
+      setProps(){
+        if (this.$store.state.authorisedStatus === true) {
+          axios({
+            method: 'get',
+            url: this.$store.state.urlApi + `profiles/` + this.$store.state.userInfo + '?expand=cpCom',
+            headers: {'Authorization': `Bearer ${localStorage.token}`}
+          })
+              .then((response) => {
+                this.$store.state.userComp = response.data
+                this.userInfo = response.data
+              })
+              .catch((error) => {
+                console.error(error)
+              })
+        }
       },
       createCon () {
         this.testDate(this.date)
@@ -282,6 +297,7 @@
         e.target.__vue__.about = ''
         e.target.__vue__.tags = []
       })
+      $('.create_cons_modal').on("shown.bs.modal", this.setProps)
     }
   }
 </script>

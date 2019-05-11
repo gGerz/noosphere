@@ -204,7 +204,6 @@
           .then(response => {
             if (response.statusText == 'Created') {
               this.$store.dispatch('saveUserProfileId', response.data.p_id)
-              $('.sign_up_next_modal').modal('hide');
             }
           })
           .catch(response => {

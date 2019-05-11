@@ -200,7 +200,6 @@
         })
           .then(response => {
             if (response.status === 201) {
-              console.log(response)
               this.sellId = response.data.sc_id
               this.purId = this.reqs[i].pc_id
 
@@ -262,7 +261,6 @@
           data: formData
         })
           .then(response => {
-            console.log(response)
           })
           .catch(response => {
           })

@@ -146,7 +146,6 @@
             this.datePastEr = false
             const arrDate = date.split('-')
             const nowDate = this.$store.state.now.date.split('-')
-            console.log(nowDate, ', ', arrDate)
             if (!(nowDate[0] <= arrDate[0] && nowDate[1] <= arrDate[1] && nowDate[2] <= arrDate[2])) this.datePastEr = true
         },
         addTag () {
