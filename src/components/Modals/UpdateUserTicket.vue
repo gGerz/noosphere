@@ -194,6 +194,7 @@
           })
               .then(response => {
                 this.closeModal()
+                this.$emit('getTickets')
               })
               .catch(response => {
               })
