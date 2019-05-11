@@ -43,7 +43,6 @@
             </div>
             <div class="form-group">
               <textarea type="text" class="form-control textarea-resize-n" required="required" placeholder="Описание" rows="4" v-model="about"></textarea>
-              <div v-show="aboutEr" class="text-danger font_s">Введите описание</div>
               <div v-show="aboutLenEr" class="text-danger font_s">Описание не должно превышать 256 символов</div>
             </div>
             <div class="form-group">
@@ -132,14 +131,12 @@
 
         this.nameEr = false
         this.nameLenEr = false
-        this.aboutEr = false
         this.aboutLenEr = false
         this.dateEr = false
         this.genderEr = false
 
         if (this.name === '') this.nameEr = true
         else if (this.name.length < 4 || this.name.length > 30) this.nameLenEr = true
-        if (this.about === '') this.aboutEr = true
         else if (this.about.length > 256) this.aboutLenEr = true
         if (this.date === '') this.dateEr = true
         if (this.gender === 'Выберите пол...') this.genderEr = true
@@ -161,7 +158,6 @@
           this.gender !== 'Выберите пол...' &&
           this.nameEr === false &&
           this.dateEr === false &&
-          this.aboutEr === false &&
           this.validPassword === false &&
           this.aboutLenEr === false &&
           this.nameLenEr === false &&
