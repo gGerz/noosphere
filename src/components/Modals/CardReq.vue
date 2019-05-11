@@ -96,7 +96,7 @@
         }
       },
       methods: {
-        inTime(begin ='', end='') {
+        inTime(begin, end) {
           const beginH = +(begin[0] + begin[1])
           const endH = +(end[0] + end[1])
           const beginM = +(begin[3] + begin[4])
