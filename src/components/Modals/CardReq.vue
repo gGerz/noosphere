@@ -98,15 +98,15 @@
         }
       },
       methods: {
-        inTime(begin, end) {
-          const beginH = +(begin[0] + begin[1])
-          const endH = +(end[0] + end[1])
-          const beginM = +(begin[3] + begin[4])
-          const endM = +(end[3] + end[4])
-          if (this.$store.state.now.time.h > beginH && this.$store.state.now.time.h < endH) return true
-          if (((this.$store.state.now.time.h == beginH) && (this.$store.state.now.time.m >= beginM)) || ((this.$store.state.now.time.h == endH) && (this.$store.state.now.time.m <= endM))) return true
-          return false
-        },
+        // inTime(begin, end) {
+        //   const beginH = +(begin[0] + begin[1])
+        //   const endH = +(end[0] + end[1])
+        //   const beginM = +(begin[3] + begin[4])
+        //   const endM = +(end[3] + end[4])
+        //   if (this.$store.state.now.time.h > beginH && this.$store.state.now.time.h < endH) return true
+        //   if (((this.$store.state.now.time.h == beginH) && (this.$store.state.now.time.m >= beginM)) || ((this.$store.state.now.time.h == endH) && (this.$store.state.now.time.m <= endM))) return true
+        //   return false
+        // },
         inDate(date) {
           if (this.$store.state.now.date === date) {
             return true
