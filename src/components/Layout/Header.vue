@@ -20,8 +20,7 @@
 <!--          <li class="nav-item">-->
 <!--            <router-link class="nav-link nav-link-header" to="/about">О сервисе</router-link>-->
 <!--          </li>-->
-          <li class="nav-item" v-if="$store.state.authorisedStatus">
-          <!--<li class="nav-item" v-if="$store.state.authorisedStatus && $store.state.userId === '287'">-->
+          <li class="nav-item">
             <router-link class="nav-link nav-link-header" to="/arbitrage">Арбитраж</router-link>
           </li>
           <li class="nav-item" v-if="$store.state.authorisedStatus">
