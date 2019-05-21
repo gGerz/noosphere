@@ -88,13 +88,18 @@
                 <span class="main_color font_xl">руб</span>
               </div>
               <div class="ml-auto" v-if="$store.state.authorisedStatus">
-                <span v-if="$store.state.userId == con.sc_user_id" class="btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>
-                <div v-else-if="inDate(con.sc_date) && inTime(con.sc_begin_time,con.sc_end_time)">
-                  <span class=" btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Купить</span>
+                <div v-if="$store.state.userId == con.sc_user_id">
+                  <span class="btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>
                 </div>
                 <div v-else>
-                  <span class=" btn btn-outline-secondary btn-md px-4 btn-buy font_l">Не время</span>
+                  <span class=" btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Купить</span>
                 </div>
+<!--                <div v-else-if="inDate(con.sc_date) && inTime(con.sc_begin_time,con.sc_end_time)">-->
+<!--                  <span class=" btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Купить</span>-->
+<!--                </div>-->
+<!--                <div v-else>-->
+<!--                  <span class=" btn btn-outline-secondary btn-md px-4 btn-buy font_l">Не время</span>-->
+<!--                </div>-->
               </div>
               <!--<span v-if="$store.state.userId == con.sc_user_id" class="ml-auto btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>-->
               <!--<span v-else class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Купить</span>-->

@@ -210,8 +210,8 @@
         }
       },
       createCon () {
-        this.testDate(this.date)
-        this.testTime(this.begin, this.end)
+        // this.testDate(this.date)
+        // this.testTime(this.begin, this.end)
         this.about = $.trim(this.about)
         this.title = $.trim(this.title)
         this.titleEr = false

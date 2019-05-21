@@ -72,12 +72,13 @@
 
             <div class="ml-auto" v-if="$store.state.authorisedStatus">
               <span v-if="$store.state.userId == selectedCard.sc_user_id" class="btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>
-              <div v-else-if="inDate(selectedCard.sc_date) && inTime(selectedCard.sc_begin_time,selectedCard.sc_end_time) ">
-                <span class=" btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Купить</span>
-              </div>
-              <div v-else>
-                <span class=" btn btn-outline-secondary btn-md px-4 btn-buy font_l">Не время</span>
-              </div>
+              <span v-else class=" btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Купить</span>
+<!--              <div v-else-if="inDate(selectedCard.sc_date) && inTime(selectedCard.sc_begin_time,selectedCard.sc_end_time) ">-->
+<!--                <span class=" btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Купить</span>-->
+<!--              </div>-->
+<!--              <div v-else>-->
+<!--                <span class=" btn btn-outline-secondary btn-md px-4 btn-buy font_l">Не время</span>-->
+<!--              </div>-->
             </div>
             <!--<router-link class="btn btn-outline-primary m-2 my-sm-0" data-toggle="modal" data-target=".arbitration_modal" to="/videoroom">Video</router-link>-->
             <!--<router-link target="_blank" :to="{ path: 'offer', query: {id: data.item.id }}">-->

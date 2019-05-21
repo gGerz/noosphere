@@ -21,7 +21,7 @@
     },
     methods: {
       getNotifications(){
-        if(this.$store.state.userId === null){
+        if(this.$store.state.authorisedStatus === false){
           return
         }
         axios({
