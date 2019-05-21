@@ -2,7 +2,7 @@
   <div>
     <div class="reg_succ">
       <div class="reg_succ__body">
-        Вы зарегистрировались
+        Вы зарегистрировались!
       </div>
     </div>
     <div class="modal fade sign_up_modal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
@@ -124,7 +124,6 @@
         return re.test(email);
       },
       reg() {
-
         this.name = $.trim(this.name)
         this.about = $.trim(this.about)
 
@@ -183,6 +182,7 @@
               if (response.statusText === "Created") {
                 this.$store.dispatch('saveUserId', response.data.id)
                 this.regNext()
+                this.regSuccMes()
                 $('.sign_up_modal').modal('hide');
               }
             })
@@ -194,10 +194,10 @@
         }
       },
       regSuccMes() {
-        $( ".reg_succ" ).show()
+        document.querySelector('.reg_succ').classList.add('reg_succ__active');
         setTimeout(() => {
-          $( ".reg_succ" ).hide()
-        }, 7000);
+          document.querySelector('.reg_succ').classList.remove('reg_succ__active');
+        }, 6000);
       },
       regNext() {
         const formData = new FormData()
@@ -215,12 +215,10 @@
           .then(response => {
             if (response.statusText == 'Created') {
               this.$store.dispatch('saveUserProfileId', response.data.p_id)
-              this.regSuccMes()
             }
           })
           .catch(response => {
           })
-
       }
     },
     mounted() {
@@ -274,15 +272,22 @@
     position: fixed;
     bottom: 50px;
     right: 120px;
-    height: 100px;
-    width: 300px;
     background: white;
-    border: 1px solid rgba(60,60,60,.26);
+    border: 1px solid #28a745;
     border-radius: 10px;
     z-index: 1115;
-    display: none;
+    opacity: 0;
+    transition: 2s;
+    display: flex;
+    align-items: center;
+    color: #28a745;
+    font-size: 22px;
+  }
+  .reg_succ__active {
+    opacity: 1;
+
   }
   .reg_succ__body{
-    padding: 10px 20px;
+    padding: 14px 28px;
   }
 </style>
