@@ -76,7 +76,7 @@
       }
     },
     methods: {
-      getArbitrageList(){
+      getArbitrageList() {
         axios({
           method: 'get',
           url: this.$store.state.urlApi + `archives`
@@ -116,11 +116,11 @@
 
 <style lang="scss">
   $main_color: #0D84FB; //синиий
-    $main_grey: #A6A6A6; //серый
-    $danger: #FF3F3F; //красный
-    $success: #43C768; //зеленый
-    $white: #FFFFFF; // Белый
-    $secondary_grey: #373737;
+  $main_grey: #A6A6A6; //серый
+  $danger: #FF3F3F; //красный
+  $success: #43C768; //зеленый
+  $white: #FFFFFF; // Белый
+  $secondary_grey: #373737;
   $font_card-price: 30px; //34
   $font_xxl: 28px;
   $font_card-header: 22px;
