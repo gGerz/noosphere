@@ -184,7 +184,6 @@
                 this.$store.dispatch('saveUserId', response.data.id)
                 this.regNext()
                 $('.sign_up_modal').modal('hide');
-                this.regSuccMes()
               }
             })
             .catch(response => {
@@ -216,6 +215,7 @@
           .then(response => {
             if (response.statusText == 'Created') {
               this.$store.dispatch('saveUserProfileId', response.data.p_id)
+              this.regSuccMes()
             }
           })
           .catch(response => {
