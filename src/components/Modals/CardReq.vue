@@ -14,7 +14,7 @@
           </div>
           <div class="d-flex align-items-center py-3">
             <div>
-              <img v-if="selectedCard.image.length !== 0" class="img_master2" :src="$store.state.imageApi+selectedCard.image[0].i_image">
+              <img v-if="selectedCard.image.length !== 0" class="img_master2" :src="$store.state.imageApi+selectedCard.image[selectedCard.image.length - 1].i_image">
               <img v-else class="img_master2" src="../../assets/img/ava.jpg">
             </div>
             <div>

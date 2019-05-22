@@ -296,7 +296,7 @@
                 data: formData
             })
                 .then(response => {
-                    console.log(response)
+                    this.getUserInfo()
                 })
                 .catch(response => {
 
@@ -314,8 +314,8 @@
                     this.email = this.userInfo.pUser.email //почта
                     this.userComps = this.userInfo.cpCom //компетенции пользователя
                   if (response.data.image.length !== 0){
-                    this.avatarSrc = response.data.image[0].i_image
-                    this.$store.state.myAvaSrc = response.data.image[0].i_image
+                    this.avatarSrc = response.data.image[response.data.image.length - 1].i_image
+                    this.$store.state.myAvaSrc = response.data.image[response.data.image.length - 1].i_image
                   }
                 })
                 .catch((error) => {

@@ -41,7 +41,7 @@
             <div>
               <div class="d-flex align-items-center">
                 <div>
-                  <img v-if="con.image.length !== 0" class="img_master2" :src="$store.state.imageApi+con.image[0].i_image">
+                  <img v-if="con.image.length !== 0" class="img_master2" :src="$store.state.imageApi+con.image[con.image.length - 1].i_image">
                   <img v-else class="img_master2" src="../assets/img/ava.jpg">
                 </div>
                 <div>
