@@ -1,6 +1,11 @@
 <template>
   <div>
     <h2 class="my-4 font_xxl" >Арбитраж</h2>
+    <div class="search-bar_date">
+      <input type="date" v-model="searchDate">
+      <div class="search-btn btn text-grey mr-1" @click="search">Поиск</div>
+      {{searchDate}}
+    </div>
     <div class="card mb-3" v-for="(item, i) in arbitrageList">
       <div class="card-body d-flex row">
         <div class="col-12 col-lg-9">
@@ -72,10 +77,19 @@
   export default {
     data(){
       return {
-        arbitrageList: []
+        arbitrageList: [],
+        searchDate: ''
       }
     },
     methods: {
+      search() {
+
+        function toTimestamp(strDate){
+          var datum = Date.parse(strDate);
+          return datum/1000;
+        }
+        console.log(toTimestamp(this.searchDate))
+      },
       getArbitrageList() {
         axios({
           method: 'get',
@@ -169,4 +183,32 @@
     }
   }
 
+  .search-btn {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    padding-top: 13px;
+    margin-left: 1rem;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    height: 48px;
+    background: #E4E4E4;
+
+    &:hover {
+      background: #d6d6d6;
+    }
+  }
+
+  .search-bar_date {
+    input {
+      height: 48px;
+      margin-bottom: 10px;
+      background: none;
+      border: 1px solid rgba(60,60,60,.26);
+      border-radius: 4px;
+      white-space: normal;
+      padding: 0 7px;
+      color: #495057;
+    }
+  }
 </style>

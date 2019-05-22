@@ -10,9 +10,13 @@
             </template>
             <span slot="no-options">Ничего не найдено</span>
           </vue-select>
+
+        </div>
+        <div class="w-100 search-bar_text">
+          <input type="text" v-model="searchTitle" placeholder="Название">
         </div>
         <div class="d-flex mt-2 mt-md-0">
-          <div class="search-btn btn text-grey mr-1" @click="consFindComp">Поиск</div>
+          <div class="search-btn btn text-grey mr-1" @click="consFind">Поиск</div>
           <div class="search-btn btn text-grey ml-1" @click="clearSearch">Сбросить</div>
         </div>
       </div>
@@ -131,7 +135,8 @@
         idOtherUser: '',
         sellId: '',
         purId: '',
-        now: ''
+        now: '',
+        searchTitle: ''
       }
     },
     mounted () {
@@ -170,6 +175,26 @@
         })
     },
     methods: {
+      consFind() {
+        let comId
+        if (this.searchTitle === '') this.searchTitle = ``
+        if (this.selected === '') comId = ''
+        else comId = this.selected.com_id
+
+        axios({
+          method: 'get',
+          //api дающая список ...... по выбранной компитенции
+          url: this.$store.state.urlApi + `purchases?PurchasesConsultationSearch[pc_title]=`+ this.searchTitle+ `&SellingConsultationSearch[pc_com_id]=` + comId
+        })
+          .then((response) => {
+            this.cons = response.data
+            this.page = Math.ceil((response.data.length) / 21)
+            this.$store.state.loader = false
+          })
+          .catch((error) => {
+            console.error(error)
+          })
+      },
       // inTime(begin, end) {
       //   const beginH = +(begin[0] + begin[1])
       //   const endH = +(end[0] + end[1])
@@ -399,9 +424,8 @@
 
   .search-bar {
     display: flex;
-    width: 450px;
+    width: 650px;
   }
-
   .card-pad {
     padding-right: 12px!important;
     padding-left: 12px!important;
@@ -517,6 +541,19 @@
     .search-btn {
       width: 50%!important;
       margin-left: 0rem;
+    }
+  }
+
+  .search-bar_text {
+    input {
+      height: 48px;
+      margin-left: 10px;
+      background: none;
+      border: 1px solid rgba(60,60,60,.26);
+      border-radius: 4px;
+      white-space: normal;
+      padding: 0 7px;
+      color: #495057;
     }
   }
 
