@@ -4,15 +4,18 @@
     <div class="headline mb-4 align-items-center">
       <div class="search-bar">
         <div class="w-100">
-          <vue-select v-model="selected" label="competence" :options="globalComps" placeholder="Компетенции"  style="display: block">
+          <vue-select v-model="selected" label="competence" :options="globalComps" placeholder="Компетенции" style="display: block">
             <template id="style-2" slot="option" slot-scope="option" class="modal-body__select mt-5" >
               <div class="py-1">{{ option.competence }}</div>
             </template>
             <span slot="no-options">Ничего не найдено</span>
           </vue-select>
         </div>
+        <div class="w-100 search-bar_text">
+          <input type="text" v-model="searchTitle" placeholder="Название">
+        </div>
         <div class="d-flex mt-2 mt-md-0">
-          <div class="search-btn btn text-grey mr-1" @click="consFindComp">Поиск</div>
+          <div class="search-btn btn text-grey mr-1" @click="consFind()">Поиск</div>
           <div class="search-btn btn text-grey ml-1" @click="clearSearch">Сбросить</div>
         </div>
       </div>
@@ -161,6 +164,7 @@
         cons: [],
         photos: [],
         now: '',
+        searchTitle: ''
       }
     },
     // mounted вызывается после компиляции html элементов
@@ -209,6 +213,7 @@
       },
       clearSearch() {
         this.selected = ''
+        this.searchTitle = ''
         axios({
           method: 'get',
           url: this.$store.state.urlApi + `sellings`
@@ -222,8 +227,28 @@
             console.error(error)
           })
       },
+      consFind() {
+        let comId
+        if (this.searchTitle === '') this.searchTitle = ``
+        if (this.selected === '') comId = ''
+        else comId = this.selected.com_id
+
+        axios({
+          method: 'get',
+          //api дающая список ...... по выбранной компитенции
+          url: this.$store.state.urlApi + `sellings?SellingConsultationSearch[sc_title]=`+ this.searchTitle+ `&SellingConsultationSearch[sc_com_id]=` + comId
+        })
+          .then((response) => {
+            this.cons = response.data
+            this.page = Math.ceil((response.data.length) / 21)
+            this.$store.state.loader = false
+          })
+          .catch((error) => {
+            console.error(error)
+          })
+      },
       //поиск по компетенциям
-      consFindComp() {
+      consFindComp() { //old
         if (this.selected === null){ //если не выбрана компитенция
           axios({
             method: 'get',
@@ -242,7 +267,7 @@
           axios({
             method: 'get',
             //api дающая список консультаций по выбранной компитенции
-            url: this.$store.state.urlApi + `sellings?SellingConsultationSearch[sc_com_id]=` + this.selected.com_id
+            url: this.$store.state.urlApi + `sellings?SellingConsultationSearch[sc_com_id]=`
           })
             .then((response) => {
               this.cons = response.data
@@ -428,7 +453,7 @@
 
   .search-bar {
     display: flex;
-    width: 450px;
+    width: 650px;
   }
 
 
@@ -546,6 +571,19 @@
   }
   .card-item-name {
     width: 230px;
+  }
+
+  .search-bar_text {
+    input {
+      height: 48px;
+      margin-left: 10px;
+      background: none;
+      border: 1px solid rgba(60,60,60,.26);
+      border-radius: 4px;
+      white-space: normal;
+      padding: 0 7px;
+      color: #495057;
+    }
   }
 
 
