@@ -27,11 +27,11 @@ export default new Vuex.Store({
     userInfo: localStorage.getItem('userInfo'),
     authorisedStatus: !!localStorage.getItem('token'),
     // для прода
-    // urlApi: `http://api.noosfera.noosfera.student.smartworld.team:2280/v1/`,
-    // imageApi: `http://api.noosfera.noosfera.student.smartworld.team:2280/uploads/avatar/`,
+    urlApi: `http://api.noosfera.noosfera.student.smartworld.team:2280/v1/`,
+    imageApi: `http://api.noosfera.noosfera.student.smartworld.team:2280/uploads/avatar/`,
     // для разработки
-    urlApi: `http://api.noosfera.local/v1/`,
-    imageApi: `http://api.noosfera.local/uploads/avatar/`,
+    // urlApi: `http://api.noosfera.local/v1/`,
+    // imageApi: `http://api.noosfera.local/uploads/avatar/`,
     myAvaSrc: ''
   },
   mutations: {
