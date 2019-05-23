@@ -1,82 +1,75 @@
 <template>
-  <div>
-    <div class="reg_succ">
-      <div class="reg_succ__body">
-        Вы зарегистрировались!
-      </div>
-    </div>
-    <div class="modal fade sign_up_modal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-      <div class="modal-dialog " role="document">
-        <div class="modal-content ">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel1">Регистрация</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body signin">
-            <div class="py-5 px-5">
-              <div class="form-group">
-                <input type="email" class="form-control inputText" required="required" aria-describedby="emailHelp" placeholder="Email" v-model="mail">
-                <div v-show="emailEr" class="text-danger font_s">Введите email</div>
-                <div v-show="emailValEr" class="text-danger font_s">Введите корректный email</div>
-                <div v-show="emailServEr" class="text-danger font_s">Такой email уже занят</div>
+  <div class="modal fade sign_up_modal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+      <div class="modal-content ">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel1">Регистрация</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body signin">
+          <div class="py-5 px-5">
+            <div class="form-group">
+              <input type="email" class="form-control inputText" required="required" aria-describedby="emailHelp" placeholder="Email" v-model="mail">
+              <div v-show="emailEr" class="text-danger font_s">Введите email</div>
+              <div v-show="emailValEr" class="text-danger font_s">Введите корректный email</div>
+              <div v-show="emailServEr" class="text-danger font_s">Такой email уже занят</div>
 
-              </div>
-              <div class="form-group">
-                <input type="password" class="form-control inputText" required="required" placeholder="Пароль" v-model="password">
-                <!--<div v-show="password.length < 7 && password.length !== 0" class="text-danger font_s">Пароль должен содержать от 7 до 30 символов</div>-->
-                <div v-show="passEr" class="text-danger font_s">Введите пароль</div>
-                <div v-show="passLongEr" class="text-danger font_s">Пароль должен содержать от 7 до 30 символов</div>
-                <div v-show="validPassword && password.length > 0" class="text-danger font_s">Пароль может содержать только цифры или латинские буквы</div>
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control inputText" required="required" placeholder="Пароль" v-model="password">
+              <!--<div v-show="password.length < 7 && password.length !== 0" class="text-danger font_s">Пароль должен содержать от 7 до 30 символов</div>-->
+              <div v-show="passEr" class="text-danger font_s">Введите пароль</div>
+              <div v-show="passLongEr" class="text-danger font_s">Пароль должен содержать от 7 до 30 символов</div>
+              <div v-show="validPassword && password.length > 0" class="text-danger font_s">Пароль может содержать только цифры или латинские буквы</div>
 
-              </div>
-              <div class="form-group">
-                <input type="password" class="form-control inputText" required="required" placeholder="Подтвердите пароль" v-model="resetPassword">
-                <div v-show="passProfEr" class="text-danger font_s">Пароли не совпадают</div>
-              </div>
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control inputText" required="required" placeholder="Подтвердите пароль" v-model="resetPassword">
+              <div v-show="passProfEr" class="text-danger font_s">Пароли не совпадают</div>
+            </div>
 
-              <div class="form-group pb-0">
-                <input type="text" class="form-control inputText" required="required" aria-describedby="" placeholder="Имя" v-model="name">
-                <div v-show="nameEr" class="text-danger font_s">Введите имя</div>
-                <div v-show="nameLenEr" class="text-danger font_s">Имя должно содержать от 4 до 30 символов</div>
-                <div v-show="validUsername && name.length > 0" class="text-danger font_s">Имя может содержать только русские символы</div>
-              </div>
-              <div class="form-group ">
-                <small id="" class="form-text text-muted">Дата рождения</small>
-                <input type="date" class="form-control inputText" required="required" v-model="date" placeholder="Дата рождения">
-                <div v-show="dateEr" class="text-danger font_s">Введите дату рождения</div>
-              </div>
-              <div class="form-group">
-                <textarea type="text" class="form-control textarea-resize-n" required="required" placeholder="Описание" rows="4" v-model="about"></textarea>
-                <div v-show="aboutLenEr" class="text-danger font_s">Описание не должно превышать 256 символов</div>
-              </div>
-              <div class="form-group">
-                <select id="inputState" class="form-control inputText" v-model="gender">
-                  <option selected class="text-grey">Выберите пол...</option>
-                  <option>Мужской</option>
-                  <option>Женский</option>
-                </select>
-                <div v-show="genderEr" class="text-danger font_s">Выбирите гендер</div>
-              </div>
+            <div class="form-group pb-0">
+              <input type="text" class="form-control inputText" required="required" aria-describedby="" placeholder="Имя" v-model="name">
+              <div v-show="nameEr" class="text-danger font_s">Введите имя</div>
+              <div v-show="nameLenEr" class="text-danger font_s">Имя должно содержать от 4 до 30 символов</div>
+              <div v-show="validUsername && name.length > 0" class="text-danger font_s">Имя может содержать только русские символы</div>
+            </div>
+            <div class="form-group ">
+              <small id="" class="form-text text-muted">Дата рождения</small>
+              <input type="date" class="form-control inputText" required="required" v-model="date" placeholder="Дата рождения">
+              <div v-show="dateEr" class="text-danger font_s">Введите дату рождения</div>
+            </div>
+            <div class="form-group">
+              <textarea type="text" class="form-control textarea-resize-n" required="required" placeholder="Описание" rows="4" v-model="about"></textarea>
+              <div v-show="aboutLenEr" class="text-danger font_s">Описание не должно превышать 256 символов</div>
+            </div>
+            <div class="form-group">
+              <select id="inputState" class="form-control inputText" v-model="gender">
+                <option selected class="text-grey">Выберите пол...</option>
+                <option>Мужской</option>
+                <option>Женский</option>
+              </select>
+              <div v-show="genderEr" class="text-danger font_s">Выбирите гендер</div>
+            </div>
 
-              <div class="form-field pt-2">
-                <label class="text-center d-inline-block">
-                  <input type="checkbox" name="terms" v-model="checkbox">
-                  Я принимаю условия <a href="#">Пользовательского соглашения</a>.
-                </label>
-                <div v-show="checkEr" class="text-danger font_s">Вы должны принять пользовательское соглашение</div>
-              </div>
-              <div class="pt-3">
-                <button type="submit" class="btn btn-primary btn-shadow" @click="reg">Зарегистрировать</button>
-              </div>
-              <div v-for="error in errors" class="">
-                {{error}}
-              </div>
-              <div class="text-center pt-3">
-                Уже есть аккаунт?
-                <a href="#" data-toggle="modal" data-target=".sign_in_modal" data-dismiss="modal">Войти</a>
-              </div>
+            <div class="form-field pt-2">
+              <label class="text-center d-inline-block">
+                <input type="checkbox" name="terms" v-model="checkbox">
+                Я принимаю условия <a href="#">Пользовательского соглашения</a>.
+              </label>
+              <div v-show="checkEr" class="text-danger font_s">Вы должны принять пользовательское соглашение</div>
+            </div>
+            <div class="pt-3">
+              <button type="submit" class="btn btn-primary btn-shadow" @click="reg">Зарегистрировать</button>
+            </div>
+            <div v-for="error in errors" class="">
+              {{error}}
+            </div>
+            <div class="text-center pt-3">
+              Уже есть аккаунт?
+              <a href="#" data-toggle="modal" data-target=".sign_in_modal" data-dismiss="modal">Войти</a>
             </div>
           </div>
         </div>
@@ -194,10 +187,7 @@
         }
       },
       regSuccMes() {
-        document.querySelector('.reg_succ').classList.add('reg_succ__active');
-        setTimeout(() => {
-          document.querySelector('.reg_succ').classList.remove('reg_succ__active');
-        }, 6000);
+        this.$emit('succesReg')
       },
       regNext() {
         const formData = new FormData()
@@ -268,26 +258,5 @@
     -o-transition: all .2s;
     transition: all .2s;
   }
-  .reg_succ {
-    position: fixed;
-    bottom: 50px;
-    right: 120px;
-    background: white;
-    border: 1px solid #28a745;
-    border-radius: 10px;
-    z-index: 1115;
-    opacity: 0;
-    transition: 2s;
-    display: flex;
-    align-items: center;
-    color: #28a745;
-    font-size: 22px;
-  }
-  .reg_succ__active {
-    opacity: 1;
 
-  }
-  .reg_succ__body{
-    padding: 14px 28px;
-  }
 </style>

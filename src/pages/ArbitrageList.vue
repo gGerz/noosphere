@@ -1,11 +1,11 @@
 <template>
   <div>
     <h2 class="my-4 font_xxl" >Арбитраж</h2>
-    <div class="search-bar_date">
-      <input type="date" v-model="searchDate">
-      <div class="search-btn btn text-grey mr-1" @click="search">Поиск</div>
-      {{searchDate}}
-    </div>
+    <!--<div class="search-bar_date">-->
+      <!--<input type="date" v-model="searchDate">-->
+      <!--<div class="search-btn btn text-grey mr-1" @click="search">Поиск</div>-->
+      <!--{{searchDate}}-->
+    <!--</div>-->
     <div class="card mb-3" v-for="(item, i) in arbitrageList">
       <div class="card-body d-flex row">
         <div class="col-12 col-lg-9">

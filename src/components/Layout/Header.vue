@@ -21,7 +21,7 @@
 <!--            <router-link class="nav-link nav-link-header" to="/about">О сервисе</router-link>-->
 <!--          </li>-->
           <li class="nav-item">
-            <router-link class="nav-link nav-link-header" to="/arbitrage">Арбитраж</router-link>
+            <router-link class="nav-link nav-link-header" to="/arbitrage" v-if="this.$store.state.userId === 11">Арбитраж</router-link>
           </li>
           <li class="nav-item" v-if="$store.state.authorisedStatus">
             <div v-if="this.$store.state.userInfo === null" class="d-flex align-items-center" data-toggle="modal" data-target=".sign_up_next_modal">
@@ -38,8 +38,13 @@
         <router-link v-if="!this.$store.state.authorisedStatus" class="btn btn-outline-primary m-2 my-sm-0" data-toggle="modal" data-target=".sign_in_modal" to="">Войти</router-link>
         <auth />
         <router-link v-if="!this.$store.state.authorisedStatus" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="modal" data-target=".sign_up_modal" to="">Регистрация</router-link>
-        <reg />
+        <reg @succesReg='onSuccesReg'/>
         <reg-next />
+        <div class="reg_succ">
+          <div class="reg_succ__body">
+            Вы зарегистрировались!
+          </div>
+        </div>
       </div>
     </nav>
   </div>
@@ -61,6 +66,12 @@
       }
     },
     methods: {
+      onSuccesReg() {
+        document.querySelector('.reg_succ').classList.add('reg_succ__active');
+        setTimeout(() => {
+          document.querySelector('.reg_succ').classList.remove('reg_succ__active');
+        }, 6000);
+      },
       getUserAvatar(){
         axios({
           method: 'get',
@@ -121,5 +132,28 @@
   .navbar-nav{
     display: flex;
     align-items: center;
+  }
+
+  .reg_succ {
+    position: fixed;
+    bottom: 50px;
+    right: 120px;
+    background: white;
+    border: 1px solid #28a745;
+    border-radius: 10px;
+    z-index: 1115;
+    opacity: 0;
+    transition: 2s;
+    display: flex;
+    align-items: center;
+    color: #28a745;
+    font-size: 22px;
+  }
+  .reg_succ__active {
+    opacity: 1;
+
+  }
+  .reg_succ__body{
+    padding: 14px 28px;
   }
 </style>

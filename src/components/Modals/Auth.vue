@@ -74,6 +74,7 @@
             data: formData
           })
                   .then(response => {
+                    console.log('snake',response)
                     if (response.data.success === true){
                       $('.sign_in_modal').modal('hide'); //закрытие модального окна
                       this.$store.dispatch('login', response.data.data)
