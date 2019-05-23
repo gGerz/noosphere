@@ -59,6 +59,26 @@
     data(){
       return{
       }
+    },
+    methods: {
+      getUserAvatar(){
+        axios({
+          method: 'get',
+          url: this.$store.state.urlApi + `profiles/` + this.$store.state.userInfo + '?expand=cpCom,pUser,image',
+          headers: {'Authorization': `Bearer ${localStorage.token}`}
+        })
+            .then((response) => {
+              if (response.data.image.length !== 0){
+                this.$store.state.myAvaSrc = response.data.image[response.data.image.length - 1].i_image
+              }
+            })
+            .catch((error) => {
+              console.error(error)
+            })
+      }
+    },
+    mounted(){
+      this.getUserAvatar()
     }
   }
 </script>

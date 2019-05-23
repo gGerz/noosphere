@@ -15,6 +15,10 @@
               <input type="email" class="form-control inputText" required="required" aria-describedby="" placeholder="Имя" v-model="mail">
             </div>
             <div class="form-group pb-0">
+              <small class="form-text text-muted">Пароль</small>
+              <input type="password" class="form-control inputText" required="required" aria-describedby="" placeholder="Пароль" v-model="password">
+            </div>
+            <div class="form-group pb-0">
               <small class="form-text text-muted">Имя</small>
               <input type="text" class="form-control inputText" required="required" aria-describedby="" placeholder="Имя" v-model="name">
             </div>
@@ -104,6 +108,7 @@
                 let payload1 = {
 
                   'email': this.mail,
+                  'password': this.password,
                 };
                 axios({
                   method: 'PUT',

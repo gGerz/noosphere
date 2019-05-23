@@ -26,6 +26,10 @@ export default new Vuex.Store({
     userId: localStorage.getItem('userId'),
     userInfo: localStorage.getItem('userInfo'),
     authorisedStatus: !!localStorage.getItem('token'),
+    // для прода
+    // urlApi: `http://api.noosfera.noosfera.student.smartworld.team:2280/v1/`,
+    // imageApi: `http://api.noosfera.noosfera.student.smartworld.team:2280/uploads/avatar/`,
+    // для разработки
     urlApi: `http://api.noosfera.local/v1/`,
     imageApi: `http://api.noosfera.local/uploads/avatar/`,
     myAvaSrc: ''
