@@ -53,6 +53,8 @@
                             <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
                                 <div>Пароль</div>
                                 <div>************</div>
+                                <div class="font_s dashed2 changePasswordButton" @click="changePasswordModal">Изменить</div>
+                                <ChangePasswordModal/>
                             </div>
                             <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg d-flex d-lg-block d-md-block d-sm-block mx-auto">
                                 <div>Дата рождения</div>
@@ -204,11 +206,13 @@
   import CreateComp from '../components/Modals/CreateComp.vue'
   import DelConModal from '../components/Modals/DelConModal.vue'
   import DelTicketModal from '../components/Modals/DelTicketModal.vue'
+  import ChangePasswordModal from '../components/Modals/ChangePasswordModal.vue'
 
 
     export default {
     components: {
         VueSelect,
+        ChangePasswordModal,
         UpdateUserInfo,
         UpdateUserCon,
         UpdateUserTicket,
@@ -394,6 +398,10 @@
                     console.error(error)
                 })
         },
+        // Модалка на изменение пароля
+        changePasswordModal(){
+            $('.change_user_password_modal').modal('show');
+        },
         // Изменение консультации из расписания
         changeConItem(con){
             this.selectedCon = con
@@ -520,6 +528,11 @@
     }
     body {
         color: $secondary_grey;
+    }
+
+    .changePasswordButton{
+        margin-top: -21px;
+        max-width: 75px;
     }
 
     .text-danger {

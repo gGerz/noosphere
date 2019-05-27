@@ -21,7 +21,7 @@
 <!--            <router-link class="nav-link nav-link-header" to="/about">О сервисе</router-link>-->
 <!--          </li>-->
           <li class="nav-item">
-            <router-link class="nav-link nav-link-header" to="/arbitrage" v-if="this.$store.state.userId === 11">Арбитраж</router-link>
+            <router-link class="nav-link nav-link-header" to="/arbitrage" v-if="this.$store.state.userInfo === '11'">Арбитраж</router-link>
           </li>
           <li class="nav-item" v-if="$store.state.authorisedStatus">
             <div v-if="this.$store.state.userInfo === null" class="d-flex align-items-center" data-toggle="modal" data-target=".sign_up_next_modal">
@@ -35,9 +35,9 @@
             </router-link>
           </li>
         </ul>
-        <router-link v-if="!this.$store.state.authorisedStatus" class="btn btn-outline-primary m-2 my-sm-0" data-toggle="modal" data-target=".sign_in_modal" to="">Войти</router-link>
+        <router-link v-if="!$store.state.authorisedStatus" class="btn btn-outline-primary m-2 my-sm-0" data-toggle="modal" data-target=".sign_in_modal" to="">Войти</router-link>
         <auth />
-        <router-link v-if="!this.$store.state.authorisedStatus" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="modal" data-target=".sign_up_modal" to="">Регистрация</router-link>
+        <router-link v-if="!$store.state.authorisedStatus" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="modal" data-target=".sign_up_modal" to="">Регистрация</router-link>
         <reg @succesReg='onSuccesReg'/>
         <reg-next />
         <div class="reg_succ">
