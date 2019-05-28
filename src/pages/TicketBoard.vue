@@ -10,9 +10,8 @@
             </template>
             <span slot="no-options">Ничего не найдено</span>
           </vue-select>
-
         </div>
-        <div class="w-100 search-bar_text">
+        <div class="w-100 search-bar_text mt-2 mt-md-0">
           <input type="text" v-model="searchTitle" placeholder="Название">
         </div>
         <div class="d-flex mt-2 mt-md-0">
@@ -544,10 +543,24 @@
     }
   }
 
+  @media ( max-width: 991px) {
+    .search-bar {
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .search-bar_text {
+      input {
+        margin-left: 10px;
+      }
+    }
+  }
+
   .search-bar_text {
     input {
+      width: 100%;
       height: 48px;
-      margin-left: 10px;
       background: none;
       border: 1px solid rgba(60,60,60,.26);
       border-radius: 4px;
