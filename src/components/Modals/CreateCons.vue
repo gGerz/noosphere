@@ -171,7 +171,9 @@
       closeModal() {
         $('.create_cons_modal').modal('hide');
       },
-      testTime(begin, end) {
+      testTime(begin, end, date) {
+        const arrDate = date.split('-')
+        const nowDate = this.$store.state.now.date.split('-')
         const beginH = +(begin[0] + begin[1])
         const endH = +(end[0] + end[1])
         const beginM = +(begin[3] + begin[4])
@@ -181,8 +183,8 @@
         this.timePastEr = false
         const h =  this.$store.state.now.time.h
         const m =  this.$store.state.now.time.m
-        if (beginH < h || ( beginH === h && beginM < m )) this.timePastEr = true
-        else if (beginH > endH || (beginH === endH && beginM > endM)) this.timeChronoEr = true
+        if ((nowDate[0] == arrDate[0] && nowDate[1] == arrDate[1] && nowDate[2] == arrDate[2]) && (beginH < h || ( beginH === h && beginM < m ))) this.timePastEr = true
+        if (beginH > endH || (beginH === endH && beginM > endM)) this.timeChronoEr = true
         else if ((beginH + 1 === endH && ((60 - beginM) + endM) < 30) || (beginH === endH && (endM - beginM) < 30 )) {
           this.timeDurEr = true
         }
@@ -210,8 +212,8 @@
         }
       },
       createCon () {
-        // this.testDate(this.date)
-        // this.testTime(this.begin, this.end)
+        this.testDate(this.date)
+        this.testTime(this.begin, this.end, this.date)
         this.about = $.trim(this.about)
         this.title = $.trim(this.title)
         this.titleEr = false

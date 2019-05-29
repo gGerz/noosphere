@@ -70,15 +70,15 @@
                 <div v-if="$store.state.userId == req.pc_user_id">
                   <span class="btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>
                 </div>
-                <div v-else>
-                  <span class=" btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Ответить</span>
-                </div>
-<!--                <div v-else-if="inDate(req.pc_date) && inTime(req.pc_begin_time,req.pc_end_time)">-->
+<!--                <div v-else>-->
 <!--                  <span class=" btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Ответить</span>-->
 <!--                </div>-->
-<!--                <div v-else>-->
-<!--                  <span class=" btn btn-outline-secondary btn-md px-4 btn-buy font_l">Не время</span>-->
-<!--                </div>-->
+                <div v-else-if="inDate(req.pc_date) && inTime(req.pc_begin_time,req.pc_end_time)">
+                  <span class=" btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Ответить</span>
+                </div>
+                <div v-else>
+                  <span class=" btn btn-outline-secondary btn-md px-4 btn-buy font_l">Не время</span>
+                </div>
               </div>
                 <!--<span v-if="$store.state.userId == req.pc_user_id" class="ml-auto btn btn-outline-secondary btn-md px-4 btn-buy font_l">Мое</span>-->
                 <!--<span v-else class="ml-auto btn btn-outline-primary btn-md px-4 btn-buy font_l" @click="createCons(i)">Ответить</span>-->
@@ -194,15 +194,15 @@
             console.error(error)
           })
       },
-      // inTime(begin, end) {
-      //   const beginH = +(begin[0] + begin[1])
-      //   const endH = +(end[0] + end[1])
-      //   const beginM = +(begin[3] + begin[4])
-      //   const endM = +(end[3] + end[4])
-      //   if (this.$store.state.now.time.h > beginH && this.$store.state.now.time.h < endH) return true
-      //   if (((this.$store.state.now.time.h == beginH) && (this.$store.state.now.time.m >= beginM)) || ((this.$store.state.now.time.h == endH) && (this.$store.state.now.time.m <= endM))) return true
-      //   return false
-      // },
+      inTime(begin, end) {
+        const beginH = +(begin[0] + begin[1])
+        const endH = +(end[0] + end[1])
+        const beginM = +(begin[3] + begin[4])
+        const endM = +(end[3] + end[4])
+        if (this.$store.state.now.time.h > beginH && this.$store.state.now.time.h < endH) return true
+        if (((this.$store.state.now.time.h == beginH) && (this.$store.state.now.time.m >= beginM)) || ((this.$store.state.now.time.h == endH) && (this.$store.state.now.time.m <= endM))) return true
+        return false
+      },
       inDate(date) {
         if (this.$store.state.now.date === date) {
           return true
